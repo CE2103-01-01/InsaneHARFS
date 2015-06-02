@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.2)
-project(InsaneHARFS)
+project(harfs-disk)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(SOURCE_FILES main.cpp)
-add_executable(InsaneHARFS ${SOURCE_FILES})
+set(SOURCE_FILES main.cpp
+                models/pointer/Pointer.h
+                models/pointer/MemoryPointer.tpp
+                models/pointer/MemoryPointer.h)
+add_executable(harfs-disk ${SOURCE_FILES} )
