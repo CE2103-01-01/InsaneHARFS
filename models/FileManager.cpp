@@ -2,6 +2,7 @@
 // Created by pablo on 03/06/15.
 //
 
+#include <iostream>
 #include "FileManager.h"
 
 FileManager::FileManager() {
@@ -12,7 +13,9 @@ FileManager::FileManager() {
 bool FileManager::checkFileExistence(const string& path)
 {
     ifstream f(path.c_str());
-    return f.is_open(); //TODO-close file
+    bool open = f.is_open();
+    f.close();
+    return open; //TODO-close file
 }
 
 FileManager::~FileManager() {

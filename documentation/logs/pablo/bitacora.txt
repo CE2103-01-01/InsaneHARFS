@@ -2,3 +2,7 @@
 Initial Commit, Pointer
 02/jun/2015
 Reunion con companeros de trabajo acerca del diagrama de clases
+03/jun/2015
+File Manager con metodos de read and write
+04/jun/2015
+Archivo de configuracion
