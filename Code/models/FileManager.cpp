@@ -5,22 +5,16 @@
 #include <iostream>
 #include "FileManager.h"
 
-FileManager::FileManager() {
-}
 /**
  * Search if a file exists
  */
-bool FileManager::checkFileExistence(const string& path)
-{
+bool FileManager::checkFileExistence(const string& path) {
     ifstream f(path.c_str());
     bool open = f.is_open();
     f.close();
     return open; //TODO-close file
 }
 
-FileManager::~FileManager() {
-
-}
 /**
  * writes char* on a file
  * Exit codes:
