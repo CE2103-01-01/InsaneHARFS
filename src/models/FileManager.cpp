@@ -12,7 +12,7 @@ bool FileManager::checkFileExistence(const string& path) {
     ifstream f(path.c_str());
     bool open = f.is_open();
     f.close();
-    return open; //TODO-close file
+    return open;
 }
 
 /**
