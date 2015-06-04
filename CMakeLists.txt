@@ -12,4 +12,4 @@ set(HEADER_FILES Code/models/pointer/Pointer.h
 set(SOURCE_FILES Code/main.cpp
                  Code/models/pointer/MemoryPointer.tpp)
 
-add_executable(harfs-disk ${SOURCE_FILES} ${HEADER_FILES} Code/DataStructures/proof.h Code/DataStructures/proof.cpp)
+add_executable(harfs-disk ${SOURCE_FILES} ${HEADER_FILES} )

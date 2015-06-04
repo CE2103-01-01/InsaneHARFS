@@ -1,2 +1,4 @@
 01/jun/2015
 Initial Commit, Pointer
+02/jun/2015
+Reunion con companeros de trabajo acerca del diagrama de clases
