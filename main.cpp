@@ -3,16 +3,25 @@
 #include "src/config/Configuration.h"
 
 using namespace std;
-
-int main() {
-    cout<<Configuration::initializeAndGetInstance("res/config.cfg")->getPath()<<endl;
-    cout<<Configuration::getInstance()->getSharedSecret()<<endl;
+/**
+ * Usage: goto edit configurations and then program arguments:
+ * insert this --config res/config.cfg
+ */
+int main(int argc, char* argv[]) {
+    if (argc!=3)
+    {
+        cerr<<"Usage : harfs-disk --config res/config.cfg"<<endl;
+    }
+    cout<<"Path to file: "<<Configuration::initializeAndGetInstance(argv[2])->getPath()<<endl;
+    cout<<"SharedSecret: "<<Configuration::getInstance()->getSharedSecret()<<endl;
+    cout<<"Port: "<<Configuration::getInstance()->getPort()<<endl;
+    cout<<"Disk Size: "<<Configuration::getInstance()->getDiskSize()<<endl;
 
 
 
     Pointer<int> number = malloc(sizeof(int));
     *number = 2;
-    cout << "Number: " << *number<<endl;
+    cout << "Number from Pointer: " << *number<<endl;
     number.Free();
     return 0;
 }
