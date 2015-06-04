@@ -3,8 +3,8 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include "../libs/rapidjson/document.h"
-#include "../libs/rapidjson/reader.h"
+#include "../../libs/rapidjson/document.h"
+#include "../../libs/rapidjson/reader.h"
 
 #define SHARED_SECRET_LENGTH 64
 

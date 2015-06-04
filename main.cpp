@@ -1,6 +1,6 @@
 #include <iostream>
-#include "models/Pointer.h"
-#include "config/Configuration.h"
+#include "src/models/Pointer.h"
+#include "src/config/Configuration.h"
 
 using namespace std;
 
