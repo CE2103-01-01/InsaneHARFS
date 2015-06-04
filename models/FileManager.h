@@ -7,16 +7,13 @@
 
 #include <string>
 #include <fstream>
-#include "../Data/DoubleList.h"
+
 using namespace std;
 class FileManager {
-private:
 public:
-    FileManager();
-    ~FileManager();
-    bool checkFileExistence(const string&path);
-    int write(const string &path, const int &offset, char* data);
-    char* read(const string &path, const int & offset, const int& size);
+    static bool checkFileExistence(const string&path);
+    static int write(const string &path, const int &offset, char* data);
+    static char* read(const string &path, const int & offset, const int& size);
 };
 
 

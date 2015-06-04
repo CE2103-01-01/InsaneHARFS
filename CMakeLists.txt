@@ -7,9 +7,11 @@ set(HEADER_FILES Code/models/pointer/Pointer.h
                  Code/models/pointer/MemoryPointer.h
                  Code/DataStructures/DoubleLinkedNode.h
                  Code/DataStructures/DoubleLinkedList.h
-                 Code/DataStructures/BinaryTree.h)
+                 Code/DataStructures/BinaryTree.h
+                 Code/DataStructures/proof.h)
 
 set(SOURCE_FILES Code/main.cpp
-                 Code/models/pointer/MemoryPointer.tpp)
+                 Code/models/pointer/MemoryPointer.tpp
+                 Code/DataStructures/proof.cpp)
 
 add_executable(harfs-disk ${SOURCE_FILES} ${HEADER_FILES} )

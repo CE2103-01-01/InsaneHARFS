@@ -34,6 +34,7 @@ public:
 
     ~Pointer()
     {
+        //TODO: no declaren estas cosas si no las van a implementar, esto es un memory leak
     }
 
     T& operator* ()
