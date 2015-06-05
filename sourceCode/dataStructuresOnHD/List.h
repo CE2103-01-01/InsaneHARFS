@@ -8,7 +8,6 @@
 #include <string>
 #include <fstream>
 #include "../models/Pointer.h"
-#include "ListNode.h"
 
 #define NODE_LENGHT 16
 #define HEADER_LENGHT 16

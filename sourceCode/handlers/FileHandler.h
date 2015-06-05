@@ -16,12 +16,9 @@
 #define NOT_FOUND " not found."
 
 class FileHandler {
-public:
-    FileHandler();
-    ~FileHandler();
-    bool checkFileExistence(const std::string&path);
-    int write(const std::string &path, const int &offset, char* data);
-    char* read(const std::string &path, const int & offset, const int& size);
+    static bool checkFileExistence(const std::string&path);
+    static int write(const std::string &path, const int &offset, char* data);
+    static char* read(const std::string &path, const int & offset, const int& size);
 };
 
 

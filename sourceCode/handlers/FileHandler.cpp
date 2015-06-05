@@ -33,7 +33,7 @@ int FileHandler::write(const std::string &path, const int & offset, char *data) 
     return 0;
 }
 
-char *FileHandler::read(const std::string &path, const int & offset, const int& size) {
+char* FileHandler::read(const std::string &path, const int & offset, const int& size) {
     if (checkFileExistence(path)) {
         std::fstream outputFile(path.c_str());
         char* toRet = static_cast<char*>(malloc(size));
