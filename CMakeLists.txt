@@ -6,11 +6,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES main.cpp
                  sourceCode/handlers/FileHandler.cpp
                  sourceCode/config/Configuration.cpp
-                 sourceCode/dataStructures/proof.cpp)
+                 sourceCode/dataStructures/proof.cpp
+                 sourceCode/dataStructuresOnHD/List.cpp
+                 sourceCode/models/Pointer.cpp
+                 sourceCode/models/RegisterManager.cpp )
 
 configure_file( res/config.cfg res/config.cfg COPYONLY)
 
 
-add_executable(harfs-disk ${SOURCE_FILES} )
+add_executable(harfs-disk ${SOURCE_FILES} sourceCode/models/Register.cpp sourceCode/models/Register.h)
 
 target_link_libraries (harfs-disk ${CMAKE_THREAD_LIBS_INIT})
