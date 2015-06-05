@@ -9,11 +9,11 @@
 #include <fstream>
 #include <iostream>
 using namespace std;
-class FileManager {
+class FileHandler {
 private:
 public:
-    FileManager();
-    ~FileManager();
+    FileHandler();
+    ~FileHandler();
     bool checkFileExistence(const string&path);
     int write(const string &path, const int &offset, char* data);
     char* read(const string &path, const int & offset, const int& size);

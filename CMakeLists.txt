@@ -4,8 +4,8 @@ project(harfs-disk)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES main.cpp
-                src/models/FileManager.cpp
-                src/models/FileManager.h
+                src/handlers/FileHandler.cpp
+                src/handlers/FileHandler.h
                 src/models/Pointer.h
                 src/config/Configuration.cpp
                 src/config/Configuration.h)

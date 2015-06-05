@@ -3,12 +3,12 @@
 //
 
 #include <iostream>
-#include "FileManager.h"
+#include "FileHandler.h"
 
 /**
  * Search if a file exists
  */
-bool FileManager::checkFileExistence(const string& path) {
+bool FileHandler::checkFileExistence(const string& path) {
     ifstream f(path.c_str());
     bool open = f.is_open();
     f.close();
@@ -22,7 +22,7 @@ bool FileManager::checkFileExistence(const string& path) {
  * 1: file created
  * -1: file couldnt create
  */
-int FileManager::write(const string &path, const int & offset, char *data) {
+int FileHandler::write(const string &path, const int & offset, char *data) {
     fstream iofile;
     const bool exists = checkFileExistence(path);
     if (!exists) {
@@ -44,7 +44,7 @@ int FileManager::write(const string &path, const int & offset, char *data) {
     else return 1;
 }
 
-char *FileManager::read(const string &path, const int & offset, const int& size) {
+char *FileHandler::read(const string &path, const int & offset, const int& size) {
     fstream iofile;
     const bool exists = checkFileExistence(path);
     if (!exists) {
