@@ -22,31 +22,25 @@ bool FileHandler::checkFileExistence(const std::string& path) {
  * -1: file couldnt create
  */
 int FileHandler::write(const std::string &path, const int & offset, char *data) {
-    std::fstream inputFile;
-    const bool exists = checkFileExistence(path);
-    if (!exists) {
-        printf((FILE+path+NOT_FOUND).c_str());
-        inputFile.open(path.c_str());
-        if (!inputFile.is_open()) {
-            printf(COULD_NOT_CREATE_FILE);
-            return -1;
-        }
-        printf(FILE_CREATED);
+    std::fstream inputFile(path.c_str());
+    if (!inputFile.is_open()) {
+        printf((COULD_NOT_CREATE_FILE+path).c_str());
+        return -1;
     }
-    else inputFile.open(path.c_str());
-
     inputFile.seekg(offset);
     inputFile << *data;
     inputFile.close();
-    if (exists) return 0;
-    else return 1;
+    return 0;
 }
 
 char *FileHandler::read(const std::string &path, const int & offset, const int& size) {
-    const bool exists = checkFileExistence(path);
-    if (!exists) {
+    if (checkFileExistence(path)) {
+        std::fstream outputFile(path.c_str());
+        char* toRet = static_cast<char*>(malloc(size));
+        outputFile.read(toRet, size);
+        return toRet;
+    }else{
         printf(FILE_DOES_NOT_EXIST);
         return NULL;
     }
-    std::fstream outputFile(path.c_str());
 }
