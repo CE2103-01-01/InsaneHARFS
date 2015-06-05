@@ -14,6 +14,6 @@ set(SOURCE_FILES main.cpp
 configure_file( res/config.cfg res/config.cfg COPYONLY)
 
 
-add_executable(harfs-disk ${SOURCE_FILES} sourceCode/models/Register.cpp sourceCode/models/Register.h)
+add_executable(harfs-disk ${SOURCE_FILES})
 
 target_link_libraries (harfs-disk ${CMAKE_THREAD_LIBS_INIT})
