@@ -1,6 +1,6 @@
 #include <iostream>
-#include "src/models/Pointer.h"
-#include "src/config/Configuration.h"
+#include "sourceCode/models/Pointer.h"
+#include "sourceCode/config/Configuration.h"
 
 using namespace std;
 /**
