@@ -8,5 +8,6 @@
 #include "../managers/FileManager.h"
 
 void fileManagerProofOne();
+void fileManagerProofTwo();
 
 #endif //HARFS_DISK_FILEMANAGERPROOF_H
