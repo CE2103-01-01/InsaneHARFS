@@ -18,24 +18,16 @@ void signal_callback_handler(int signum) {
 }
 
 /**
- * Prints intructions of use
- */
-void printUsage() {
-    printf(USAGE_MSG);
-}
-
-/**
  * Usage: goto edit configurations and then program arguments:
  * insert this --config res/disk_config.cfg
  */
-
 int main(int argc, char* argv[]) {
     // Register signal and signal handler
     signal(SIGINT, signal_callback_handler);
     signal(SIGABRT, signal_callback_handler);
     //Handle Configuration
     if (argc!=3||strcmp(argv[1], CONFIG)) {
-        printUsage();
+        printf(USAGE_MSG);
         abort();
     }
     else Configuration::initializeAndGetInstance(argv[2]);
