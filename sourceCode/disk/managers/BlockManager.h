@@ -8,7 +8,7 @@
 #include <fstream>
 #include "../managers/FileManager.h"
 
-// HEADER:      |    PrimerVacio  4 Bytes   |        Usados 4 Bytes         |   Blouqes totales 4 Bytes  | =  12 Bytes
+// HEADER:      |    PrimerVacio  4 Bytes   |        Usados 4 Bytes         |   Bloques totales 4 Bytes  | =  12 Bytes
 
 #define BLOCK_MANAGER_HEADER_LENGHT 24
 #define BLOCK_MANAGER_COMPONENT_LENGHT 4

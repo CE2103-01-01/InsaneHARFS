@@ -1,21 +1,29 @@
-#include <iostream>
 #include <signal.h>
-#include <string.h>
 #include "config/diskConfiguration.h"
+#include "../disk/managers/BlockManager.h"
 
-using namespace std;
+using namespace PathConstants;
 
+#define CAUGHT_SIGNAL "Caught signal %d\n"
+#define USAGE_MSG "Usage : harfs-disk --config res/disk_config.cfg \n"
+#define CONFIG "--config"
 
-void signal_callback_handler(int signum);
-#include "proofs/FileManagerProof.h"
+// Define the function to be called when ctrl-c (SIGINT) signal is sent to process
+void signal_callback_handler(int signum) {
+    printf(CAUGHT_SIGNAL,signum);
+    // Cleanup and close up stuff here
+    free(Configuration::getInstance());
+    // Terminate program
+    exit(signum);
+}
+
 /**
  * Prints intructions of use
  */
-void printUsage()
-{
-    cerr<<"Usage : harfs-disk --config res/disk_config.cfg"<<endl;
-
+void printUsage() {
+    printf(USAGE_MSG);
 }
+
 /**
  * Usage: goto edit configurations and then program arguments:
  * insert this --config res/disk_config.cfg
@@ -26,34 +34,17 @@ int main(int argc, char* argv[]) {
     signal(SIGINT, signal_callback_handler);
     signal(SIGABRT, signal_callback_handler);
     //Handle Configuration
-    if (argc!=3||strcmp(argv[1], "--config"))
-    {
+    if (argc!=3||strcmp(argv[1], CONFIG)) {
         printUsage();
         abort();
     }
     else Configuration::initializeAndGetInstance(argv[2]);
 
+    /** PRUEBAS **/
+    BlockManager* manager = static_cast<BlockManager*>(malloc(sizeof(BlockManager(PROJECT_PATH+"disk"+EXT,50))));
+    new(manager) BlockManager(PROJECT_PATH+"disk"+EXT,50);
+    /** ~PRUEBAS **/
 
-
-
-    fileManagerProofOne();
-    fileManagerProofTwo();
-    fileManagerProofThree();
-    
-    
-    delete Configuration::getInstance();// Garbage Collection!
+    free(Configuration::getInstance());// Garbage Collection!
     return 0;
 }
-
-
-// Define the function to be called when ctrl-c (SIGINT) signal is sent to process
-void signal_callback_handler(int signum)
-{
-    printf("Caught signal %d\n",signum);
-    delete Configuration::getInstance();
-    // Cleanup and close up stuff here
-
-    // Terminate program
-    exit(signum);
-}
-
