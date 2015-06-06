@@ -23,10 +23,8 @@ void FileManager::createFile(const char* data, std::string path, int dataSize) {
  */
 void FileManager::writeFile(const char* data, std::string path, int offset, int dataSize) {
     std::fstream outFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::out | std::ios::in | std::ios::ate);
-    for(int i = 0; i < dataSize; i++) {
-           outFile.seekp(offset + i);
-           outFile << *(data + i);
-    }
+    outFile.seekp(offset);
+    outFile.write(data,dataSize);
     outFile.close();
 }
 
