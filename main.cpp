@@ -7,6 +7,6 @@ int main(int argc, char* argv[]) {
     std::string path = "proof";
     char* text = "proof";
     FileManager::createFile(text,path,5);
-    FileManager::writeFile("a",path,2,1);
+    FileManager::writeFile("abb",path,2,3);
     return 0;
 }
