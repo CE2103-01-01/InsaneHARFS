@@ -7,7 +7,9 @@
 /**@brief constructor
  * @param long id
  */
-Pointer::Pointer(long idParam){ id = idParam; }
+Pointer::Pointer(long idParam){
+    id = idParam;
+}
 
 /**@brief destructor
  */
