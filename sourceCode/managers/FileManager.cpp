@@ -4,6 +4,17 @@
 
 #include "FileManager.h"
 
+/** Crear de archivos
+ * @brief guarda un archivo formato EXTENSION
+ * @param: void* data: dato a guardar
+ * @param: int dSize: tamaño del dato
+ */
+void FileManager::createFile(const char* data, std::string path, int dataSize) {
+    std::fstream outFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::out);
+    outFile.write(data,dataSize);
+    outFile.close();
+}
+
 /** Escritor de archivos
  * @brief guarda un archivo formato EXTENSION
  * @param: void* data: dato a guardar
