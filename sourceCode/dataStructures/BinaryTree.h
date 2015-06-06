@@ -7,6 +7,8 @@
 
 #include "DoubleLinkedNode.h"
 
+#define NOT_FOUND_ERROR "ERROR, ELEMENTO NO ENCONTRADO"
+
 template <typename AnyType> class BinaryTree {
     long nodeCounter;
     DoubleLinkedNode<AnyType>* root = 0;
@@ -29,7 +31,7 @@ template <typename AnyType> class BinaryTree {
 /**@brief Constructor
  */
 template <typename AnyType> BinaryTree<AnyType>::BinaryTree(){
-    nodeCounter = NULL;
+    nodeCounter = 0;
     root = NULL;
 }
 
