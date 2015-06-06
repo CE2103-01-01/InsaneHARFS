@@ -7,8 +7,6 @@
 
 #include "DoubleLinkedNode.h"
 
-#define POSITION_ERROR "ERROR EN DoubleLinkedList, LA POSICION SUMINISTRADA ESTA FUERA DE RANGO"
-
 template <typename AnyType> class DoubleLinkedList {
     long nodeCounter;
     DoubleLinkedNode<AnyType>* head;

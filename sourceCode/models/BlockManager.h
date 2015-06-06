@@ -5,7 +5,6 @@
 #ifndef HARFS_DISK_REGISTERMANAGER_H
 #define HARFS_DISK_REGISTERMANAGER_H
 
-#include <string>
 #include <fstream>
 
 // HEADER:      |    PrimerVacio  8 Bytes   |        Usados 8 Bytes         |   Blouqes totales 8 Bytes  | =  24 Bytes

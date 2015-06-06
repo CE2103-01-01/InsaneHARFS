@@ -3,7 +3,6 @@
 //
 
 #include "BlockManager.h"
-#include "../handlers/FileHandler.h"
 
 /**@brief elimina un registro y los registros anexos al mismo
  * @param long offset: numero de registro (posicion)
