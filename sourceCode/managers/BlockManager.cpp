@@ -51,12 +51,27 @@ long BlockManager::addBlock(char* data, long dataSize){
  * @return void*: dato del registro junto con los anexos
  */
 void* BlockManager::searchBlock(int id){
-
+    void* toRet = malloc(DATA_LENGHT);
+    FileManager::readFile(toRet,path,id*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT,DATA_LENGHT);
+    return toRet;
 }
 
 /**@brief elimina un registro y los registros anexos al mismo
  * @param long offset: numero de registro (posicion)
  */
 void BlockManager::deleteBlock(int id){
-
+    //Escribe el primer vacio como siguiente vacio y actualiza primer vacio
+    FileManager::writeFile(static_cast<void*>(firstEmptyBlock), path,
+                           id*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT + NEXT_LENGHT, NEXT_EMPTY_LENGHT);
+    firstEmptyBlock = id;
+    //Se lee el siguiente
+    int* next = static_cast<int*>(malloc(DATA_LENGHT));
+    FileManager::readFile(next,path,id*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT,DATA_LENGHT);
+    //si el siguiente no es -1 lo borra, ya que -1 indica que es el ultimo bloque de la cadena
+    if(*next!=-1) {
+        deleteBlock(*next);
+        int tmp = -1;
+        FileManager::writeFile(static_cast<void*>(&tmp), path, id*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT,
+                               NEXT_LENGHT);
+    }
 }
