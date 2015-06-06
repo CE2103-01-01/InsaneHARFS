@@ -3,3 +3,4 @@ http://www.cplusplus.com/doc/tutorial/files/
 http://duramecho.com/ComputerInformation/WhyHowCppConst.html
 https://miloyip.github.io/rapidjson/md_doc_stream.html
 http://www.cplusplus.com/articles/DEN36Up4/
+http://cs.ecs.baylor.edu/~donahoo/practical/CSockets/practical/

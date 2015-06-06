@@ -1,6 +1,5 @@
-#include <fstream>
-#include <iostream>
-#include "Configuration.h"
+
+#include "controllerConfiguration.h"
 
 Configuration *Configuration::ConfigurationSingleton = nullptr;
 
@@ -40,7 +39,7 @@ Configuration::Configuration(string cfgPath) {
 
 
 Configuration *Configuration::getInstance() {
-    if (!ConfigurationSingleton) return nullptr;
+    if (!ConfigurationSingleton) cerr<<"Uninitialized Configuration";
     return ConfigurationSingleton;
 }
 
@@ -61,7 +60,7 @@ size_t Configuration::getDiskSize() const {
     return diskSize;
 }
 
-uint16_t Configuration::getPort() const {
+unsigned short Configuration::getPort() const {
     return port;
 }
 
@@ -70,3 +69,5 @@ string Configuration::getPath() const {
 }
 
 
+Configuration::~Configuration() {
+}

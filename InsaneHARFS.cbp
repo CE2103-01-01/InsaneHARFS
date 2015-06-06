@@ -33,9 +33,16 @@
 		</Compiler>
 		<Unit filename="CMakeLists.txt" />
 		<Unit filename="main.cpp" />
-		<Unit filename="models/FileManager.cpp" />
-		<Unit filename="models/FileManager.h" />
-		<Unit filename="models/Pointer.h" />
+		<Unit filename="src/config/Configuration.cpp" />
+		<Unit filename="src/config/Configuration.h" />
+		<Unit filename="src/dataStructures/BinaryTree.h" />
+		<Unit filename="src/dataStructures/DoubleLinkedList.h" />
+		<Unit filename="src/dataStructures/DoubleLinkedNode.h" />
+		<Unit filename="src/dataStructures/proof.cpp" />
+		<Unit filename="src/dataStructures/proof.h" />
+		<Unit filename="src/handlers/FileHandler.cpp" />
+		<Unit filename="src/handlers/FileHandler.h" />
+		<Unit filename="src/models/Pointer.h" />
 		<Extensions>
 			<envvars />
 			<code_completion />
