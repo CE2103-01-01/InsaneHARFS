@@ -9,5 +9,6 @@
 
 void fileManagerProofOne();
 void fileManagerProofTwo();
+void fileManagerProofThree();
 
 #endif //HARFS_DISK_FILEMANAGERPROOF_H

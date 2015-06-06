@@ -10,14 +10,14 @@
  */
 void fileManagerProofOne(){
     //Creacion
-    std::string path = "proof";
-    char* text = "aaaaaaaaaa";
-    int sizeOfText = 10;
+    std::string path = "FileManagerProofOne";
+    char* text = "111111111";
+    int sizeOfText = 9;
     FileManager::createFile(text,path,sizeOfText);
     //Modificacion
-    char* change = "bbbbb";
-    int sizeOfChange = 5;
-    int offset = 2;
+    char* change = "000";
+    int sizeOfChange = 3;
+    int offset = 0;
     FileManager::writeFile(change,path,offset,sizeOfChange);
     //Lectura
     void* completeTextReaded = malloc(sizeOfText);
@@ -30,23 +30,58 @@ void fileManagerProofOne(){
     std::cout << std::endl;
     for(int i = 0; i < sizeOfChange; i++) std::cout << *static_cast<char*>(changeReaded+i);
     std::cout << std::endl;
+    free(completeTextReaded);
+    free(changeReaded);
 }
+
 void fileManagerProofTwo(){
-    std::string path = "proof";
-    char* text = "0000000000";
-    char* change = "11111";
-    int offset = 4;
-    int sizeOfText = 10;
-    int sizeOfChange = 5;
+    //Creacion
+    std::string path = "FileManagerProofTwo";
+    char* text = "111111111";
+    int sizeOfText = 9;
+    FileManager::createFile(text,path,sizeOfText);
+    //Modificacion
+    char* change = "000";
+    int sizeOfChange = 3;
+    int offset = 3;
+    FileManager::writeFile(change,path,offset,sizeOfChange);
+    //Lectura
     void* completeTextReaded = malloc(sizeOfText);
     void* changeReaded = malloc(sizeOfChange);
-    FileManager::createFile(text,path,sizeOfText);
-    FileManager::writeFile(change,path,offset,sizeOfChange);
     FileManager::readFile(completeTextReaded, path, NULL, sizeOfText);
     FileManager::readFile(changeReaded, path, offset, sizeOfChange);
+    //Impresion
     std::cout<< "This is the second test"<<std::endl;
     for(int i = 0; i < sizeOfText; i++) std::cout << *static_cast<char*>(completeTextReaded+i);
     std::cout << std::endl;
-    for(int i = 0; i < sizeOfChange; i++) std::cout << *static_cast<char*>(changeReaded+i);
+    for(int i = 0; i <  sizeOfChange; i++) printf(static_cast<char*>(changeReaded+i));
     std::cout << std::endl;
+    free(completeTextReaded);
+    free(changeReaded);
+}
+
+void fileManagerProofThree(){
+    //Creacion
+    std::string path = "FileManagerProofThree";
+    char* text = "111111111";
+    int sizeOfText = 9;
+    FileManager::createFile(text,path,sizeOfText);
+    //Modificacion
+    char* change = "000";
+    int sizeOfChange = 3;
+    int offset = 6;
+    FileManager::writeFile(change,path,offset,sizeOfChange);
+    //Lectura
+    void* completeTextReaded = malloc(sizeOfText);
+    void* changeReaded = malloc(sizeOfChange);
+    FileManager::readFile(completeTextReaded, path, NULL, sizeOfText);
+    FileManager::readFile(changeReaded, path, offset, sizeOfChange);
+    //Impresion
+    std::cout<< "This is the third test"<<std::endl;
+    for(int i = 0; i < sizeOfText; i++) std::cout << *static_cast<char*>(completeTextReaded+i);
+    std::cout << std::endl;
+    for(int i = 0; i <  sizeOfChange; i++) printf(static_cast<char*>(changeReaded+i));
+    std::cout << std::endl;
+    free(completeTextReaded);
+    free(changeReaded);
 }
