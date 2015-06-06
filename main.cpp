@@ -7,6 +7,8 @@ int main(int argc, char* argv[]) {
     std::string path = "proof.bin";
     char* text = "proof";
     FileManager::writeFile(text,path,0,5);
-    FileManager::writeFile("a",path,0,1);
+    FileManager::writeFile("ab",path,0,2);
+
+
     return 0;
 }
