@@ -7,7 +7,7 @@
 /**@brief elimina un registro y los registros anexos al mismo
  * @param long offset: numero de registro (posicion)
  */
-BlockManager::BlockManager(std::string pathParam, long numberOfBlocksParam){
+BlockManager::BlockManager(std::string pathParam, int numberOfBlocksParam){
     numberOfBlocks = numberOfBlocksParam;
     firstEmptyBlock = 0;
     usedBlocks = 0;
@@ -35,12 +35,12 @@ long BlockManager::addBlock(char* data, long dataSize){
         //Escribe el dato, suma porque:  | siguiente | siguiente vacio | dato
         FileManager::writeFile(data, path, firstEmptyBlock+NEXT_LENGHT+NEXT_EMPTY_LENGHT, BLOCK_LENGHT);
         //Toma el nuevo primer ultimo, suma porque:  | siguiente | siguiente vacio | dato
-        FileManager::readFile(static_cast<char*>(&firstEmptyBlock), path, firstEmptyBlock+NEXT_LENGHT, NEXT_EMPTY_LENGHT);
+//        FileManager::readFile(static_cast<char*>(&firstEmptyBlock), path, firstEmptyBlock+NEXT_LENGHT, NEXT_EMPTY_LENGHT);
         //Escribe el siguiente vacio en -1, suma porque:  | siguiente | siguiente vacio | dato
-        FileManager::writeFile(static_cast<char*>(&flag), path, tmp+NEXT_LENGHT, NEXT_EMPTY_LENGHT);
+//        FileManager::writeFile(static_cast<char*>(&flag), path, tmp+NEXT_LENGHT, NEXT_EMPTY_LENGHT);
         if(i < dataSize/BLOCK_LENGHT) {
             //Si no es la ultima iteracion agrega siguiente, suma porque:  | siguiente | siguiente vacio | dato
-            FileManager::writeFile(static_cast<char*>(&firstEmptyBlock), path, tmp, NEXT_LENGHT);
+//            FileManager::writeFile(static_cast<char*>(&firstEmptyBlock), path, tmp, NEXT_LENGHT);
         }
     }
     return id;
