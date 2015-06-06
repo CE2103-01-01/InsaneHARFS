@@ -34,6 +34,10 @@ void fileManagerProofOne(){
     free(changeReaded);
 }
 
+/**@brief: la prueba consiste en la creacion de un archivo que se modifica en un offset, con el fin de verificar
+ * el funcionamiento del metodo de creacion, lectura y escritura. El archivo modificado es cargado en una variable,
+ * asi como su cambio, para imprimirlas en consola
+ */
 void fileManagerProofTwo(){
     //Creacion
     std::string path = "FileManagerProofTwo";
@@ -60,6 +64,10 @@ void fileManagerProofTwo(){
     free(changeReaded);
 }
 
+/**@brief: la prueba consiste en la creacion de un archivo que se modifica en un offset, con el fin de verificar
+ * el funcionamiento del metodo de creacion, lectura y escritura. El archivo modificado es cargado en una variable,
+ * asi como su cambio, para imprimirlas en consola
+ */
 void fileManagerProofThree(){
     //Creacion
     std::string path = "FileManagerProofThree";
