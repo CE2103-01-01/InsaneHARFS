@@ -58,7 +58,7 @@ void fileManagerProofTwo(){
     std::cout<< "This is the second test"<<std::endl;
     for(int i = 0; i < sizeOfText; i++) std::cout << *static_cast<char*>(completeTextReaded+i);
     std::cout << std::endl;
-    for(int i = 0; i <  sizeOfChange; i++) printf(static_cast<char*>(changeReaded+i));
+    for(int i = 0; i <  sizeOfChange; i++) std::cout << *static_cast<char*>(changeReaded+i);
     std::cout << std::endl;
     free(completeTextReaded);
     free(changeReaded);
@@ -88,7 +88,7 @@ void fileManagerProofThree(){
     std::cout<< "This is the third test"<<std::endl;
     for(int i = 0; i < sizeOfText; i++) std::cout << *static_cast<char*>(completeTextReaded+i);
     std::cout << std::endl;
-    for(int i = 0; i <  sizeOfChange; i++) printf(static_cast<char*>(changeReaded+i));
+    for(int i = 0; i <  sizeOfChange; i++) std::cout << *static_cast<char*>(changeReaded+i);
     std::cout << std::endl;
     free(completeTextReaded);
     free(changeReaded);
