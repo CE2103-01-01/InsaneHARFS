@@ -9,7 +9,7 @@ set(SOURCE_FILES main.cpp
                  sourceCode/dataStructures/proof.cpp
                  sourceCode/dataStructuresOnHD/List.cpp
                  sourceCode/models/Pointer.cpp
-                 sourceCode/models/RegisterManager.cpp )
+                 sourceCode/models/BlockManager.cpp )
 
 configure_file( res/config.cfg res/config.cfg COPYONLY)
 

@@ -10,7 +10,7 @@
 List::List(std::string pathParam){
     path = pathParam;
     std::fstream file(path.c_str(),std::ios::binary);
-    for(int i = 0; i<HEADER_LENGHT; i++){
+    for(int i = 0; i < LIST_HEADER_LENGHT; i++){
         file.write(0,1);
     }
     file.close();

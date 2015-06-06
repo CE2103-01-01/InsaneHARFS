@@ -10,11 +10,12 @@
 #include "../models/Pointer.h"
 
 #define NODE_LENGHT 16
-#define HEADER_LENGHT 16
+#define LIST_HEADER_LENGHT 16
 
 // HEADER:  |  FIRST EMPTY 8 BYTES  |     TAIL 8 BYTES     |    = 16 BYTES
 // NODES:   |  DATA OFFSET 8 BYTES  |  NEXT EMPTY 8 BYTES  |    = 16 BYTES
 // El data offset es un numero que indica la posicion en otro archivo. Se debera coordinar mediante manager.
+
 class List {
     long firstEmpty;
     long tail;
