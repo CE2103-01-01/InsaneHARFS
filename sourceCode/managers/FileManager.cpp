@@ -11,18 +11,11 @@
  * @param: int dSize: tamaño del dato
  */
 void FileManager::writeFile(const char* data, std::string path, int offset, int dataSize) {
-    std::fstream outFile;
-    outFile.open(PathConstants::PROJECT_PATH + path);
-    if(outFile.width()==0) {
-
-            outFile<<data;
-
-    }
-    else{
-        std::cout<<"hola"<<std::endl;
-        outFile.seekp(dataSize);
-        outFile<<data;
-    }
+        std::ofstream outFile(PathConstants::PROJECT_PATH + path, std::ios::binary);
+       for(int i = 0; i < dataSize; i++) {
+           outFile.seekp(offset + i);
+           outFile << *(data + i);
+       }
     outFile.close();
 }
 
