@@ -61,7 +61,7 @@ void* BlockManager::searchBlock(int id){
  */
 void BlockManager::deleteBlock(int id){
     //Escribe el primer vacio como siguiente vacio y actualiza primer vacio
-    FileManager::writeFile(static_cast<void*>(firstEmptyBlock), path,
+    FileManager::writeFile(static_cast<void*>(&firstEmptyBlock), path,
                            id*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT + NEXT_LENGHT, NEXT_EMPTY_LENGHT);
     firstEmptyBlock = id;
     //Se lee el siguiente

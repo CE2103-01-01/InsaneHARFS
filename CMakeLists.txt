@@ -10,6 +10,7 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             libs/practicalsocket/PracticalSocket.cpp
             sourceCode/disk/proofs/FileManagerProof.cpp
             sourceCode/disk/managers/FileManager.cpp
+            sourceCode/disk/managers/BlockManager.cpp
             sourceCode/disk/pathConstants.cpp
 )
 
