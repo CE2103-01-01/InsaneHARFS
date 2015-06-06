@@ -4,11 +4,9 @@
  * insert this --config res/config.cfg
  */
 int main(int argc, char* argv[]) {
-    std::string path = "proof.bin";
+    std::string path = "proof";
     char* text = "proof";
     FileManager::writeFile(text,path,0,5);
-    FileManager::writeFile("ab",path,1,2);
-
-
+    FileManager::writeFile("a",path,2,1);
     return 0;
 }

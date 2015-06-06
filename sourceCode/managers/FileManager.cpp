@@ -11,11 +11,11 @@
  * @param: int dSize: tamaño del dato
  */
 void FileManager::writeFile(const char* data, std::string path, int offset, int dataSize) {
-        std::ofstream outFile(PathConstants::PROJECT_PATH + path, std::ios::binary);
-       for(int i = 0; i < dataSize; i++) {
+    std::fstream outFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::out | std::ios::in | std::ios::ate);
+    for(int i = 0; i < dataSize; i++) {
            outFile.seekp(offset + i);
            outFile << *(data + i);
-       }
+    }
     outFile.close();
 }
 
@@ -26,7 +26,7 @@ void FileManager::writeFile(const char* data, std::string path, int offset, int 
  * @param: int retSize: tamaño del dato
  */
 void FileManager::readFile(char* ret, std::string path, int offset, int dataSize) {//T(11+6i)
-    std::ifstream inFile(path, std::ios::binary);
+    std::ifstream inFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::binary);
     inFile.read(ret,dataSize);
     inFile.close();
 }
@@ -36,5 +36,5 @@ void FileManager::readFile(char* ret, std::string path, int offset, int dataSize
  * @param: int id: numero de archivo
  */
 void FileManager::deleteFile(std::string path){
-    remove(path.c_str());
+    remove((PathConstants::PROJECT_PATH+path+PathConstants::EXT).c_str());
 }
