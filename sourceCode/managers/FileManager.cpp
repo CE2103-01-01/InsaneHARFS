@@ -36,6 +36,7 @@ void FileManager::writeFile(void* data, std::string path, int offset, int dataSi
  */
 void FileManager::readFile(void* ret, std::string path, int offset, int dataSize) {//T(11+6i)
     std::ifstream inFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::binary);
+    inFile.seekg(offset);
     inFile.read(static_cast<char*>(ret),dataSize);
     inFile.close();
 }
