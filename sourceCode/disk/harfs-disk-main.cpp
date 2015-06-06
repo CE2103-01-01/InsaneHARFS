@@ -29,8 +29,7 @@ int main(int argc, char* argv[]) {
     if (argc!=3||strcmp(argv[1], CONFIG)) {
         printf(USAGE_MSG);
         abort();
-    }
-    else Configuration::initializeAndGetInstance(argv[2]);
+    } else Configuration::initializeAndGetInstance(argv[2]);
 
     /** PRUEBAS **/
     BlockManager* manager = static_cast<BlockManager*>(malloc(sizeof(BlockManager(PROJECT_PATH+"disk"+EXT,50))));
