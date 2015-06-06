@@ -12,9 +12,9 @@
 
 class FileManager{
 public:
-    static void createFile(const char* data, std::string path, int dataSize);
-    static void writeFile(const char*, std::string, int, int);
-    static void readFile(char*, std::string, int, int);
+    static void createFile(void* data, std::string path, int dataSize);
+    static void writeFile(void*, std::string, int, int);
+    static void readFile(void*, std::string, int, int);
     static void deleteFile(std::string);
 };
 
