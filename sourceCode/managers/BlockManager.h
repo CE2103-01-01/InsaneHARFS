@@ -6,6 +6,7 @@
 #define HARFS_DISK_REGISTERMANAGER_H
 
 #include <fstream>
+#include "../managers/FileManager.h"
 
 // HEADER:      |    PrimerVacio  4 Bytes   |        Usados 4 Bytes         |   Blouqes totales 4 Bytes  | =  12 Bytes
 
@@ -27,14 +28,14 @@
 
 class BlockManager {
     std::string path;
-    long firstEmptyBlock;
-    long usedBlocks;
-    long numberOfBlocks;
+    int firstEmptyBlock;
+    int usedBlocks;
+    int numberOfBlocks;
     public:
-        BlockManager(std::string, long);
+        BlockManager(std::string, int);
         long addBlock(char*, long);
-        void* searchBlock(long);
-        void deleteBlock(long);
+        void* searchBlock(int);
+        void deleteBlock(int);
 };
 
 #endif //HARFS_DISK_REGISTERMANAGER_H
