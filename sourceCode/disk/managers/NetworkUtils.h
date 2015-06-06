@@ -5,7 +5,8 @@
 #ifndef HARFS_DISK_NETWORKUTILS_H
 #define HARFS_DISK_NETWORKUTILS_H
 
-#include "../../libs/practicalsocket/PracticalSocket.h"  // For Socket and SocketException
+#include "../../../libs/practicalsocket/PracticalSocket.h"  // For Socket and SocketException
+#include "../config/diskConfiguration.h"
 #include <iostream>           // For cerr and cout
 #include <cstdlib>            // For atoi()
 

@@ -4,13 +4,13 @@ project(harfs-disk)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
-set(HARFS_DISK_FILES sourceCode/mains/harfs-disk-main.cpp
-            sourceCode/config/diskConfiguration.cpp
-            sourceCode/managers/NetworkUtils.cpp
+set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
+            sourceCode/disk/config/diskConfiguration.cpp
+            sourceCode/disk/managers/NetworkUtils.cpp
             libs/practicalsocket/PracticalSocket.cpp
-            sourceCode/proofs/FileManagerProof.cpp
-            sourceCode/managers/FileManager.cpp
-            sourceCode/pathConstants.cpp
+            sourceCode/disk/proofs/FileManagerProof.cpp
+            sourceCode/disk/managers/FileManager.cpp
+            sourceCode/disk/pathConstants.cpp
 )
 
 
@@ -26,8 +26,8 @@ project(harfs-controller)
 set(HARFS_CONTROLLER_FILES
 )
 
-add_executable(harfs-controller ${HARFS_CONTROLLER_FILES} sourceCode/mains/harfs-controller-main.cpp
-                                                            sourceCode/config/controllerConfiguration.cpp)
+add_executable(harfs-controller ${HARFS_CONTROLLER_FILES} sourceCode/controller/harfs-controller-main.cpp
+                                                            sourceCode/controller/config/controllerConfiguration.cpp)
 
 
 #RESOURCES

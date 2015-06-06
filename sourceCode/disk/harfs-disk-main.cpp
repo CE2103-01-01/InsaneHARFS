@@ -1,22 +1,19 @@
-//
-// Created by pablo on 06/06/15.
-//
-
 #include <iostream>
 #include <signal.h>
 #include <string.h>
-#include "../config/controllerConfiguration.h"
+#include "config/diskConfiguration.h"
 
 using namespace std;
 
 
 void signal_callback_handler(int signum);
+#include "proofs/FileManagerProof.h"
 /**
  * Prints intructions of use
  */
 void printUsage()
 {
-    cerr<<"Usage : harfs-controller --config res/controller_config.cfg"<<endl;
+    cerr<<"Usage : harfs-disk --config res/disk_config.cfg"<<endl;
 
 }
 /**
@@ -39,6 +36,11 @@ int main(int argc, char* argv[]) {
 
 
 
+    fileManagerProofOne();
+    fileManagerProofTwo();
+    fileManagerProofThree();
+    
+    
     delete Configuration::getInstance();// Garbage Collection!
     return 0;
 }
