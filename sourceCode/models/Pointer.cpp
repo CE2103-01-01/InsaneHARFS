@@ -135,7 +135,7 @@ bool Pointer::operator >(Pointer  other){
  * @return void*
  */
 void* Pointer::operator *(){
-    return data;
+    return data;        //Todo: modificar
 }
 
 /**@brief operador de resta
