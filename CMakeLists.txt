@@ -15,6 +15,6 @@ set(SOURCE_FILES main.cpp
 configure_file( res/config.cfg res/config.cfg COPYONLY)
 
 
-add_executable(harfs-disk ${SOURCE_FILES})
+add_executable(harfs-disk ${SOURCE_FILES} sourceCode/proofs/FileManagerProof.h sourceCode/proofs/FileManagerProof.cpp)
 
 target_link_libraries (harfs-disk ${CMAKE_THREAD_LIBS_INIT})
