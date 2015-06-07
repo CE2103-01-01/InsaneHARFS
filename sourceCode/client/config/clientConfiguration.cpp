@@ -1,5 +1,6 @@
-
-#include "controllerConfiguration.h"
+#include <fstream>
+#include <iostream>
+#include "clientConfiguration.h"
 
 Configuration *Configuration::ConfigurationSingleton = nullptr;
 
@@ -30,7 +31,7 @@ Configuration::Configuration(string cfgPath) {
         sharedSecret[i] = sharedSecretStr[i];
     }
     port = document.FindMember("port")->value.GetUint();
-    //TODO: DiskNodes config get
+
 
 }
 
@@ -55,10 +56,10 @@ const char *Configuration::getSharedSecret() const {
     return sharedSecret;
 }
 
+
 unsigned short Configuration::getPort() const {
     return port;
 }
-
 
 
 Configuration::~Configuration() {

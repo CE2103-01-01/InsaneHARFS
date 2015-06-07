@@ -6,19 +6,19 @@
 #define HARFS_DISK_NETWORKUTILS_H
 
 #include "../../../libs/practicalsocket/PracticalSocket.h"  // For Socket and SocketException
-#include "../config/diskConfiguration.h"
+#include "../config/controllerConfiguration.h"
 #include <iostream>           // For cerr and cout
 #include <cstdlib>            // For atoi()
 
 #define  RCVBUFSIZE 32    // Size of receive buffer
 
-class NetworkUtils {
+class TCPServer {
 private:
     void HandleTCPClient(TCPSocket *sock);
     int off;
 public:
-    NetworkUtils();
-    ~NetworkUtils();
+    TCPServer();
+    ~TCPServer();
 };
 
 
