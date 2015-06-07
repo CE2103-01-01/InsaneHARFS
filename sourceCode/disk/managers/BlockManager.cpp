@@ -19,7 +19,7 @@ BlockManager::BlockManager(std::string pathParam, int numberOfBlocksParam){
                            USED_POSITION*BLOCK_MANAGER_COMPONENT_LENGHT, BLOCK_MANAGER_COMPONENT_LENGHT);
     FileManager::writeFile(std::addressof(numberOfBlocks), path,
                            MAX_BLOCKS_POSITION*BLOCK_MANAGER_COMPONENT_LENGHT, BLOCK_MANAGER_COMPONENT_LENGHT);
-
+    /** IMPRESIONES **/
     int* a = static_cast<int*>(malloc(sizeof(int)));
     FileManager::readFile(a, path, FIRST_EMPTY_POSITION*BLOCK_MANAGER_COMPONENT_LENGHT, BLOCK_MANAGER_COMPONENT_LENGHT);
     std::cout << "PRIMER BLOQUE VACIO: " << *a << std::endl;
@@ -27,7 +27,7 @@ BlockManager::BlockManager(std::string pathParam, int numberOfBlocksParam){
     std::cout << "BLOQUES USADOS: " << *a << std::endl;
     FileManager::readFile(a, path, MAX_BLOCKS_POSITION*BLOCK_MANAGER_COMPONENT_LENGHT, BLOCK_MANAGER_COMPONENT_LENGHT);
     std::cout << "TOTAL DE BLOQUES: " << *a << std::endl;
-
+    /** IMPRESIONES **/
 
     int flag=-1;
     int tmp;
@@ -37,13 +37,14 @@ BlockManager::BlockManager(std::string pathParam, int numberOfBlocksParam){
         FileManager::writeFile(std::addressof(tmp), path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT+NEXT_LENGHT,
                                NEXT_EMPTY_LENGHT);
         FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT, NEXT_LENGHT);
-
+        /** IMPRESIONES **/
         FileManager::readFile(a, path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT+NEXT_LENGHT, NEXT_EMPTY_LENGHT);
         std::cout << " BLOQUE " << i << ": SIGUIENTE BLOQUE VACIO: " << *a << NULL_CHR;
         FileManager::readFile(a, path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT, NEXT_LENGHT);
         std::cout << "SIGUIENTE BLOQUE: " << *a << NULL_CHR << std::endl;
+        /** IMPRESIONES **/
     }
-    free(a);
+    free(a); //TODO: recordar que se deben eliminiar las impresiones mas adelante
 }
 
 /**@brief agrega un nuevo registro
