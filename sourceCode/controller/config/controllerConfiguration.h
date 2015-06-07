@@ -17,20 +17,15 @@ private:
 
     Configuration(string cfgPath);
     char sharedSecret[SHARED_SECRET_LENGTH];
-    size_t diskSize;
-    short port;
-    string path;
+    unsigned short port;
+
 public:
     ~Configuration();
     static Configuration *getInstance();
     static Configuration *initializeAndGetInstance(string cfgPath);
     const char *getSharedSecret() const;
-
-    size_t getDiskSize() const ;
-
     unsigned short getPort() const ;
 
-    string getPath() const ;
 };
 
 

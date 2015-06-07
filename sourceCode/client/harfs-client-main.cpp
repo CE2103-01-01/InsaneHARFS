@@ -4,41 +4,32 @@
 
 #include <iostream>
 #include <signal.h>
-#include <string.h>
 #include <thread>
-#include "config/controllerConfiguration.h"
-#include "network/TCPServer.h"
+#include "config/clientConfiguration.h"
+#include "network/TCPClient.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
-#define USAGE_MSG "Usage : harfs-disk --config res/controller_config.cfg \n"
+#define USAGE_MSG "Usage : harfs-disk --config res/client_config.cfg \n"
 #define CONFIG "--config"
 
-
-
-
 using namespace std;
-
-
-TCPServer *server;
-
-void initServer()
+TCPClient *client;
+void initClient()
 {
-    server = new TCPServer();
+    client = new TCPClient();
 }
-
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
     // Cleanup and close up stuff here
-    free(Configuration::getInstance());
-    delete server;
+
     // Terminate program
     exit(signum);
 }
 
 /**
  * Usage: goto edit configurations and then program arguments:
- * insert this --config res/controller_config.cfg
+ * insert this --config res/disk_config.cfg
  */
 int main(int argc, char* argv[]) {
     // Register signal and signal handler
@@ -51,15 +42,17 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
 
     //Thread for server
-    thread serverThread (initServer);
+    thread serverThread (initClient);
 
 
     serverThread.join();
 
     // Garbage Collection!
     free(Configuration::getInstance());
-    delete server;
+    delete client;
 
     return 0;
 
 }
+
+

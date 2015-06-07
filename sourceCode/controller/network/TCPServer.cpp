@@ -2,10 +2,10 @@
 // Created by pablo on 05/06/15.
 //
 
-#include "NetworkUtils.h"
+#include "TCPServer.h"
 
 
-NetworkUtils::NetworkUtils() {
+TCPServer::TCPServer() {
     off = false;
     try {
         TCPServerSocket servSock(Configuration::getInstance()->getPort());     // Server Socket object
@@ -19,11 +19,11 @@ NetworkUtils::NetworkUtils() {
     }
 }
 
-NetworkUtils::~NetworkUtils() {
+TCPServer::~TCPServer() {
     off = true;
 }
 
-void NetworkUtils::HandleTCPClient(TCPSocket *sock) {
+void TCPServer::HandleTCPClient(TCPSocket *sock) {
     cout << "Handling client ";
         try {
             cout << sock->getForeignAddress() << ":";
