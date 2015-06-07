@@ -1,0 +1,16 @@
+insert
+{"op":"insert", ""data":<bytes> , "part":<parte>, "totalParts":<total>}
+buscar
+{"op":"search", "key":<bytes>}
+getData
+{"op":"getData","data":<bytes> , "part":<parte>, "totalParts":<total>}
+modificar
+{"op":"edit","key":<bytes>,"data":<bytes> , "part":<parte>, "totalParts":<total>}
+modificar
+{"op":"edit","key":<bytes>,"columna":<int>,"data":<bytes>,"tamano":<int>}
+
+definirEsquema
+{"op":"define", "columnas": [
+                            {"size":int},
+                              ....
+]}
