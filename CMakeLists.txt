@@ -12,9 +12,13 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/proofs/FileManagerProof.cpp
             sourceCode/disk/managers/FileManager.cpp
             sourceCode/disk/managers/BlockManager.cpp
-            sourceCode/disk/pathConstants.cpp)
+            sourceCode/disk/pathConstants.cpp
+            sourceCode/disk/proofs/BlockManagerProof.cpp
+            sourceCode/disk/managers/RegisterManager.cpp
+            sourceCode/disk/models/Pointer.cpp
+            sourceCode/disk/dataStructuresOnHD/List.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/proofs/BlockManagerProof.h sourceCode/disk/proofs/BlockManagerProof.cpp)
+add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/Exceptions.h)
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 

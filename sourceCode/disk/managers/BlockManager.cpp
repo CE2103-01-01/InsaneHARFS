@@ -8,22 +8,27 @@
  * @param long offset: numero de registro (posicion)
  */
 BlockManager::BlockManager(std::string pathParam, int numberOfBlocksParam){
-    numberOfBlocks = numberOfBlocksParam;
-    firstEmptyBlock = 0;
-    usedBlocks = 0;
-    path = pathParam;
-    FileManager::createFile(path, BLOCK_MANAGER_HEADER_LENGHT + numberOfBlocksParam*BLOCK_LENGHT);
-    //Escribe el header
-    updateHeader();
-    //Llena los bloques
-    int flag=-1;
-    int tmp;
-    for(int i = 0; i < numberOfBlocks ; i++){
-        if(i<numberOfBlocksParam-1) tmp = i+1;
-        else tmp = flag;
-        FileManager::writeFile(std::addressof(tmp), path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT+NEXT_LENGHT,
-                               NEXT_EMPTY_LENGHT);
-        FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT, NEXT_LENGHT);
+    if(pathParam.length() && numberOfBlocksParam){
+        numberOfBlocks = numberOfBlocksParam;
+        firstEmptyBlock = 0;
+        usedBlocks = 0;
+        path = pathParam;
+        FileManager::createFile(path, BLOCK_MANAGER_HEADER_LENGHT + numberOfBlocksParam*BLOCK_LENGHT);
+        //Escribe el header
+        updateHeader();
+        //Llena los bloques
+        int flag=-1;
+        int tmp;
+        for(int i = 0; i < numberOfBlocks ; i++){
+            if(i<numberOfBlocksParam-1) tmp = i+1;
+            else tmp = flag;
+            FileManager::writeFile(std::addressof(tmp), path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT+NEXT_LENGHT,
+                                   NEXT_EMPTY_LENGHT);
+            FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+i*BLOCK_LENGHT, NEXT_LENGHT);
+        }
+    }else{
+        printf(NULL_PARAMETER);
+        throw NULL_PARAMETER_CODE;
     }
 }
 
@@ -43,36 +48,46 @@ void BlockManager::updateHeader() {
  * @param long size: tamano
  */
 long BlockManager::addBlock(void* data, long dataSize){
-    //toma el id
-    int id = firstEmptyBlock;
-    int flag = -1;
-    //toma el id
-    int tmp;
-    for(int i = 0; i < dataSize/DATA_LENGHT; i++){
-        //toma el id
-        tmp = firstEmptyBlock;
-        //Escribe el dato, suma porque:  | siguiente | siguiente vacio | dato
-        FileManager::writeFile(static_cast<char*>(data+i*DATA_LENGHT), path, BLOCK_MANAGER_HEADER_LENGHT+ firstEmptyBlock*BLOCK_LENGHT
-                                                                             +NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
-        //Toma el nuevo primer ultimo, suma porque:  | siguiente | siguiente vacio | dato
-        FileManager::readFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+firstEmptyBlock*BLOCK_LENGHT+NEXT_LENGHT,
-                              NEXT_EMPTY_LENGHT);
-        //Escribe el siguiente vacio en -1, suma porque:  | siguiente | siguiente vacio | dato
-        FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT+NEXT_LENGHT,
-                               NEXT_EMPTY_LENGHT);
-        usedBlocks++;
-        if(i < dataSize/DATA_LENGHT-1) {
-            //Si no es la ultima iteracion agrega siguiente, suma porque:  | siguiente | siguiente vacio | dato
-            FileManager::writeFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT,
-                                   NEXT_LENGHT);
+    if(data){
+        if(firstEmptyBlock>-1 || dataSize <= (numberOfBlocks-usedBlocks)*DATA_LENGHT){
+            //toma el id
+            int id = firstEmptyBlock;
+            int flag = -1;
+            //toma el id
+            int tmp;
+            for(int i = 0; i < dataSize/DATA_LENGHT; i++){
+                //toma el id
+                tmp = firstEmptyBlock;
+                //Escribe el dato, suma porque:  | siguiente | siguiente vacio | dato
+                FileManager::writeFile(static_cast<char*>(data+i*DATA_LENGHT), path, BLOCK_MANAGER_HEADER_LENGHT+ firstEmptyBlock*BLOCK_LENGHT
+                                                                                     +NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
+                //Toma el nuevo primer ultimo, suma porque:  | siguiente | siguiente vacio | dato
+                FileManager::readFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+firstEmptyBlock*BLOCK_LENGHT+NEXT_LENGHT,
+                                      NEXT_EMPTY_LENGHT);
+                //Escribe el siguiente vacio en -1, suma porque:  | siguiente | siguiente vacio | dato
+                FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT+NEXT_LENGHT,
+                                       NEXT_EMPTY_LENGHT);
+                usedBlocks++;
+                if(i < dataSize/DATA_LENGHT-1) {
+                    //Si no es la ultima iteracion agrega siguiente, suma porque:  | siguiente | siguiente vacio | dato
+                    FileManager::writeFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT,
+                                           NEXT_LENGHT);
+                }else{
+                    //Escribe el siguiente -1, suma porque:  | siguiente | siguiente vacio | dato
+                    FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT,
+                                           NEXT_LENGHT);
+                }
+            }
+            updateHeader();
+            return id;
         }else{
-            //Escribe el siguiente -1, suma porque:  | siguiente | siguiente vacio | dato
-            FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT,
-                                   NEXT_LENGHT);
+            printf(NOT_ENOUGH_SPACE);
+            throw NOT_ENOUGH_SPACE_CODE;
         }
+    }else{
+        printf(NULL_PARAMETER);
+        throw NULL_PARAMETER_CODE;
     }
-    updateHeader();
-    return id;
 }
 
 /**@brief busca un registro
@@ -80,35 +95,50 @@ long BlockManager::addBlock(void* data, long dataSize){
  * @return void*: dato del registro junto con los anexos
  */
 void* BlockManager::searchBlock(void* toRet, int offset, int counter){
-    FileManager::readFile(toRet+counter*DATA_LENGHT, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
-    counter++;
-    int* next = static_cast<int*>(malloc(sizeof(int)));
-    FileManager::readFile(next, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT, NEXT_LENGHT);
-    if(*next!=-1)searchBlock(toRet,*next,counter);
-    free(next);
-    return toRet;
+    if(toRet){
+        if(offset < numberOfBlocks){
+            FileManager::readFile(toRet+counter*DATA_LENGHT, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
+            counter++;
+            int* next = static_cast<int*>(malloc(sizeof(int)));
+            FileManager::readFile(next, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT, NEXT_LENGHT);
+            if(*next!=-1)searchBlock(toRet,*next,counter);
+            free(next);
+            return toRet;
+        }else {
+            printf(OFFSET_OUT_OF_BOUND);
+            throw OFFSET_OUT_OF_BOUND_CODE;
+        }
+    }else{
+        printf(NULL_PARAMETER);
+        throw NULL_PARAMETER_CODE;
+    }
 }
 
 /**@brief elimina un registro y los registros anexos al mismo
  * @param long offset: numero de registro (posicion)
  */
 void BlockManager::deleteBlock(int offset){
-    //Escribe el primer vacio como siguiente vacio y actualiza primer vacio
-    FileManager::writeFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT,
-                           NEXT_EMPTY_LENGHT);
-    firstEmptyBlock = offset;
-    //Se lee el siguiente
-    int* next = static_cast<int*>(malloc(DATA_LENGHT));
-    FileManager::readFile(next, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT, NEXT_LENGHT);
-    //si el siguiente no es -1 lo borra, ya que -1 indica que es el ultimo bloque de la cadena
-    if(*next!=-1) {
-        deleteBlock(*next);
-        *next = -1;
-        FileManager::writeFile(next, path, offset*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT, NEXT_LENGHT);
+    if(offset < numberOfBlocks){
+        //Escribe el primer vacio como siguiente vacio y actualiza primer vacio
+        FileManager::writeFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT,
+                               NEXT_EMPTY_LENGHT);
+        firstEmptyBlock = offset;
+        //Se lee el siguiente
+        int* next = static_cast<int*>(malloc(DATA_LENGHT));
+        FileManager::readFile(next, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT, NEXT_LENGHT);
+        //si el siguiente no es -1 lo borra, ya que -1 indica que es el ultimo bloque de la cadena
+        if(*next!=-1) {
+            deleteBlock(*next);
+            *next = -1;
+            FileManager::writeFile(next, path, offset*BLOCK_LENGHT + BLOCK_MANAGER_HEADER_LENGHT, NEXT_LENGHT);
+        }
+        usedBlocks--;
+        updateHeader();
+        free(next);
+    }else {
+        printf(OFFSET_OUT_OF_BOUND);
+        throw OFFSET_OUT_OF_BOUND_CODE;
     }
-    usedBlocks--;
-    updateHeader();
-    free(next);
 }
 
 /**@brief imprime los bloques

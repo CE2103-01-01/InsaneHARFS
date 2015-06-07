@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include "../managers/FileManager.h"
+#include "../Exceptions.h"
 
 // HEADER:      |    PrimerVacio  4 Bytes   |        Usados 4 Bytes         |   Bloques totales 4 Bytes  | =  12 Bytes
 

@@ -30,7 +30,11 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
 
     /** PRUEBAS **/
-    blockManagerProof();
+    try{
+        blockManagerProof();
+    }catch(int exception){
+        return exception;
+    }
     /** ~PRUEBAS **/
 
     free(Configuration::getInstance());// Garbage Collection!

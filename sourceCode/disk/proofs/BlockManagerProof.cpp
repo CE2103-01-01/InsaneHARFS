@@ -11,7 +11,7 @@ void blockManagerProof(){
     std::cout << "SE HAN CREADO " << blocks << " BLOQUES"<<std::endl;
     manager->print();
 
-    for(long i = 0; i < blocks*10000000000000000/2; i+=10000000000000000) {
+    for(long i = 0; i < (blocks)*10000000000000000/2; i+=10000000000000000) {
         std::cout << "SE AGREGARA DATO " << i << std::endl;
         manager->addBlock(std::addressof(i),sizeof(i));
         manager->print();

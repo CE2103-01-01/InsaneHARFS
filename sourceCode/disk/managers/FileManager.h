@@ -9,6 +9,7 @@
 #include <iostream>
 #include <sys/stat.h>
 #include "../pathConstants.h"
+#include "../Exceptions.h"
 
 #define NULL_CHR " "
 #define NULL_CHR_SIZE 1
