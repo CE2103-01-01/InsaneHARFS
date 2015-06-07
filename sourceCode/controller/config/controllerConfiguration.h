@@ -17,7 +17,7 @@ private:
 
     Configuration(string cfgPath);
     char sharedSecret[SHARED_SECRET_LENGTH];
-    short port;
+    unsigned short port;
 
 public:
     ~Configuration();

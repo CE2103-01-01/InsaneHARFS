@@ -16,7 +16,7 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
 
 add_executable(harfs-disk ${HARFS_DISK_FILES})
 
-target_link_libraries (harfs-disk ${CMAKE_THREAD_LIBS_INIT})
+set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
 
 
@@ -26,10 +26,12 @@ project(harfs-controller)
 set(HARFS_CONTROLLER_FILES  sourceCode/controller/harfs-controller-main.cpp
                             libs/practicalsocket/PracticalSocket.cpp
                             sourceCode/controller/config/controllerConfiguration.cpp
-                            sourceCode/controller/Network/TCPServer.cpp)
+                            sourceCode/controller/network/TCPServer.cpp)
 
 add_executable(harfs-controller ${HARFS_CONTROLLER_FILES} )
 set_target_properties(harfs-controller PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
+
+
 
 #HARFS CLIENT
 project(harfs-client)
@@ -39,9 +41,10 @@ set(HARFS_CLIENT_FILES  sourceCode/client/harfs-client-main.cpp
                         sourceCode/client/config/clientConfiguration.cpp
                         )
 
-add_executable(harfs-client ${HARFS_CLIENT_FILES} )
-target_link_libraries (harfs-client ${CMAKE_THREAD_LIBS_INIT})
+add_executable(harfs-client ${HARFS_CLIENT_FILES} sourceCode/client/network/TCPClient.cpp sourceCode/client/network/TCPClient.h)
+set_target_properties(harfs-client PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 #RESOURCES
 
 configure_file( res/disk_config.cfg res/disk_config.cfg COPYONLY)
 configure_file( res/controller_config.cfg res/controller_config.cfg COPYONLY)
+configure_file( res/client_config.cfg res/client_config.cfg COPYONLY)

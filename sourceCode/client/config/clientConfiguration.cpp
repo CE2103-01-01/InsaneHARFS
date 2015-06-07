@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include "clientConfiguration.h"
 
 Configuration *Configuration::ConfigurationSingleton = nullptr;
@@ -32,6 +33,13 @@ Configuration::Configuration(string cfgPath) {
     }
     port = document.FindMember("port")->value.GetUint();
 
+    string ipPort = document.FindMember("controller")->value.GetString();
+
+    stringstream ss(ipPort);
+    getline(ss, controllerip, ':');
+    string controllerPortStr;
+    getline(ss, controllerPortStr, ':');
+    controllerPort = atoi(controllerPortStr.c_str());
 
 }
 
@@ -61,6 +69,14 @@ unsigned short Configuration::getPort() const {
     return port;
 }
 
+
+string Configuration::getControllerIP() const {
+    return controllerip;
+}
+
+unsigned short Configuration::getControllerPort() const {
+    return controllerPort;
+}
 
 Configuration::~Configuration() {
 }

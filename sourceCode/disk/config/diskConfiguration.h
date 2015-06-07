@@ -17,7 +17,7 @@ private:
     Configuration(string cfgPath);
     char sharedSecret[SHARED_SECRET_LENGTH];
     size_t diskSize;
-    short port;
+    unsigned  short port;
     string path;
 public:
     ~Configuration();

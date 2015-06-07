@@ -7,7 +7,7 @@
 #include <string.h>
 #include <thread>
 #include "config/controllerConfiguration.h"
-#include "Network/TCPServer.h"
+#include "network/TCPServer.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/controller_config.cfg \n"
@@ -21,10 +21,11 @@ using namespace std;
 
 TCPServer *server;
 
-void initServer(TCPServer* server)
+void initServer()
 {
     server = new TCPServer();
 }
+
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
@@ -50,7 +51,7 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
 
     //Thread for server
-    thread serverThread (initServer,server);
+    thread serverThread (initServer);
 
 
     serverThread.join();

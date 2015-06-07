@@ -17,7 +17,9 @@ private:
 
     Configuration(string cfgPath);
     char sharedSecret[SHARED_SECRET_LENGTH];
-    short port;
+    unsigned short port;
+    string controllerip;
+    short controllerPort;
 
 public:
     ~Configuration();
@@ -25,6 +27,8 @@ public:
     static Configuration *initializeAndGetInstance(string cfgPath);
     const char *getSharedSecret() const;
     unsigned short getPort() const ;
+    string getControllerIP() const ;
+    unsigned short getControllerPort() const ;
 
 };
 
