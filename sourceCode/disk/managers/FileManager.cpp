@@ -9,9 +9,9 @@
  * @param: void* data: dato a guardar
  * @param: int dSize: tamaño del dato
  */
-void FileManager::createFile(void* data, std::string path, int dataSize) {
-    std::fstream outFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::out);
-    outFile.write(static_cast<char*>(data),dataSize);
+void FileManager::createFile(std::string name, int dataSize) {
+    std::fstream outFile(PathConstants::PROJECT_PATH+name+PathConstants::EXT, std::ios::out);
+    for(int i = 0; i < dataSize; i++) outFile.write(NULL_CHR,NULL_CHR_SIZE);
     outFile.close();
 }
 
@@ -21,10 +21,10 @@ void FileManager::createFile(void* data, std::string path, int dataSize) {
  * @param: int id: numero de archivo
  * @param: int dSize: tamaño del dato
  */
-void FileManager::writeFile(void* data, std::string path, int offset, int dataSize) {
-    std::fstream outFile(PathConstants::PROJECT_PATH+path+PathConstants::EXT, std::ios::out | std::ios::in | std::ios::ate);
+void FileManager::writeFile(void* data, std::string name, int offset, int dataSize) {
+    std::fstream outFile(PathConstants::PROJECT_PATH+name+PathConstants::EXT, std::ios::out | std::ios::in | std::ios::ate);
     outFile.seekp(offset);
-    outFile.write(static_cast<char*>(data),dataSize);
+    for(int i = 0; i < dataSize; i++) outFile.write(static_cast<char*>(data+i),1);
     outFile.close();
 }
 

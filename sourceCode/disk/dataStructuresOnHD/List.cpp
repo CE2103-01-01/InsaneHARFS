@@ -17,10 +17,10 @@ List::List(std::string pathParam){
 }
 
 /**@brief busca un dato
- * @param Pointer: puntero a posicion en la lista, contiene el numero de nodo
+ * @param int: puntero a posicion en la lista, contiene el numero de nodo
  * @return Pointer: puntero a posicion del dato en otro archivo
  */
-Pointer List::search(Pointer toGet){
+Pointer List::search(int toGet){
 
 }
 

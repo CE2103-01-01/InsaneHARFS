@@ -6,19 +6,19 @@
 #define INSANEHARFS_POINTER_H
 
 class Pointer{
-    unsigned long id = 0;
+    unsigned int id = 0;
     void* data = 0;
     public:
-        Pointer(long);
+        Pointer(int);
         ~Pointer();
-        Pointer operator =(long);
+        Pointer operator =(int);
         Pointer operator =(const Pointer&);
-        bool operator ==(long);
-        bool operator !=(long);
-        bool operator <=(long);
-        bool operator >=(long);
-        bool operator <(long);
-        bool operator >(long);
+        bool operator ==(int);
+        bool operator !=(int);
+        bool operator <=(int);
+        bool operator >=(int);
+        bool operator <(int);
+        bool operator >(int);
         bool operator ==(Pointer);
         bool operator !=(Pointer);
         bool operator <=(Pointer);
@@ -33,14 +33,14 @@ class Pointer{
         Pointer operator +=(Pointer);
         Pointer operator /=(Pointer);
         Pointer operator *=(Pointer);
-        Pointer operator -(long);
-        Pointer operator +(long);
-        Pointer operator *(long);
-        Pointer operator /(long);
-        Pointer operator -=(long);
-        Pointer operator +=(long);
-        Pointer operator /=(long);
-        Pointer operator *=(long);
+        Pointer operator -(int);
+        Pointer operator +(int);
+        Pointer operator *(int);
+        Pointer operator /(int);
+        Pointer operator -=(int);
+        Pointer operator +=(int);
+        Pointer operator /=(int);
+        Pointer operator *=(int);
         void* operator *();
 };
 

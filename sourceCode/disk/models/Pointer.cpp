@@ -5,9 +5,9 @@
 #include "Pointer.h"
 
 /**@brief constructor
- * @param long id
+ * @param int id
  */
-Pointer::Pointer(long idParam){
+Pointer::Pointer(int idParam){
     id = idParam;
 }
 
@@ -19,9 +19,9 @@ Pointer::~Pointer(){
 }
 
 /**@brief operador de asignacion
- * @param long id
+ * @param int id
  */
-Pointer Pointer::operator =(long idParam){ 
+Pointer Pointer::operator =(int idParam){ 
     id = idParam; 
     return *this;
 }
@@ -36,50 +36,50 @@ Pointer Pointer::operator =(const Pointer& other){
 }
 
 /**@brief operador de igualdad
- * @param long id
+ * @param int id
  * @return bool
  */
-bool Pointer::operator ==(long idParam){ 
+bool Pointer::operator ==(int idParam){ 
     return id == idParam; 
 }
 
 /**@brief operador de diferencia
- * @param long id
+ * @param int id
  * @return bool
  */
-bool Pointer::operator !=(long idParam){ 
+bool Pointer::operator !=(int idParam){ 
     return id != idParam; 
 }
 
 /**@brief operador de menor igual
- * @param long id
+ * @param int id
  * @return bool
  */
-bool Pointer::operator <=(long  idParam){ 
+bool Pointer::operator <=(int  idParam){ 
     return id <= idParam; 
 }
 
 /**@brief operador de mayor igual
- * @param long id
+ * @param int id
  * @return bool
  */
-bool Pointer::operator >=(long  idParam){ 
+bool Pointer::operator >=(int  idParam){ 
     return id >= idParam; 
 }
 
 /**@brief operador de menor
- * @param long id
+ * @param int id
  * @return bool
  */
-bool Pointer::operator <(long  idParam){ 
+bool Pointer::operator <(int  idParam){ 
     return id < idParam; 
 }
 
 /**@brief operador de mayor
- * @param long id
+ * @param int id
  * @return bool
  */
-bool Pointer::operator >(long  idParam){ 
+bool Pointer::operator >(int  idParam){ 
     return id > idParam; 
 }
 
@@ -203,18 +203,18 @@ Pointer Pointer::operator *=(Pointer other){
 }
 
 /**@brief operador de resta
- * @param longother
+ * @param intother
  * @return Pointer
  */
-Pointer Pointer::operator -(long other){
+Pointer Pointer::operator -(int other){
     return id - other;
 }
 
 /**@brief operador de suma
- * @param long other
+ * @param int other
  * @return Pointer
  */
-Pointer Pointer::operator +(long other){
+Pointer Pointer::operator +(int other){
     return id + other;
 }
 
@@ -222,7 +222,7 @@ Pointer Pointer::operator +(long other){
  * @param Pointer other
  * @return Pointer
  */
-Pointer Pointer::operator *(long other){
+Pointer Pointer::operator *(int other){
     return id * other;
 }
 
@@ -230,7 +230,7 @@ Pointer Pointer::operator *(long other){
  * @param Pointer other
  * @return Pointer
  */
-Pointer Pointer::operator /(long other){
+Pointer Pointer::operator /(int other){
     return id / other;
 }
 
@@ -238,7 +238,7 @@ Pointer Pointer::operator /(long other){
  * @param Pointer other
  * @return Pointer
  */
-Pointer Pointer::operator -=(long other){
+Pointer Pointer::operator -=(int other){
     return id -= other;
 }
 
@@ -246,7 +246,7 @@ Pointer Pointer::operator -=(long other){
  * @param Pointer other
  * @return Pointer
  */
-Pointer Pointer::operator +=(long other){
+Pointer Pointer::operator +=(int other){
     return id += other;
 }
 
@@ -254,7 +254,7 @@ Pointer Pointer::operator +=(long other){
  * @param Pointer other
  * @return Pointer
  */
-Pointer Pointer::operator /=(long other){
+Pointer Pointer::operator /=(int other){
     return id /= other;
 }
 
@@ -262,6 +262,6 @@ Pointer Pointer::operator /=(long other){
  * @param Pointer other
  * @return Pointer
  */
-Pointer Pointer::operator *=(long other){
+Pointer Pointer::operator *=(int other){
     return id *= other;
 }

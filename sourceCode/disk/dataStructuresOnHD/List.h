@@ -7,7 +7,6 @@
 
 #include <string>
 #include <fstream>
-#include "../models/Pointer.h"
 
 #define NODE_LENGHT 16
 #define LIST_HEADER_LENGHT 16
@@ -17,14 +16,13 @@
 // El data offset es un numero que indica la posicion en otro archivo. Se debera coordinar mediante manager.
 
 class List {
-    long firstEmpty;
-    long tail;
+    int firstEmpty;
     std::string path;
     public:
         List(std::string);
-        Pointer search(Pointer);
-        void insertData(Pointer);
-        void deleteData(Pointer);
+        void* search(int);
+        void insertData(void*);
+        void deleteData(int);
 };
 
 

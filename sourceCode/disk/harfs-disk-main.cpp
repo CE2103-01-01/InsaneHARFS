@@ -1,8 +1,7 @@
 #include <signal.h>
 #include "config/diskConfiguration.h"
 #include "../disk/managers/BlockManager.h"
-
-using namespace PathConstants;
+#include "proofs/FileManagerProof.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/disk_config.cfg \n"
@@ -32,8 +31,8 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
 
     /** PRUEBAS **/
-    BlockManager* manager = static_cast<BlockManager*>(malloc(sizeof(BlockManager(PROJECT_PATH+"disk"+EXT,50))));
-    new(manager) BlockManager(PROJECT_PATH+"disk"+EXT,50);
+    BlockManager* manager = static_cast<BlockManager*>(malloc(sizeof(BlockManager)));
+    new(manager) BlockManager("disk",10);
     /** ~PRUEBAS **/
 
     free(Configuration::getInstance());// Garbage Collection!

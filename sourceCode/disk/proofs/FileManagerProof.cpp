@@ -13,7 +13,8 @@ void fileManagerProofOne(){
     std::string path = "FileManagerProofOne";
     char* text = "111111111";
     int sizeOfText = 9;
-    FileManager::createFile(text,path,sizeOfText);
+    FileManager::createFile(path, sizeOfText);
+    FileManager::writeFile(text,path,NULL,sizeOfText);
     //Modificacion
     char* change = "000";
     int sizeOfChange = 3;
@@ -43,7 +44,8 @@ void fileManagerProofTwo(){
     std::string path = "FileManagerProofTwo";
     char* text = "111111111";
     int sizeOfText = 9;
-    FileManager::createFile(text,path,sizeOfText);
+    FileManager::createFile(path, sizeOfText);
+    FileManager::writeFile(text,path,NULL,sizeOfText);
     //Modificacion
     char* change = "000";
     int sizeOfChange = 3;
@@ -73,7 +75,8 @@ void fileManagerProofThree(){
     std::string path = "FileManagerProofThree";
     char* text = "111111111";
     int sizeOfText = 9;
-    FileManager::createFile(text,path,sizeOfText);
+    FileManager::createFile(path, sizeOfText);
+    FileManager::writeFile(text,path,NULL,sizeOfText);
     //Modificacion
     char* change = "000";
     int sizeOfChange = 3;
