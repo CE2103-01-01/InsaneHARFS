@@ -61,7 +61,7 @@ long BlockManager::addBlock(void* data, long dataSize){
         FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT+NEXT_LENGHT,
                                NEXT_EMPTY_LENGHT);
         usedBlocks++;
-        if(i < dataSize/BLOCK_LENGHT) {
+        if(i < dataSize/DATA_LENGHT-1) {
             //Si no es la ultima iteracion agrega siguiente, suma porque:  | siguiente | siguiente vacio | dato
             FileManager::writeFile(std::addressof(firstEmptyBlock), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT,
                                    NEXT_LENGHT);
@@ -69,7 +69,7 @@ long BlockManager::addBlock(void* data, long dataSize){
             //Escribe el siguiente -1, suma porque:  | siguiente | siguiente vacio | dato
             FileManager::writeFile(std::addressof(flag), path, BLOCK_MANAGER_HEADER_LENGHT+tmp*BLOCK_LENGHT,
                                    NEXT_LENGHT);
-        };
+        }
     }
     updateHeader();
     return id;
@@ -79,9 +79,13 @@ long BlockManager::addBlock(void* data, long dataSize){
  * @param long offset: numero de registro (posicion)
  * @return void*: dato del registro junto con los anexos
  */
-void* BlockManager::searchBlock(int offset){
-    void* toRet = malloc(DATA_LENGHT);
-    FileManager::readFile(toRet, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
+void* BlockManager::searchBlock(void* toRet, int offset, int counter){
+    FileManager::readFile(toRet+counter*DATA_LENGHT, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
+    counter++;
+    int* next = static_cast<int*>(malloc(sizeof(int)));
+    FileManager::readFile(next, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT, NEXT_LENGHT);
+    if(*next!=-1)searchBlock(toRet,*next,counter);
+    free(next);
     return toRet;
 }
 

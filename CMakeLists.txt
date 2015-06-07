@@ -14,7 +14,7 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/managers/BlockManager.cpp
             sourceCode/disk/pathConstants.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES})
+add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/proofs/BlockManagerProof.h sourceCode/disk/proofs/BlockManagerProof.cpp)
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
