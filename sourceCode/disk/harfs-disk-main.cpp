@@ -31,8 +31,31 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
 
     /** PRUEBAS **/
+    int blocks = 10;
     BlockManager* manager = static_cast<BlockManager*>(malloc(sizeof(BlockManager)));
-    new(manager) BlockManager("disk",10);
+    new(manager) BlockManager("disk",blocks);
+    std::cout << "SE HAN CREADO " << blocks << " BLOQUES"<<std::endl;
+    manager->print();
+
+    for(int i = 0; i < blocks; i++) {
+        std::cout << "SE AGREGARA DATO " << i << std::endl;
+        manager->addBlock(std::addressof(i),sizeof(i));
+        manager->print();
+    }
+
+    printf("SE ELIMINARA BLOQUE 1\n");
+    manager->deleteBlock(1);
+    manager->print();
+    printf("SE ELIMINARA BLOQUE 3\n");
+    manager->deleteBlock(3);
+    manager->print();
+    printf("SE ELIMINARA BLOQUE 6\n");
+    manager->deleteBlock(6);
+    manager->print();
+    printf("SE AGREGARA DATO 10\n");
+    manager->addBlock(std::addressof(blocks),sizeof(blocks));
+    manager->print();
+    free(manager);
     /** ~PRUEBAS **/
 
     free(Configuration::getInstance());// Garbage Collection!

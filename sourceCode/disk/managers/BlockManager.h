@@ -31,11 +31,13 @@ class BlockManager {
     int firstEmptyBlock;
     int usedBlocks;
     int numberOfBlocks;
+    void updateHeader();
     public:
         BlockManager(std::string, int);
-        long addBlock(char*, long);
+        long addBlock(void*, long);
         void* searchBlock(int);
         void deleteBlock(int);
+        void print();
 };
 
 #endif //HARFS_DISK_REGISTERMANAGER_H
