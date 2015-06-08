@@ -41,9 +41,11 @@ void TCPServer::HandleTCPClient(TCPSocket *sock) {
         char echoBuffer[RCVBUFSIZE];
         int recvMsgSize;
         while ((recvMsgSize = sock->recv(echoBuffer, RCVBUFSIZE)) > 0) { // Zero means
+            echoBuffer[recvMsgSize]='\0';
         // end of transmission
         // Echo message back to client
+            std::cout << echoBuffer << std::endl;
         sock->send(echoBuffer, recvMsgSize);
     }
-    delete sock;
+    //delete sock;
 }

@@ -20,6 +20,8 @@
 #ifndef __PRACTICALSOCKET_INCLUDED__
 #define __PRACTICALSOCKET_INCLUDED__
 
+
+#include <netinet/tcp.h>     // For tcp constants
 #include <string>            // For string
 #include <exception>         // For exception class
 
