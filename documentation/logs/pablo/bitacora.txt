@@ -6,3 +6,5 @@ Reunion con companeros de trabajo acerca del diagrama de clases
 File Manager con metodos de read and write
 04/jun/2015
 Archivo de configuracion
+15/jun/2015
+Creacion de la documentacion

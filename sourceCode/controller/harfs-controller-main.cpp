@@ -43,6 +43,7 @@ void signal_callback_handler(int signum) {
 int main(int argc, char* argv[]) {
     // Register signal and signal handler
     signal(SIGINT, signal_callback_handler);
+    signal(SIGTERM, signal_callback_handler);
     signal(SIGABRT, signal_callback_handler);
     //Handle Configuration
     if (argc!=3||strcmp(argv[1], CONFIG)) {

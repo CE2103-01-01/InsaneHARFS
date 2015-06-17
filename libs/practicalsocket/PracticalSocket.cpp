@@ -17,9 +17,9 @@
  *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+
 #include <string.h>
 #include "PracticalSocket.h"
-
 #ifdef WIN32
   #include <winsock.h>         // For socket(), connect(), send(), and recv()
   typedef int socklen_t;
@@ -96,6 +96,24 @@ Socket::Socket(int type, int protocol) throw(SocketException) {
     if ((sockDesc = socket(PF_INET, type, protocol)) < 0) {
         throw SocketException("Socket creation failed (socket())", true);
     }
+    /* Set the option active */
+
+    int keepcnt = 3; // max of keep alives
+    int keepidle = 5; //time secnds between keepalive check
+    int keepintvl = 1; // time between keppalives
+
+    setsockopt(sockDesc,  SOL_TCP, TCP_KEEPCNT, &keepcnt, sizeof(int));
+    setsockopt(sockDesc, SOL_TCP, TCP_KEEPIDLE, &keepidle, sizeof(int));
+    setsockopt(sockDesc, SOL_TCP, TCP_KEEPINTVL, &keepintvl, sizeof(int));
+
+    int optval = 1;
+    if(setsockopt(sockDesc, SOL_SOCKET, SO_KEEPALIVE, &optval, sizeof(optval)) < 0) {
+        perror("setsockopt()");
+        close(sockDesc);
+        exit(EXIT_FAILURE);
+    }
+    //printf("SO_KEEPALIVE set on socket\n");
+
 }
 
 Socket::Socket(int sockDesc) {
@@ -107,6 +125,7 @@ Socket::~Socket() {
     ::closesocket(sockDesc);
   #else
     ::close(sockDesc);
+    printf("hey");
 #endif
     sockDesc = -1;
 }

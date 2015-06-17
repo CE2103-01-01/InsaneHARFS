@@ -14,8 +14,11 @@ using namespace std;
 class TCPClient {
 private:
     TCPSocket *sock;
+    bool on;
+    void receive();
 public:
     TCPClient();
+    ~TCPClient();
 };
 
 

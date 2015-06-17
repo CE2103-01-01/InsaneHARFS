@@ -7,6 +7,7 @@
 #include <thread>
 #include "config/clientConfiguration.h"
 #include "network/TCPClient.h"
+#include "user_interface/command-line.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/client_config.cfg \n"
@@ -34,6 +35,7 @@ void signal_callback_handler(int signum) {
 int main(int argc, char* argv[]) {
     // Register signal and signal handler
     signal(SIGINT, signal_callback_handler);
+    signal(SIGTERM, signal_callback_handler);
     signal(SIGABRT, signal_callback_handler);
     //Handle Configuration
     if (argc!=3||strcmp(argv[1], CONFIG)) {
@@ -44,9 +46,9 @@ int main(int argc, char* argv[]) {
     //Thread for server
     thread serverThread (initClient);
 
+    CLI();
 
     serverThread.join();
-
     // Garbage Collection!
     free(Configuration::getInstance());
     delete client;

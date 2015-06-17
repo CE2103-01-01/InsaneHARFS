@@ -10,7 +10,4 @@ modificar
 {"op":"edit","key":<bytes>,"columna":<int>,"data":<bytes>,"tamano":<int>}
 
 definirEsquema
-{"op":"define", "columnas": [
-                            {"size":int},
-                              ....
-]}
+{"op":"define", "columns":[int,int,int.....,int]}
