@@ -11,7 +11,7 @@
  */
 void FileManager::createFile(std::string name, int dataSize) {
     if(name.length()) {
-        std::fstream outFile(PathConstants::PROJECT_PATH + name + PathConstants::EXT, std::ios::out);
+        std::fstream outFile(PathConstants::PROJECT_PATH + name, std::ios::out);
         for (int i = 0; i < dataSize; i++) outFile.write(NULL_CHR, NULL_CHR_SIZE);
         outFile.close();
     }else{
@@ -29,7 +29,7 @@ void FileManager::createFile(std::string name, int dataSize) {
 void FileManager::writeFile(void* data, std::string name, int offset, int dataSize) {
     if(offset>-1){
         if(name.length()){
-            std::fstream outFile(PathConstants::PROJECT_PATH+name+PathConstants::EXT, std::ios::out | std::ios::in | std::ios::ate);
+            std::fstream outFile(PathConstants::PROJECT_PATH+name, std::ios::out | std::ios::in | std::ios::ate);
             outFile.seekp(offset);
             for(int i = 0; i < dataSize; i++) outFile.write(static_cast<char*>(data+i),1);
             outFile.close();
@@ -52,7 +52,7 @@ void FileManager::writeFile(void* data, std::string name, int offset, int dataSi
 void FileManager::readFile(void* ret, std::string name, int offset, int dataSize) {//T(11+6i)
     if(offset>-1){
         if(name.length()){
-            std::ifstream inFile(PathConstants::PROJECT_PATH+name+PathConstants::EXT, std::ios::binary);
+            std::ifstream inFile(PathConstants::PROJECT_PATH+name, std::ios::binary);
             inFile.seekg(offset);
             inFile.read(static_cast<char*>(ret),dataSize);
             inFile.close();
@@ -72,7 +72,7 @@ void FileManager::readFile(void* ret, std::string name, int offset, int dataSize
  */
 void FileManager::deleteFile(std::string name){
     if(name.length()){
-        remove((PathConstants::PROJECT_PATH+name+PathConstants::EXT).c_str());
+        remove((PathConstants::PROJECT_PATH+name).c_str());
     }else{
         printf(NULL_PARAMETER);
         throw NULL_PARAMETER_CODE;

@@ -12,7 +12,9 @@
 namespace PathConstants{
     extern const std::string HOME_PATH;
     extern const std::string PROJECT_PATH;
-    extern const std::string EXT;
+    extern const std::string DATA_EXT;
+    extern const std::string HARFS_EXT;
+    extern const std::string HEADER_EXT;
 }
 
 #endif //HARFS_DISK_PATHCONSTANTS_H

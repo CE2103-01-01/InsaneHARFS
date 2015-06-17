@@ -18,7 +18,7 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/models/Pointer.cpp
             sourceCode/disk/dataStructuresOnHD/List.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/Exceptions.h)
+add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/Exceptions.h sourceCode/disk/dataStructuresOnHD/BTree.cpp sourceCode/disk/dataStructuresOnHD/BTree.h)
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
@@ -45,7 +45,7 @@ set(HARFS_CLIENT_FILES  sourceCode/client/harfs-client-main.cpp
                         sourceCode/client/config/clientConfiguration.cpp
                         )
 
-add_executable(harfs-client ${HARFS_CLIENT_FILES} sourceCode/client/network/TCPClient.cpp sourceCode/client/network/TCPClient.h)
+add_executable(harfs-client ${HARFS_CLIENT_FILES} sourceCode/client/network/TCPClient.cpp sourceCode/client/network/TCPClient.h sourceCode/disk/dataStructures/BTree.cpp sourceCode/disk/dataStructures/BTree.h sourceCode/disk/dataStructures/BNode.cpp sourceCode/disk/dataStructures/BNode.h sourceCode/disk/dataStructures/BRecord.cpp sourceCode/disk/dataStructures/BRecord.h)
 set_target_properties(harfs-client PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 #RESOURCES
 
