@@ -67,22 +67,24 @@ void CLI::cycleOptions() {
 }
 
 void CLI::defineSchema() {
-    string input;
-    cout << COLUMNS_INSTRUCTS << std::endl;
-    getline(cin, input);
-    int columnNumber = atoi(input.c_str());
-    columns = static_cast<int*>(malloc(sizeof(int)*columnNumber));
-    for(int i = 0;i<columnNumber;i++) {
-        cout << COLUMN << endl;
+        string input;
+        cout << COLUMNS_INSTRUCTS << std::endl;
         getline(cin, input);
-        columns[i] = atoi(input.c_str());
+        int columnNumber = atoi(input.c_str());
+        columns = static_cast<int *>(malloc(sizeof(int) * columnNumber));
+        for (int i = 0; i < columnNumber; i++) {
+            cout << COLUMN << endl;
+            getline(cin, input);
+            columns[i] = atoi(input.c_str());
+        }
+        JsonWriter::createSchema(columns, columnNumber);
+        existeRegister = true;
+
     }
-    JsonWriter::createSchema(columns,columnNumber);
-    existeRegister = true;
-}
+
 void CLI::createStorageBlock() {
     string input_name;
-    cout<< Please_insert_the_name_of_the_storage_block<<endl;
+    cout<< "Please insert the name of the storage block"<<endl;
     getline(cin,input_name);
     string input_organization;
     cout<< "Please insert the type of the organization"<<endl;
@@ -98,18 +100,23 @@ void CLI::createStorageBlock() {
         getline(cin,input_organization);
         num = atoi(input_organization.c_str());
     }
-    JsonWriter::createStorageBlock(input_name,atoi(input_organization),1);
+    JsonWriter::createStorageBlock(input_name,input_organization,"1");
 
 }
 void CLI::listStorageBlock() {
+    JsonWriter::listStorageBlock();
 }
 
 void CLI::deleteStorageBlock() {
     string input;
     cout<< "Please insert the UID of the storage block which you want to delete"<<endl;
     getline(cin,input);
+    JsonWriter::deleteStorageBlock(input);
 }
 void CLI::saveRegister() {
+    if(existeRegister){
+
+    }
 }
 
 

@@ -22,16 +22,34 @@ const char *JsonWriter::createSchema(int *pInt, int size) {
     std::cout << s.GetString() << std::endl;
     return s.GetString();
 }
-string JsonWriter::createStorageBlock(string name,int structure, int raid) {
+string JsonWriter::createStorageBlock(string name,string structure, string raid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
 
-    writer.Srting("op");writer.String("createBlock");
-    writer.String("name");writer.String(name);
-    writer.Srting("structure");writer.String(sturcture);
-    writer.String("raid");writer.String(raid);
+    writer.String("op");writer.String("createBlock");
+    writer.String("name");writer.String(name.c_str());
+    writer.String("structure");writer.String(structure.c_str());
+    writer.String("raid");writer.String(raid.c_str());
     writer.EndObject();
     std::cout<<s.GetString()<<std::endl;
+}
+string JsonWriter::listStorageBlock() {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op"); writer.String("list");
+    writer.EndObject();
+}
+
+void JsonWriter::deleteStorageBlock(string uid) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op");writer.String("deleteStorageBlock");
+    writer.String("uid");writer.String(uid.c_str());
+    writer.EndObject();
 
 }
