@@ -16,9 +16,10 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/proofs/BlockManagerProof.cpp
             sourceCode/disk/managers/RegisterManager.cpp
             sourceCode/disk/models/Pointer.cpp
-            sourceCode/disk/dataStructuresOnHD/List.cpp)
+            sourceCode/disk/dataStructuresOnHD/List.cpp
+            sourceCode/disk/dataStructuresOnHD/BTree.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/Exceptions.h)
+add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/dataStructuresOnHD/Buffer.cpp sourceCode/disk/dataStructuresOnHD/Buffer.h)
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 

@@ -72,7 +72,6 @@ void BTree::init(std::string name) {
     updateHeader();
     //Crea el primer nodo
     FileManager::createFile(dataPath,NODE_OFFSET+NODE_ELEMENT_LENGHT+order*(keyLenght+NODE_ELEMENT_LENGHT));
-    //TODO
 }
 
 /**@brief actualiza la longitud y el primer vacio
