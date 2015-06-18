@@ -46,7 +46,7 @@ set_target_properties(harfs-controller PROPERTIES COMPILE_FLAGS -pthread LINK_FL
 project(harfs-client)
 
 set(HARFS_CLIENT_FILES  sourceCode/client/harfs-client-main.cpp
-                        libs/practicalsocket/Pract
+                        libs/practicalsocket/PracticalSocket.cpp
                         sourceCode/client/config/clientConfiguration.cpp
                         sourceCode/client/network/JsonWriter.cpp
                         sourceCode/client/user_interface/command-line.cpp

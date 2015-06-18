@@ -24,11 +24,13 @@ void initClient()
 {
     ipPort * nodes = Configuration::getInstance()->getDiskNodes();
     for (int i = 0; i < Configuration::getInstance()->getNumberOfDiks(); ++i) {
-        client = new TCPClient(*(nodes+i)->ip,*(nodes+i)->port);
+        ipPort ipPort = (*(nodes+i));
+        std::cout <<  string(ipPort.ip)<<":"<<ipPort.port<< std::endl;
+        client = new TCPClient(string(ipPort.ip),ipPort.port);
     }
 
 }
-    
+
 TCPServer *server;
 
 void initServer()
