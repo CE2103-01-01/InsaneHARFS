@@ -28,7 +28,7 @@ void initClient()
     }
 
 }
-
+    
 TCPServer *server;
 
 void initServer()
