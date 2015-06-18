@@ -4,66 +4,33 @@
 
 
 #include "command-line.h"
-#include "../network/JsonWriter.h"
+
 
 // cout <<  << endl;
 CLI::CLI() {
     existeRegister = false;
     cout << WELCOME << endl;
-    cout <<"Options:"<<"\n"
-         <<"1-Create Storage Block"<<"\n"
-         <<"2-List Storage Block"<<"\n"
-         <<"3-Delete a Storage Block"<<"\n"
-         <<"4-Define a Schema"<<"\n"
-         <<"5-Save Register"<<"\n"
-         <<"6-Delete Register"<<"\n"
-         <<"7-Search Register"<<"\n"
-         <<"8-Get Register"<<"\n"
-         <<"9-Create User"<<"\n"
-         <<"10-Permission to Storage Block"<<"\n"
-         <<"11-test permission"<<endl;
-    //defineSchema();
     cycleOptions();
 }
 
 void CLI::cycleOptions() {
+    std::cout << OPTIONS << std::endl;
     cout <<"Please choose an option: "<< endl;
     string input;
     getline(cin, input);
     int num = atoi(input.c_str());
-    if(num==1){
-        createStorageBlock();
-    }
-    else if(num==2){
-        listStorageBlock();
-    }
-    else if(num==3){
-        deleteStorageBlock();
-    }
-    else if(num==4){
-        defineSchema();
-    }
-    else if(num==5){
-        saveRegister();
-    }
-    else if(num==6){
-        deleteRegister();
-    }
-    else if(num==7){
-        search();
-    }
-    else if(num==8){
-        getRegister();
-    }
-    else if(num==9){
-        createUser();
-    }
-    else if(num==10){
-        setPermission();
-    }
-    else{
-        testPermission();
-    }
+         if(num==1) createStorageBlock();
+    else if(num==2)listStorageBlock();
+    else if(num==3) deleteStorageBlock();
+    else if(num==4) defineSchema();
+    else if(num==5) saveRegister();
+    else if(num==6)deleteRegister();
+    else if(num==7)search();
+    else if(num==8)getRegister();
+    else if(num==9) createUser();
+    else if(num==10)setPermission();
+    else if(num==11)testPermission();
+    else(cycleOptions());
 }
 
 void CLI::defineSchema() {
