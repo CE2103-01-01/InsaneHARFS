@@ -8,9 +8,8 @@
 
 ipPort::ipPort(string ipNode, unsigned short port) : port(port) {
     for (int i = 0; i < IP_LENGTH; ++i) {
-        if(ipNode[i]==0) break;
         ip[i] = ipNode[i];
+        if(ipNode[i]==0) break;
     }
 
-    std::cout << ipNode << std::endl;
 }

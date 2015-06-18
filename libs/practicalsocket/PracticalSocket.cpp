@@ -125,7 +125,6 @@ Socket::~Socket() {
     ::closesocket(sockDesc);
   #else
     ::close(sockDesc);
-    printf("hey");
 #endif
     sockDesc = -1;
 }

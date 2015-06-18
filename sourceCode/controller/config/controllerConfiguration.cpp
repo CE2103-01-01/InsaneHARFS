@@ -36,10 +36,10 @@ Configuration::Configuration(string cfgPath) {
     //DiskNodes
     const Value&diskNodesJSON = document.FindMember("diskNodes")->value; // Using a reference for consecutive access is handy and faster.
     diskNodes = static_cast<ipPort*>(malloc(sizeof(ipPort)*diskNodesJSON.Size()));
-    for (SizeType i = 0; i < diskNodesJSON.Size(); i++)
+    numberOfDisks = diskNodesJSON.Size();
+    for (SizeType i = 0; i < numberOfDisks; i++)
     {
         string ipPortStr = diskNodesJSON[i].GetString();
-        std::cout << ipPortStr << std::endl;
         //Split
         string delimiter = ":";
         int pos = ipPortStr.find(delimiter);

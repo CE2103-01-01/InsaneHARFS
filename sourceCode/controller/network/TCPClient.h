@@ -5,6 +5,7 @@
 #ifndef HARFS_CONTROLLER_TCPCLIENT_H
 #define HARFS_CONTROLLER_TCPCLIENT_H
 #define  RCVBUFSIZE 32
+#define SLEEP 100000
 #include "../../../libs/practicalsocket/PracticalSocket.h"  // For Socket and SocketException
 #include <iostream>           // For cerr and cout
 #include <cstdlib>            // For atoi()
@@ -18,7 +19,7 @@ private:
     bool on;
     void receive();
 public:
-    TCPClient(string ip, int port);
+    TCPClient(string ip, unsigned short &port);
     ~TCPClient();
 };
 

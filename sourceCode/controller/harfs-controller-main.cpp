@@ -18,17 +18,24 @@
 
 
 using namespace std;
-
-TCPClient *client;
-void initClient()
+//Init Single Client
+void initClient(string ip, unsigned short port)
 {
+    TCPClient(ip,port);
+}
+//Init all the clients
+void initClients()
+{
+    thread threads[Configuration::getInstance()->getNumberOfDiks()];
     ipPort * nodes = Configuration::getInstance()->getDiskNodes();
     for (int i = 0; i < Configuration::getInstance()->getNumberOfDiks(); ++i) {
         ipPort ipPort = (*(nodes+i));
         std::cout <<  string(ipPort.ip)<<":"<<ipPort.port<< std::endl;
-        client = new TCPClient(string(ipPort.ip),ipPort.port);
+        threads[i] = thread(initClient,string(ipPort.ip),ipPort.port);
     }
-
+    for (int j = 0; j < Configuration::getInstance()->getNumberOfDiks(); ++j) {
+        threads[j].join();
+    }
 }
 
 TCPServer *server;
@@ -65,6 +72,7 @@ int main(int argc, char* argv[]) {
 
     //Thread for server
     thread serverThread (initServer);
+    thread clientsThread (initClients);
 
 
     serverThread.join();

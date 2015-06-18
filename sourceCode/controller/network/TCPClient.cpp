@@ -2,16 +2,21 @@
 // Created by pablo on 06/06/15.
 //
 
+#include <chrono>
+#include <thread>
+#include <unistd.h>
 #include "TCPClient.h"
 
 
 
-TCPClient::TCPClient(string ip, int port) {
+TCPClient::TCPClient(string ip, unsigned short &port) {
     on = true;
+    std::cout << "Connecting: " << ip << ':' << port << std::endl;
+    LOOP:
     try {
         // Establish connection with the echo server
         sock = new TCPSocket(ip,port);
-
+        std::cout << "Connected: " << ip << ':' << port << std::endl;
         // Send the string to the echo server
         //              1234567890123456789012345678901234
         string hello = "helloworld";
@@ -24,8 +29,8 @@ TCPClient::TCPClient(string ip, int port) {
 
 
     } catch(SocketException &e) {
-        cerr << e.what() << endl;
-        exit(1);
+        usleep(SLEEP);
+        goto LOOP;
     }
 }
 
