@@ -8,6 +8,7 @@
 #include <thread>
 #include "config/controllerConfiguration.h"
 #include "network/TCPServer.h"
+#include "network/TCPClient.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/controller_config.cfg \n"
@@ -17,7 +18,25 @@
 
 
 using namespace std;
-
+//Init Single Client
+void initClient(string ip, unsigned short port)
+{
+    TCPClient(ip,port);
+}
+//Init all the clients
+void initClients()
+{
+    thread threads[Configuration::getInstance()->getNumberOfDiks()];
+    ipPort * nodes = Configuration::getInstance()->getDiskNodes();
+    for (int i = 0; i < Configuration::getInstance()->getNumberOfDiks(); ++i) {
+        ipPort ipPort = (*(nodes+i));
+        std::cout <<  string(ipPort.ip)<<":"<<ipPort.port<< std::endl;
+        threads[i] = thread(initClient,string(ipPort.ip),ipPort.port);
+    }
+    for (int j = 0; j < Configuration::getInstance()->getNumberOfDiks(); ++j) {
+        threads[j].join();
+    }
+}
 
 TCPServer *server;
 
@@ -53,6 +72,7 @@ int main(int argc, char* argv[]) {
 
     //Thread for server
     thread serverThread (initServer);
+    thread clientsThread (initClients);
 
 
     serverThread.join();

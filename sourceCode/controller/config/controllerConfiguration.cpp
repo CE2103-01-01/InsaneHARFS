@@ -30,7 +30,25 @@ Configuration::Configuration(string cfgPath) {
         sharedSecret[i] = sharedSecretStr[i];
     }
     port = document.FindMember("port")->value.GetUint();
-    //TODO: DiskNodes config get
+
+
+
+    //DiskNodes
+    const Value&diskNodesJSON = document.FindMember("diskNodes")->value; // Using a reference for consecutive access is handy and faster.
+    diskNodes = static_cast<ipPort*>(malloc(sizeof(ipPort)*diskNodesJSON.Size()));
+    numberOfDisks = diskNodesJSON.Size();
+    for (SizeType i = 0; i < numberOfDisks; i++)
+    {
+        string ipPortStr = diskNodesJSON[i].GetString();
+        //Split
+        string delimiter = ":";
+        int pos = ipPortStr.find(delimiter);
+        string ip = ipPortStr.substr(0, pos);
+        ipPortStr.erase(0, pos + delimiter.length());
+        unsigned short port = atoi(ipPortStr.c_str());
+        //save node
+        *(diskNodes+i) = ipPort(ip,port);
+    }
 
 }
 
@@ -62,4 +80,12 @@ unsigned short Configuration::getPort() const {
 
 
 Configuration::~Configuration() {
+}
+
+unsigned short Configuration::getNumberOfDiks() const {
+    return numberOfDisks;
+}
+
+ipPort *Configuration::getDiskNodes() const {
+    return diskNodes;
 }

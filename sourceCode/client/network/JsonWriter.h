@@ -14,7 +14,12 @@ using namespace rapidjson;
 
 class JsonWriter {
 public:
-    static string createSchema(int*,int);
+    static const char * createSchema(int*,int);
+    static string createStorageBlock(string,string,string);
+    static string listStorageBlock();
+    static void deleteStorageBlock(string);
+    static string getRegister(string);
+
 };
 
 
