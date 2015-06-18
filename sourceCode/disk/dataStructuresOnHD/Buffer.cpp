@@ -27,6 +27,12 @@ void Buffer::operator =(const Buffer& other){
     copy(other);
 }
 
+/**@brief libera el espacio
+ */
+Buffer::~Buffer(){
+    free(data);
+}
+
 /**@brief copia un buffer
  * @param const Buffer& other: buffer a copia
  */
@@ -35,12 +41,6 @@ void Buffer::copy(const Buffer& other) {
     if(data) free(data);
     data = malloc(other.size);
     memcpy(data,other.data,size);
-}
-
-/**@brief libera el espacio
- */
-Buffer::~Buffer(){
-    free(data);
 }
 
 /**@brief accede a una seccion del dato

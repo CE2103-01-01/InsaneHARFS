@@ -62,6 +62,7 @@ void BTree::readHeader() {
  * @param std::string name: nombre que tendran los archivos .header y .data
  */
 void BTree::init(std::string name) {
+    nodeLenght = NODE_OFFSET + NODE_ELEMENT_LENGHT + order*(NODE_ELEMENT_LENGHT + keyLenght);
     //Crea las rutas
     headerPath = PathConstants::PROJECT_PATH + name + PathConstants::HEADER_EXT;
     dataPath = PathConstants::PROJECT_PATH + name + PathConstants::DATA_EXT;
@@ -71,7 +72,7 @@ void BTree::init(std::string name) {
     FileManager::writeFile(std::addressof(keyLenght),headerPath,KEY_LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(keyLenght));
     updateHeader();
     //Crea el primer nodo
-    FileManager::createFile(dataPath,NODE_OFFSET+NODE_ELEMENT_LENGHT+order*(keyLenght+NODE_ELEMENT_LENGHT));
+    FileManager::createFile(dataPath,nodeLenght);
 }
 
 /**@brief actualiza la longitud y el primer vacio
@@ -79,6 +80,66 @@ void BTree::init(std::string name) {
 void BTree::updateHeader() {
     FileManager::writeFile(std::addressof(lenght),headerPath,LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(lenght));
     FileManager::writeFile(std::addressof(firstEmpty),headerPath,FIRST_EMPTY_ON_HEADER*HEADER_OFFSET,sizeof(firstEmpty));
+}
+
+/**@brief compara dos datos
+ * @param void* one: primer dato
+ * @param void* two: segundo dato
+ * @param int size: tamano de los datos
+ */
+int compare(void* one, void* two, int elementSize){
+    for(int i = 0; i < elementSize; i++){
+        if(*static_cast<char*>(one+i)<*static_cast<char*>(two+i)) return SMALLER_CODE;
+        else if(*static_cast<char*>(one+i)>*static_cast<char*>(two+i)) return BIGGER_CODE;
+    }
+    return EQUAL_CODE;
+}
+
+/**@brief busqueda binaria
+ * @param long node:
+ * @param long first:
+ * @param long last: ultimo miembro de la lista
+ */
+long BTree::binarySearch(void* key, bool terminal, long node, long first, long last){
+    if(first == last){
+        //TODO
+    }
+    else{
+        //Toma el elemento medio y lo compara con la llave
+        Buffer* medium = FileManager::readFile(dataPath, (node*nodeLenght)+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*(last-first)/2, 2*NODE_ELEMENT_LENGHT + keyLenght);
+        int comparison = compare(key,medium->get(NODE_ELEMENT_LENGHT),keyLenght);
+        //Si el dato es menor
+        if(comparison == SMALLER_CODE) {
+            //Libera espacio y retorna una nueva busqueda
+            free(medium);
+            return binarySearch(key,terminal,node,first,first+(last-first)/2);
+        }//Si el dato es mayor
+        else if(comparison == BIGGER_CODE) {
+            //Libera espacio y retorna una nueva busqueda
+            free(medium);
+            return binarySearch(key,terminal,node,first+(last-first)/2,last);
+        }//Si el dato es igual
+        else{
+            //Si el nodo no es terminal
+            if(!terminal){
+                //Lee el header de hijo
+                Buffer* nodeHeader = FileManager::readFile(dataPath, *static_cast<long*>(medium->get(0))*nodeLenght, NODE_OFFSET);
+                //Actualiza variables
+                if(static_cast<char*>(nodeHeader->get(0))==" ") terminal = false;
+                else terminal = true;
+                last = *static_cast<long*>(nodeHeader->get(NODE_ELEMENT_LENGHT+1));
+                //Libera espacio y retorna una nueva busqueda
+                free(nodeHeader);
+                free(medium);
+                return binarySearch(key, nodeHeader, terminal, 0, last);
+            }//Si el nodo es terminal
+            else{
+                node = *static_cast<long*>(medium->get(0));
+                free(medium);
+                return node;
+            }
+        }
+    }
 }
 
 /**@brief inserta un elemento al arbol

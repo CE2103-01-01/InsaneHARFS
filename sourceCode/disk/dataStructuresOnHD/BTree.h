@@ -18,28 +18,34 @@
 #define FIRST_EMPTY_ON_HEADER 2
 #define KEY_LENGHT_ON_HEADER 3
 
-#define NODE_OFFSET 24
+#define NODE_OFFSET 17
 #define NODE_ELEMENT_LENGHT 8
-#define FATHER_ON_NODE 0
-#define TERMINAL_ON_NODE 1
+#define TERMINAL_ON_NODE 0
+#define FATHER_ON_NODE 1
 #define LAST_KEY 2
 
+#define SMALLER_CODE 0
+#define EQUAL_CODE 1
+#define BIGGER_CODE 2
 
 /**HEADER: | ORDEN 8 BYTES | LONGITUD 8 BYTES | PRIMER VACIO 8 BYTES | LONGITUD DE CLAVE 1 BYTE |*/
 
-/**NODO:   | PADRE 8 BYTES | TERMINAL 8 BYTES | ULTIMA CLAVE 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES |*/
+/**NODO:   | TERMINAL 1 BYTES | PADRE 8 BYTES | ULTIMA CLAVE 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES |*/
 
 
 class BTree {
     std::string headerPath;
     std::string dataPath;
+    int nodeLenght;
     int order;
     long lenght;
     long firstEmpty;
     unsigned char keyLenght;
+    int compare(void*,void*,int);
     void readHeader();
     void init(std::string);
     void updateHeader();
+    long binarySearch(void*,bool,long,long,long);
     public:
         BTree();
         BTree(std::string,long,long);
