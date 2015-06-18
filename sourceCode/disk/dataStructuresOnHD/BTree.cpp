@@ -87,7 +87,7 @@ void BTree::updateHeader() {
  * @param void* two: segundo dato
  * @param int size: tamano de los datos
  */
-int compare(void* one, void* two, int elementSize){
+int BTree::compare(void* one, void* two, int elementSize){
     for(int i = 0; i < elementSize; i++){
         if(*static_cast<char*>(one+i)<*static_cast<char*>(two+i)) return SMALLER_CODE;
         else if(*static_cast<char*>(one+i)>*static_cast<char*>(two+i)) return BIGGER_CODE;
