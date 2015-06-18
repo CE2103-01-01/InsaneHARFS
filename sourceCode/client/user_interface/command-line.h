@@ -25,7 +25,11 @@ private:
     void saveRegiter();
     void deleteRegister();
     void search();
+    void deleteRegister();
     void getRegister();
+    void createUser();
+    void setPermission();
+    void testPermission();
 public:
     CLI();
     ~CLI();

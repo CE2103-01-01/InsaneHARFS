@@ -21,3 +21,16 @@ string JsonWriter::createSchema(int *pInt, int size) {
     writer.EndObject();
     std::cout << s.GetString() << std::endl;
 }
+string JsonWriter::createStorageBlock(string name,int structure, int raid) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.Srting("op");writer.String("createBlock");
+    writer.String("name");writer.String(name);
+    writer.Srting("structure");writer.String(sturcture);
+    writer.String("raid");writer.String(raid);
+    writer.EndObject();
+    std::cout<<s.GetString()<<std::endl;
+
+}

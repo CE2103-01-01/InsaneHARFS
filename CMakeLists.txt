@@ -46,7 +46,8 @@ set(HARFS_CLIENT_FILES  sourceCode/client/harfs-client-main.cpp
                         sourceCode/client/config/clientConfiguration.cpp
                         )
 
-add_executable(harfs-client ${HARFS_CLIENT_FILES} sourceCode/client/network/TCPClient.cpp sourceCode/client/network/TCPClient.h)
+add_executable(harfs-client ${HARFS_CLIENT_FILES} sourceCode/client/network/TCPClient.cpp sourceCode/client/network/TCPClient.h  sourceCode/client/user_interface/command-line.h sourceCode/client/user_interface/command-line.cpp
+sourceCode/client/network/JsonWriter.h sourceCode/client/network/JsonWriter.cpp)
 set_target_properties(harfs-client PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 #RESOURCES
 

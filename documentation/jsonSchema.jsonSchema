@@ -11,3 +11,6 @@ modificar
 
 definirEsquema
 {"op":"define", "columns":[int,int,int.....,int]}
+
+crear Storage Block
+{"op":"createBlock,"name":string ,"structure":<int>, "raid":<int>}
