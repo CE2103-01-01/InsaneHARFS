@@ -51,5 +51,13 @@ void JsonWriter::deleteStorageBlock(string uid) {
     writer.String("op");writer.String("deleteStorageBlock");
     writer.String("uid");writer.String(uid.c_str());
     writer.EndObject();
+}
+
+string JsonWriter::getRegister(string offset) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op"); writer.String("getData");
 
 }

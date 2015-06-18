@@ -18,6 +18,7 @@ public:
     static string createStorageBlock(string,string,string);
     static string listStorageBlock();
     static void deleteStorageBlock(string);
+    static string getRegister(string);
 
 };
 

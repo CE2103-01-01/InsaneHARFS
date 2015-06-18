@@ -8,7 +8,8 @@
 
 // cout <<  << endl;
 CLI::CLI() {
-    existeRegister = false;
+    existeStorage = false;
+    defineRegister=false;
     cout << WELCOME << endl;
     cycleOptions();
 }
@@ -30,10 +31,12 @@ void CLI::cycleOptions() {
     else if(num==9) createUser();
     else if(num==10)setPermission();
     else if(num==11)testPermission();
+    else if(num==12) std::cout<<"Tanks for using"<<endl;
     else(cycleOptions());
 }
 
 void CLI::defineSchema() {
+    if (existeStorage) {
         string input;
         cout << COLUMNS_INSTRUCTS << std::endl;
         getline(cin, input);
@@ -45,9 +48,13 @@ void CLI::defineSchema() {
             columns[i] = atoi(input.c_str());
         }
         JsonWriter::createSchema(columns, columnNumber);
-        existeRegister = true;
+        defineRegister = true;
 
     }
+    else{
+        std::cout<<"Currently no Storage to define the schema"<<std::endl;
+    }
+}
 
 void CLI::createStorageBlock() {
     string input_name;
@@ -67,6 +74,7 @@ void CLI::createStorageBlock() {
         getline(cin,input_organization);
         num = atoi(input_organization.c_str());
     }
+    existeStorage=true;
     JsonWriter::createStorageBlock(input_name,input_organization,"1");
 
 }
@@ -81,13 +89,15 @@ void CLI::deleteStorageBlock() {
     JsonWriter::deleteStorageBlock(input);
 }
 void CLI::saveRegister() {
-    if(existeRegister){
 
-    }
 }
 
-
-
+void CLI::getRegister(){
+    string input;
+    cout<<"Please insert the offset where you want to get the register"<<endl;
+    getline(cin,input);
+    JsonWriter::getRegister(input);
+}
 
 CLI::~CLI() {
     free(columns);
