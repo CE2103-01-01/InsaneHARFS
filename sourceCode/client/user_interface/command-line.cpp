@@ -44,7 +44,7 @@ void CLI::cycleOptions() {
         defineSchema();
     }
     else if(num==5){
-        saveRegiter();
+        saveRegister();
     }
     else if(num==6){
         deleteRegister();
