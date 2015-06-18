@@ -15,9 +15,17 @@ using namespace std;
 #define OPTIONS "Select: 1:"
 class CLI {
 private:
+    bool existeRegister;
     int *columns;
     void defineSchema();
     void cycleOptions();
+    void createStorageBlock();
+    void listStorageBlock();
+    void deleteStorageBlock();
+    void saveRegiter();
+    void deleteRegister();
+    void search();
+    void getRegister();
 public:
     CLI();
     ~CLI();
