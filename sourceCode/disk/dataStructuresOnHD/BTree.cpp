@@ -164,7 +164,15 @@ void BTree::insertKey(void* key, long pointer){
  * @param void* key: clave sobre la que se operara
  */
 long BTree::searchKey(void* key){
-
+    //Lee el header de la raiz
+    Buffer* nodeHeader = FileManager::readFile(dataPath, 0, NODE_OFFSET);
+    long last = *static_cast<long*>(nodeHeader->get(NODE_ELEMENT_LENGHT+1));
+    bool terminal;
+    //Actualiza variables
+    if(static_cast<char*>(nodeHeader->get(0))==" ") terminal = false;
+    else terminal = true;
+    free(nodeHeader);
+    return binarySearch(key,terminal,0,0,last);
 }
 
 /**@brief elimina un elemento del arbol
