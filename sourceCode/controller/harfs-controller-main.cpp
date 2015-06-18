@@ -8,6 +8,7 @@
 #include <thread>
 #include "config/controllerConfiguration.h"
 #include "network/TCPServer.h"
+#include "network/TCPClient.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/controller_config.cfg \n"
@@ -18,6 +19,15 @@
 
 using namespace std;
 
+TCPClient *client;
+void initClient()
+{
+    ipPort * nodes = Configuration::getInstance()->getDiskNodes();
+    for (int i = 0; i < Configuration::getInstance()->getNumberOfDiks(); ++i) {
+        client = new TCPClient(*(nodes+i)->ip,*(nodes+i)->port);
+    }
+
+}
 
 TCPServer *server;
 

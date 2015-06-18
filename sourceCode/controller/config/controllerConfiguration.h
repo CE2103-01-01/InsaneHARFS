@@ -5,9 +5,15 @@
 #include <stdint.h>
 #include "../../../libs/rapidjson/document.h"
 #include "../../../libs/rapidjson/reader.h"
+#include "../network/ipPort.h"
 #include <fstream>
 #include <iostream>
+#include <vector>
+
 #define SHARED_SECRET_LENGTH 64
+
+
+
 
 using namespace rapidjson;
 using namespace std;
@@ -18,6 +24,9 @@ private:
     Configuration(string cfgPath);
     char sharedSecret[SHARED_SECRET_LENGTH];
     unsigned short port;
+    unsigned short numberOfDisks;
+    ipPort* diskNodes;
+
 
 public:
     ~Configuration();
@@ -25,6 +34,8 @@ public:
     static Configuration *initializeAndGetInstance(string cfgPath);
     const char *getSharedSecret() const;
     unsigned short getPort() const ;
+    unsigned short getNumberOfDiks() const;
+    ipPort *getDiskNodes() const;
 
 };
 

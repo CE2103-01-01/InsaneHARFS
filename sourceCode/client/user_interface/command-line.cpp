@@ -82,7 +82,7 @@ void CLI::defineSchema() {
 }
 void CLI::createStorageBlock() {
     string input_name;
-    cout<< "Please_insert_the_name_of_the_storage_block"<<endl;
+    cout<< Please_insert_the_name_of_the_storage_block<<endl;
     getline(cin,input_name);
     string input_organization;
     cout<< "Please insert the type of the organization"<<endl;
@@ -109,7 +109,7 @@ void CLI::deleteStorageBlock() {
     cout<< "Please insert the UID of the storage block which you want to delete"<<endl;
     getline(cin,input);
 }
-void CLI::saveRegiter() {
+void CLI::saveRegister() {
 }
 
 

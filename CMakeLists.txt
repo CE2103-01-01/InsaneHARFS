@@ -17,9 +17,11 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/managers/RegisterManager.cpp
             sourceCode/disk/models/Pointer.cpp
             sourceCode/disk/dataStructuresOnHD/List.cpp
-            sourceCode/disk/dataStructuresOnHD/BTree.cpp)
+            sourceCode/disk/dataStructuresOnHD/BTree.cpp
+            sourceCode/disk/dataStructuresOnHD/Buffer.cpp
+            sourceCode/disk/network/TCPServer.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES} sourceCode/disk/dataStructuresOnHD/Buffer.cpp sourceCode/disk/dataStructuresOnHD/Buffer.h)
+add_executable(harfs-disk ${HARFS_DISK_FILES}  )
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
@@ -31,9 +33,11 @@ project(harfs-controller)
 set(HARFS_CONTROLLER_FILES  sourceCode/controller/harfs-controller-main.cpp
                             libs/practicalsocket/PracticalSocket.cpp
                             sourceCode/controller/config/controllerConfiguration.cpp
-                            sourceCode/controller/network/TCPServer.cpp)
+                            sourceCode/controller/network/TCPServer.cpp
+                             sourceCode/controller/network/TCPClient.cpp
+                            sourceCode/controller/network/ipPort.cpp)
 
-add_executable(harfs-controller ${HARFS_CONTROLLER_FILES} )
+add_executable(harfs-controller ${HARFS_CONTROLLER_FILES})
 set_target_properties(harfs-controller PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
 
@@ -42,12 +46,14 @@ set_target_properties(harfs-controller PROPERTIES COMPILE_FLAGS -pthread LINK_FL
 project(harfs-client)
 
 set(HARFS_CLIENT_FILES  sourceCode/client/harfs-client-main.cpp
-                        libs/practicalsocket/PracticalSocket.cpp
+                        libs/practicalsocket/Pract
                         sourceCode/client/config/clientConfiguration.cpp
+                        sourceCode/client/network/JsonWriter.cpp
+                        sourceCode/client/user_interface/command-line.cpp
+                        sourceCode/client/network/JsonWriter.cpp
                         )
 
-add_executable(harfs-client ${HARFS_CLIENT_FILES} sourceCode/client/network/TCPClient.cpp sourceCode/client/network/TCPClient.h  sourceCode/client/user_interface/command-line.h sourceCode/client/user_interface/command-line.cpp
-sourceCode/client/network/JsonWriter.h sourceCode/client/network/JsonWriter.cpp)
+add_executable(harfs-client ${HARFS_CLIENT_FILES} )
 set_target_properties(harfs-client PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 #RESOURCES
 

@@ -22,7 +22,7 @@ private:
     void createStorageBlock();
     void listStorageBlock();
     void deleteStorageBlock();
-    void saveRegiter();
+    void saveRegister();
     void deleteRegister();
     void search();
     void deleteRegister();

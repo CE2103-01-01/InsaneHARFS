@@ -5,7 +5,7 @@
 #include <iostream>
 #include "JsonWriter.h"
 
-string JsonWriter::createSchema(int *pInt, int size) {
+const char *JsonWriter::createSchema(int *pInt, int size) {
 
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -20,6 +20,7 @@ string JsonWriter::createSchema(int *pInt, int size) {
     writer.EndArray();
     writer.EndObject();
     std::cout << s.GetString() << std::endl;
+    return s.GetString();
 }
 string JsonWriter::createStorageBlock(string name,int structure, int raid) {
     StringBuffer s;

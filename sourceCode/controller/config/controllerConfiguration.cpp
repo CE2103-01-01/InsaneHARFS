@@ -63,3 +63,11 @@ unsigned short Configuration::getPort() const {
 
 Configuration::~Configuration() {
 }
+
+unsigned short Configuration::getNumberOfDiks() const {
+    return numberOfDisks;
+}
+
+ipPort *Configuration::getDiskNodes() const {
+    return diskNodes;
+}
