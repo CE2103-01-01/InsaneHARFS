@@ -101,45 +101,55 @@ int BTree::compare(void* one, void* two, int elementSize){
  * @param long last: ultimo miembro de la lista
  */
 long BTree::binarySearch(void* key, bool terminal, long node, long first, long last){
-    if(first == last){
-        //TODO
-    }
-    else{
-        //Toma el elemento medio y lo compara con la llave
-        Buffer* medium = FileManager::readFile(dataPath, (node*nodeLenght)+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*(last-first)/2, 2*NODE_ELEMENT_LENGHT + keyLenght);
-        int comparison = compare(key,medium->get(NODE_ELEMENT_LENGHT),keyLenght);
-        //Si el dato es menor
-        if(comparison == SMALLER_CODE) {
-            //Libera espacio y retorna una nueva busqueda
-            free(medium);
-            return binarySearch(key,terminal,node,first,first+(last-first)/2);
-        }//Si el dato es mayor
-        else if(comparison == BIGGER_CODE) {
-            //Libera espacio y retorna una nueva busqueda
-            free(medium);
-            return binarySearch(key,terminal,node,first+(last-first)/2,last);
-        }//Si el dato es igual
+    Buffer* toCompare;
+    long pointer;
+    if(first != last) Buffer* toCompare = FileManager::readFile(dataPath,
+                                               node*nodeLenght+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*(last-first)/2,
+                                               2*NODE_ELEMENT_LENGHT+keyLenght);
+    else toCompare = FileManager::readFile(dataPath,
+                                                node*nodeLenght+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*last,
+                                                2*NODE_ELEMENT_LENGHT+keyLenght);
+    int comparison = compare(key,toCompare->get(NODE_ELEMENT_LENGHT),keyLenght);
+    if(comparison == EQUAL_CODE){
+        pointer = *static_cast<long*>(toCompare->get(0));
+        //Si el nodo no es terminal
+        if(terminal) return pointer;
         else{
-            //Si el nodo no es terminal
-            if(!terminal){
-                //Lee el header de hijo
-                Buffer* nodeHeader = FileManager::readFile(dataPath, *static_cast<long*>(medium->get(0))*nodeLenght, NODE_OFFSET);
-                //Actualiza variables
-                if(static_cast<char*>(nodeHeader->get(0))==" ") terminal = false;
-                else terminal = true;
-                last = *static_cast<long*>(nodeHeader->get(NODE_ELEMENT_LENGHT+1));
-                //Libera espacio y retorna una nueva busqueda
-                free(nodeHeader);
-                free(medium);
-                return binarySearch(key, nodeHeader, terminal, 0, last);
-            }//Si el nodo es terminal
+            readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+            first = 0;
+        }
+    }else{
+        if(terminal){
+            printf(OFFSET_OUT_OF_BOUND);
+            throw OFFSET_OUT_OF_BOUND_CODE;
+        }else if(comparison == SMALLER_CODE){
+            if(first!=last) last = first+(last-first)/2;
             else{
-                node = *static_cast<long*>(medium->get(0));
-                free(medium);
-                return node;
+                pointer = *static_cast<long*>(toCompare->get(0));
+                readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+                first = 0;
+            }
+        }else{
+            if(first!=last) first = first+(last-first)/2;
+            else {
+                pointer = *static_cast<long*>(toCompare->get(NODE_ELEMENT_LENGHT+keyLenght));
+                readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+                first = 0;
             }
         }
     }
+    free(toCompare);
+    return binarySearch(key, terminal, pointer, first, last);
+}
+
+void BTree::readAgainForBinaryMethods(long pointer, bool* terminal, long* last) {
+    //Lee el header de hijo
+    Buffer* nodeHeader = FileManager::readFile(dataPath, pointer*nodeLenght, NODE_OFFSET);
+    *last = *static_cast<long*>(nodeHeader->get(NODE_ELEMENT_LENGHT+1));
+    //Actualiza variables
+    if(static_cast<char*>(nodeHeader->get(0))==" ") *terminal = false;
+    else *terminal = true;
+    free(nodeHeader);
 }
 
 /**@brief inserta un elemento al arbol

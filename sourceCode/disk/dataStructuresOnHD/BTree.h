@@ -42,6 +42,7 @@ class BTree {
     long firstEmpty;
     unsigned char keyLenght;
     int compare(void*,void*,int);
+    void readAgainForBinaryMethods(long,bool*,long*);
     void readHeader();
     void init(std::string);
     void updateHeader();
