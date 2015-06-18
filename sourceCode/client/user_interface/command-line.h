@@ -16,6 +16,7 @@ using namespace std;
 class CLI {
 private:
     bool existeRegister;
+    bool existeStorage;
     int *columns;
     void defineSchema();
     void cycleOptions();
@@ -25,7 +26,6 @@ private:
     void saveRegister();
     void deleteRegister();
     void search();
-    void deleteRegister();
     void getRegister();
     void createUser();
     void setPermission();

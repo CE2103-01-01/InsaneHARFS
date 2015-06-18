@@ -14,3 +14,8 @@ definirEsquema
 
 crear Storage Block
 {"op":"createBlock,"name":string ,"structure":<int>, "raid":<int>}
+mostrar Storage Block
+{"op":"list"}
+
+deleteStorageBlock
+{"op":"deleteStorageBlock","uid":<long>}
