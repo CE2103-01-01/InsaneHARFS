@@ -4,13 +4,13 @@
 
 #ifndef HARFS_CLIENT_IPPORT_H
 #define HARFS_CLIENT_IPPORT_H
-
-
-#include <bits/stringfwd.h>
-
+#define IP_LENGTH 16
+#include <string>
+using namespace std;
 class ipPort {
 public:
-    char ip[16];
+    ipPort(string ip, unsigned short port);
+    char ip[IP_LENGTH];
     unsigned short port;
 };
 
