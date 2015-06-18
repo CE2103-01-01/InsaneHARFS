@@ -6,17 +6,19 @@
 #define HARFS_CLIENT_BTREE_H
 
 #include "../managers/FileManager.h"
+#include <math.h>
 
 #define DEFAULT_ORDER 100
 #define DEFAULT_KEY_LENGHT 8
 #define DEFAULT_NAME "tr"
 
-#define HEADER_LENGHT 25
+#define HEADER_LENGHT 33
 #define HEADER_OFFSET 8
 #define ORDER_ON_HEADER 0
-#define LENGHT_ON_HEADER 1
-#define FIRST_EMPTY_ON_HEADER 2
-#define KEY_LENGHT_ON_HEADER 3
+#define FLOORS_ON_HEADER 1
+#define LENGHT_ON_HEADER 2
+#define FIRST_EMPTY_ON_HEADER 3
+#define KEY_LENGHT_ON_HEADER 4
 
 #define NODE_OFFSET 17
 #define NODE_ELEMENT_LENGHT 8
@@ -28,7 +30,7 @@
 #define EQUAL_CODE 1
 #define BIGGER_CODE 2
 
-/**HEADER: | ORDEN 8 BYTES | LONGITUD 8 BYTES | PRIMER VACIO 8 BYTES | LONGITUD DE CLAVE 1 BYTE |*/
+/**HEADER: | ORDEN 8 BYTES | PISOS 8 BYTES | LONGITUD 8 BYTES | PRIMER VACIO 8 BYTES | LONGITUD DE CLAVE 1 BYTE |*/
 
 /**NODO:   | TERMINAL 1 BYTES | PADRE 8 BYTES | ULTIMA CLAVE 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES |*/
 
@@ -37,10 +39,12 @@ class BTree {
     std::string headerPath;
     std::string dataPath;
     int nodeLenght;
-    int order;
+    long order;
+    long floors;
     long lenght;
     long firstEmpty;
     unsigned char keyLenght;
+    long maximun(int);
     int compare(void*,void*,int);
     void readAgainForBinaryMethods(long,bool*,long*);
     void readHeader();

@@ -11,6 +11,7 @@ BTree::BTree(){
     order = DEFAULT_ORDER;
     firstEmpty = -1;
     lenght = 0;
+    floors = 1;
     init(DEFAULT_NAME);
 }
 
@@ -23,6 +24,7 @@ BTree::BTree(long keyLenghtParam, long orderParam){
     order = orderParam;
     firstEmpty = -1;
     lenght = 0;
+    floors = 1;
     init(DEFAULT_NAME);
 }
 
@@ -36,6 +38,7 @@ BTree::BTree(std::string name, long keyLenghtParam, long orderParam){
     order = orderParam;
     firstEmpty = -1;
     lenght = 0;
+    floors = 1;
     init(name);
 }
 
@@ -53,6 +56,7 @@ BTree::BTree(std::string headerPathParam, std::string dataPathParam){
  */
 void BTree::readHeader() {
     FileManager::readFile(std::addressof(order),headerPath,ORDER_ON_HEADER*HEADER_OFFSET,sizeof(order));
+    FileManager::readFile(std::addressof(floors),headerPath,FLOORS_ON_HEADER*HEADER_OFFSET,sizeof(floors));
     FileManager::readFile(std::addressof(keyLenght),headerPath,KEY_LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(keyLenght));
     FileManager::readFile(std::addressof(lenght),headerPath,LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(lenght));
     FileManager::readFile(std::addressof(firstEmpty),headerPath,FIRST_EMPTY_ON_HEADER*HEADER_OFFSET,sizeof(firstEmpty));
@@ -78,6 +82,7 @@ void BTree::init(std::string name) {
 /**@brief actualiza la longitud y el primer vacio
  */
 void BTree::updateHeader() {
+    FileManager::writeFile(std::addressof(floors),headerPath,FLOORS_ON_HEADER*HEADER_OFFSET,sizeof(floors));
     FileManager::writeFile(std::addressof(lenght),headerPath,LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(lenght));
     FileManager::writeFile(std::addressof(firstEmpty),headerPath,FIRST_EMPTY_ON_HEADER*HEADER_OFFSET,sizeof(firstEmpty));
 }
@@ -93,6 +98,13 @@ int BTree::compare(void* one, void* two, int elementSize){
         else if(*static_cast<char*>(one+i)>*static_cast<char*>(two+i)) return BIGGER_CODE;
     }
     return EQUAL_CODE;
+}
+
+/**@brief devuelve el maximo de claves hasta un piso dado
+ * @param int floor: piso
+ */
+long BTree::maximun(int floor){
+    return order*pow(order+1, floor-1);
 }
 
 /**@brief busqueda binaria
@@ -157,7 +169,11 @@ void BTree::readAgainForBinaryMethods(long pointer, bool* terminal, long* last) 
  * @param long pointer: puntero con al dato representado por la clave
  */
 void BTree::insertKey(void* key, long pointer){
+    if(lenght<=maximun(floors)){
 
+    }else{
+
+    }
 }
 
 /**@brief busca un elemento en el arbol
