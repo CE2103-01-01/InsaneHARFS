@@ -44,16 +44,17 @@ class BTree {
     long lenght;
     long firstEmpty;
     unsigned char keyLenght;
+    void init(std::string);
     long maximun(int);
     int compare(void*,void*,int);
-    void readAgainForBinaryMethods(long,bool*,long*);
     void readHeader();
-    void init(std::string);
     void updateHeader();
+    void readAgainForBinaryMethods(long,bool*,long*);
     long binarySearch(void*,bool,long,long,long);
-    long binaryDeletion(void*,bool,long,long,long);
+    void binaryDeletion(void*,bool,long,long,long);
     bool binaryInsertion(void*,long,bool,long,long,long);
     void rotate(long);
+    void mix(long,long);
     void split();
     public:
         BTree();

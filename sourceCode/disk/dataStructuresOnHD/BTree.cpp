@@ -177,9 +177,16 @@ void BTree::readAgainForBinaryMethods(long pointer, bool* terminal, long* last) 
  */
 void BTree::insertKey(void* key, long pointer){
     if(lenght<=maximun(floors)){
-        //TODO
+        Buffer* nodeHeader = FileManager::readFile(dataPath, 0, NODE_OFFSET);
+        long last = *static_cast<long*>(nodeHeader->get(NODE_ELEMENT_LENGHT+1));
+        bool terminal;
+        //Actualiza variables
+        if(static_cast<char*>(nodeHeader->get(0))==" ") terminal = false;
+        else terminal = true;
+        free(nodeHeader);
+        binaryInsertion(key, pointer,terminal,0,0,last);
     }else{
-        //TODO
+        split();
     }
 }
 
@@ -234,11 +241,24 @@ bool BTree::binaryInsertion(void* key, long pointerToInsert, bool terminal, long
     return binaryInsertion(key, pointerToInsert, terminal, pointer, first, last);
 }
 
+/**@brief rota a partir de una clave
+ * @param long offset ubicacion de clave
+ */
 void BTree::rotate(long offset){
     //TODO
 }
 
+/**@brief divide el arbol
+ */
 void BTree::split(){
+    //TODO
+}
+
+/**@brief mezcla dos nodos
+ * @param long nodeOne
+ * @param long nodeTwo
+ */
+void BTree::mix(long nodeOne, long nodeTwo){
     //TODO
 }
 
@@ -265,7 +285,7 @@ long BTree::searchKey(void* key){
  * @param long first: primer indice
  * @param long last: ultimo indice
  */
-long BTree::binaryDeletion(void* key, bool terminal, long node, long first, long last){
+void BTree::binaryDeletion(void* key, bool terminal, long node, long first, long last){
     Buffer* toCompare;
     long pointer;
     if(first != last) Buffer* toCompare = FileManager::readFile(dataPath,
@@ -305,12 +325,19 @@ long BTree::binaryDeletion(void* key, bool terminal, long node, long first, long
         }
     }
     free(toCompare);
-    return binarySearch(key, terminal, pointer, first, last);
+    binaryDeletion(key, terminal, pointer, first, last);
 }
 
 /**@brief elimina un elemento del arbol
  * @param void* key: clave sobre la que se operara
  */
 void BTree::deleteKey(void* key){
-    //TODO
+    Buffer* nodeHeader = FileManager::readFile(dataPath, 0, NODE_OFFSET);
+    long last = *static_cast<long*>(nodeHeader->get(NODE_ELEMENT_LENGHT+1));
+    bool terminal;
+    //Actualiza variables
+    if(static_cast<char*>(nodeHeader->get(0))==" ") terminal = false;
+    else terminal = true;
+    free(nodeHeader);
+    binaryDeletion(key,terminal,0,0,last);
 }
