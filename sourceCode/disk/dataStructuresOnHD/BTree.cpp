@@ -66,7 +66,7 @@ void BTree::readHeader() {
  * @param std::string name: nombre que tendran los archivos .header y .data
  */
 void BTree::init(std::string name) {
-    nodeLenght = NODE_OFFSET + NODE_ELEMENT_LENGHT + order*(NODE_ELEMENT_LENGHT + keyLenght);
+    nodeLenght = NODE_OFFSET + 3*NODE_ELEMENT_LENGHT + order*(NODE_ELEMENT_LENGHT + keyLenght);
     //Crea las rutas
     headerPath = PathConstants::PROJECT_PATH + name + PathConstants::HEADER_EXT;
     dataPath = PathConstants::PROJECT_PATH + name + PathConstants::DATA_EXT;
@@ -76,7 +76,7 @@ void BTree::init(std::string name) {
     FileManager::writeFile(std::addressof(keyLenght),headerPath,KEY_LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(keyLenght));
     updateHeader();
     //Crea el primer nodo
-    FileManager::createFile(dataPath,nodeLenght+2*NODE_ELEMENT_LENGHT);
+    FileManager::createFile(dataPath,nodeLenght);
 }
 
 /**@brief actualiza la longitud y el primer vacio
