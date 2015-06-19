@@ -244,8 +244,24 @@ bool BTree::binaryInsertion(void* key, long pointerToInsert, bool terminal, long
 /**@brief rota a partir de una clave
  * @param long offset ubicacion de clave
  */
-void BTree::rotate(long offset){
-    //TODO
+void BTree::rotateRight(Buffer* toInsert, long node, int key){
+    //lee el header del nodo
+    Buffer* header = FileManager::readFile(dataPath, 0, NODE_OFFSET);
+    long last = *static_cast<long*>(header->get(NODE_ELEMENT_LENGHT+1));
+    bool terminal;
+    //Actualiza variables
+    if(static_cast<char*>(header->get(0))==" ") terminal = false;
+    else terminal = true;
+    free(header);
+    //Lee la clave a mover
+    Buffer* keyToMove = FileManager::readFile(dataPath, node*nodeLenght+key*(8+keyLenght), NODE_OFFSET);
+    if(terminal){
+        //TODO
+    }else{
+        FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+key*(8+keyLenght), keyLenght);
+        rotateRight(toInsert, *static_cast<long*>(toInsert->get(NODE_ELEMENT_LENGHT+keyLenght)),0);
+        free(toInsert);
+    }
 }
 
 /**@brief divide el arbol
