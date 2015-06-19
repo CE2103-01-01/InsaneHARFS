@@ -32,7 +32,7 @@
 
 /**HEADER: | ORDEN 8 BYTES | PISOS 8 BYTES | LONGITUD 8 BYTES | PRIMER VACIO 8 BYTES | LONGITUD DE CLAVE 1 BYTE |*/
 
-/**NODO:   | TERMINAL 1 BYTES | PADRE 8 BYTES | ULTIMA CLAVE 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES |*/
+/**NODO:   | TERMINAL 1 BYTES | PADRE 8 BYTES | ULTIMA CLAVE 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES | PUNTERO 8 BYTES | PUNTERO 8 BYTES |*/
 
 
 class BTree {
@@ -51,6 +51,10 @@ class BTree {
     void init(std::string);
     void updateHeader();
     long binarySearch(void*,bool,long,long,long);
+    long binaryDeletion(void*,bool,long,long,long);
+    bool binaryInsertion(void*,long,bool,long,long,long);
+    void rotate(long);
+    void split();
     public:
         BTree();
         BTree(std::string,long,long);

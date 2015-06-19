@@ -76,7 +76,7 @@ void BTree::init(std::string name) {
     FileManager::writeFile(std::addressof(keyLenght),headerPath,KEY_LENGHT_ON_HEADER*HEADER_OFFSET,sizeof(keyLenght));
     updateHeader();
     //Crea el primer nodo
-    FileManager::createFile(dataPath,nodeLenght);
+    FileManager::createFile(dataPath,nodeLenght+2*NODE_ELEMENT_LENGHT);
 }
 
 /**@brief actualiza la longitud y el primer vacio
@@ -107,10 +107,12 @@ long BTree::maximun(int floor){
     return order*pow(order+1, floor-1);
 }
 
-/**@brief busqueda binaria
- * @param long node:
- * @param long first:
- * @param long last: ultimo miembro de la lista
+/**@brief recorre el arbol de forma binaria
+ * @param void* key: llave a insertar
+ * @param bool terminal: valor que indica si la hoja es terminal
+ * @param long node: nodo actual
+ * @param long first: primer indice
+ * @param long last: ultimo indice
  */
 long BTree::binarySearch(void* key, bool terminal, long node, long first, long last){
     Buffer* toCompare;
@@ -154,6 +156,11 @@ long BTree::binarySearch(void* key, bool terminal, long node, long first, long l
     return binarySearch(key, terminal, pointer, first, last);
 }
 
+/**@brief actualiza variables
+ * @param long pointer
+ * @param bool* terminal
+ * @param long* last
+ */
 void BTree::readAgainForBinaryMethods(long pointer, bool* terminal, long* last) {
     //Lee el header de hijo
     Buffer* nodeHeader = FileManager::readFile(dataPath, pointer*nodeLenght, NODE_OFFSET);
@@ -170,10 +177,69 @@ void BTree::readAgainForBinaryMethods(long pointer, bool* terminal, long* last) 
  */
 void BTree::insertKey(void* key, long pointer){
     if(lenght<=maximun(floors)){
-
+        //TODO
     }else{
-
+        //TODO
     }
+}
+
+/**@brief recorre el arbol de forma binaria
+ * @param void* key: llave a insertar
+ * @param long pointer: puntero al dato asociado a la llave
+ * @param bool terminal: valor que indica si la hoja es terminal
+ * @param long node: nodo actual
+ * @param long first: primer indice
+ * @param long last: ultimo indice
+ */
+bool BTree::binaryInsertion(void* key, long pointerToInsert, bool terminal, long node, long first, long last){
+    Buffer* toCompare;
+    long pointer;
+    if(first != last) Buffer* toCompare = FileManager::readFile(dataPath,
+                                                                node*nodeLenght+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*(last-first)/2,
+                                                                2*NODE_ELEMENT_LENGHT+keyLenght);
+    else toCompare = FileManager::readFile(dataPath,
+                                           node*nodeLenght+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*last,
+                                           2*NODE_ELEMENT_LENGHT+keyLenght);
+    int comparison = compare(key,toCompare->get(NODE_ELEMENT_LENGHT),keyLenght);
+    if(comparison == EQUAL_CODE){
+        pointer = *static_cast<long*>(toCompare->get(0));
+        //Si el nodo no es terminal
+        if(terminal){
+            printf(OFFSET_OUT_OF_BOUND);
+            throw OFFSET_OUT_OF_BOUND_CODE;
+        }else{
+            readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+            first = 0;
+        }
+    }else{
+        if(terminal){
+            //TODO
+        }else if(comparison == SMALLER_CODE){
+            if(first!=last) last = first+(last-first)/2;
+            else{
+                pointer = *static_cast<long*>(toCompare->get(0));
+                readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+                first = 0;
+            }
+        }else{
+            if(first!=last) first = first+(last-first)/2;
+            else {
+                pointer = *static_cast<long*>(toCompare->get(NODE_ELEMENT_LENGHT+keyLenght));
+                readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+                first = 0;
+            }
+        }
+    }
+    free(toCompare);
+    return binaryInsertion(key, pointerToInsert, terminal, pointer, first, last);
+}
+
+void BTree::rotate(long offset){
+    //TODO
+}
+
+void BTree::split(){
+    //TODO
 }
 
 /**@brief busca un elemento en el arbol
@@ -191,9 +257,60 @@ long BTree::searchKey(void* key){
     return binarySearch(key,terminal,0,0,last);
 }
 
+
+/**@brief borra una clave
+ * @param void* key: llave a insertar
+ * @param bool terminal: valor que indica si la hoja es terminal
+ * @param long node: nodo actual
+ * @param long first: primer indice
+ * @param long last: ultimo indice
+ */
+long BTree::binaryDeletion(void* key, bool terminal, long node, long first, long last){
+    Buffer* toCompare;
+    long pointer;
+    if(first != last) Buffer* toCompare = FileManager::readFile(dataPath,
+                                                                node*nodeLenght+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*(last-first)/2,
+                                                                2*NODE_ELEMENT_LENGHT+keyLenght);
+    else toCompare = FileManager::readFile(dataPath,
+                                           node*nodeLenght+NODE_OFFSET+(keyLenght+NODE_ELEMENT_LENGHT)*last,
+                                           2*NODE_ELEMENT_LENGHT+keyLenght);
+    int comparison = compare(key,toCompare->get(NODE_ELEMENT_LENGHT),keyLenght);
+    if(comparison == EQUAL_CODE){
+        pointer = *static_cast<long*>(toCompare->get(0));
+        //Si el nodo no es terminal
+        if(terminal){
+            //TODO
+        }else{
+            readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+            first = 0;
+        }
+    }else{
+        if(terminal){
+            printf(OFFSET_OUT_OF_BOUND);
+            throw OFFSET_OUT_OF_BOUND_CODE;
+        }else if(comparison == SMALLER_CODE){
+            if(first!=last) last = first+(last-first)/2;
+            else{
+                pointer = *static_cast<long*>(toCompare->get(0));
+                readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+                first = 0;
+            }
+        }else{
+            if(first!=last) first = first+(last-first)/2;
+            else {
+                pointer = *static_cast<long*>(toCompare->get(NODE_ELEMENT_LENGHT+keyLenght));
+                readAgainForBinaryMethods(pointer,std::addressof(terminal),std::addressof(last));
+                first = 0;
+            }
+        }
+    }
+    free(toCompare);
+    return binarySearch(key, terminal, pointer, first, last);
+}
+
 /**@brief elimina un elemento del arbol
  * @param void* key: clave sobre la que se operara
  */
 void BTree::deleteKey(void* key){
-
+    //TODO
 }
