@@ -17,9 +17,11 @@ using namespace std;
 #define OPTIONS  "Options:1-Create Storage Block \n2-List Storage Block\n3-Delete a Storage Bloc\n4-Define a Schema\n5-Save Register\n6-Delete Register\n7-Search Register\n8-Get Register\n9-Create User\n10-Permission to Storage Block\n11-Test permission\n12-Exit"
 class CLI {
 private:
+    bool signIn;
     bool defineRegister;
     bool existeStorage;
     int *columns;
+    void logIn();
     void defineSchema();
     void cycleOptions();
     void createStorageBlock();
@@ -27,7 +29,6 @@ private:
     void deleteStorageBlock();
     void saveRegister();
     void deleteRegister();
-    void search();
     void getRegister();
     void createUser();
     void setPermission();

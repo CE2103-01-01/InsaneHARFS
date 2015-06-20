@@ -21,7 +21,7 @@ const char *JsonWriter::createSchema(int *pInt, int size) {
     writer.EndObject();
     return s.GetString();
 }
-string JsonWriter::createStorageBlock(string name,string structure, string raid) {
+const char* JsonWriter::createStorageBlock(string name,string structure, string raid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -31,33 +31,39 @@ string JsonWriter::createStorageBlock(string name,string structure, string raid)
     writer.String("structure");writer.String(structure.c_str());
     writer.String("raid");writer.String(raid.c_str());
     writer.EndObject();
-    std::cout<<s.GetString()<<std::endl;
+    return s.GetString();
 }
-string JsonWriter::listStorageBlock() {
+const char* JsonWriter::listStorageBlock() {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
 
     writer.String("op"); writer.String("list");
     writer.EndObject();
+    return s.GetString();
 }
 
-void JsonWriter::deleteStorageBlock(string uid) {
+const char* JsonWriter::deleteStorageBlock(const char* uid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
 
     writer.String("op");writer.String("deleteStorageBlock");
-    writer.String("uid");writer.String(uid.c_str());
+    writer.String("uid");writer.String(uid);
     writer.EndObject();
+    return s.GetString();
 }
 
-string JsonWriter::getRegister(string offset) {
+const char* JsonWriter::getRegister(const char* colum,const char* key) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
 
     writer.String("op"); writer.String("getData");
+    writer.String("colum");writer.String(colum);
+    writer.String("key");writer.String(key);
+    writer.EndObject();
+    return s.GetString();
 
 }
 
@@ -72,3 +78,39 @@ const char *JsonWriter::createUser(const char* user, const char* password) {
     writer.EndObject();
     return s.GetString();
 }
+
+const char* JsonWriter::logIn(const char *user, const char *password) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op"); writer.String("logIn");
+    writer.String("user");writer.String(user);
+    writer.String("password");writer.String(password);
+    writer.EndObject();
+    return s.GetString();
+}
+
+const char* JsonWriter::setPermission(const char* user, const char * uid) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op"); writer.String("setPermission");
+    writer.String("user");writer.String(user);
+    writer.String("uid");writer.String(uid);
+    writer.EndObject();
+    return s.GetString();
+}
+const char* JsonWriter::testPermission(const char * user, const char * uid) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op"); writer.String("testPermission");
+    writer.String("user");writer.String(user);
+    writer.String("uid");writer.String(uid);
+    writer.EndObject();
+    return s.GetString();
+}
+

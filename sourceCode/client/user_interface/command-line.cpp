@@ -11,7 +11,26 @@
 CLI::CLI() {
     existeStorage = false;
     defineRegister=false;
+    signIn=false;
     cout << WELCOME << endl;
+    while(!signIn){
+        logIn();
+    }
+
+}
+
+void CLI::logIn() {
+    std::cout<<"Please log in"<<std::endl;
+    string user;
+    string password;
+    cout<<"Plase input the user name"<<endl;
+    getline(cin,user);
+    cout<<"Please input the password"<<endl;
+    getline(cin,password);
+    JsonWriter::logIn(user.c_str(),password.c_str());
+
+
+
     cycleOptions();
 }
 
@@ -27,12 +46,15 @@ void CLI::cycleOptions() {
     else if(num==4) defineSchema();
     else if(num==5)saveRegister();
     else if(num==6)deleteRegister();
-    else if(num==7)search();
-    else if(num==8)getRegister();
-    else if(num==9) createUser();
-    else if(num==10)setPermission();
-    else if(num==11)testPermission();
-    else if(num==12) std::cout<<"Thanks for using"<<endl;
+    else if(num==7)getRegister();
+    else if(num==8) createUser();
+    else if(num==9)setPermission();
+    else if(num==10)testPermission();
+    else if(num==11){
+             std::cout<<"Thanks for using"<<endl;
+             signIn=false;
+             logIn();
+         }
     else(cycleOptions());
 }
 
@@ -87,7 +109,8 @@ void CLI::deleteStorageBlock() {
     string input;
     cout<< "Please insert the UID of the storage block which you want to delete"<<endl;
     getline(cin,input);
-    JsonWriter::deleteStorageBlock(input);
+    string json =string(JsonWriter::deleteStorageBlock(input.c_str()));
+    cycleOptions();
 }
 void CLI::saveRegister() {
 
@@ -95,9 +118,14 @@ void CLI::saveRegister() {
 
 void CLI::getRegister(){
     string input;
-    cout<<"Please insert the offset where you want to get the register"<<endl;
+    cout<<"Please insert the number of colum where you want to get the register"<<endl;
     getline(cin,input);
-    JsonWriter::getRegister(input);
+    string key;
+    cout<<"Please insert the search key of your register"<<endl;
+    getline(cin,key);
+    string json = string(JsonWriter::getRegister(input.c_str(),key.c_str()));
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+    cycleOptions();
 }
 
 CLI::~CLI() {
@@ -108,14 +136,11 @@ void CLI::deleteRegister() {
 
 }
 
-void CLI::search() {
-
-}
 
 
 void CLI::createUser() {
     string user;
-    cout<<"Please insert the user"<<endl;
+    cout<<"Please insert the user name"<<endl;
     getline(cin,user);
     string password;
     cout<<"Please insert the password"<<endl;
@@ -126,9 +151,26 @@ void CLI::createUser() {
 }
 
 void CLI::setPermission() {
+    string user;
+    string uid;
+    cout<< "Please insert the user name which you want to associate: "<<endl;
+    getline(cin,user);
+    cout<<"Please insert the uid of the storage which you want to associate: "<<endl;
+    getline(cin,uid);
+    string json = string(JsonWriter::setPermission(user.c_str(),uid.c_str()));
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+    cycleOptions();
 
 }
 
 void CLI::testPermission() {
-
+    string user;
+    string uid;
+    cout<< "Please insert the user name which you want to associate: "<<endl;
+    getline(cin,user);
+    cout<<"Please insert the uid of the storage which you want to associate: "<<endl;
+    getline(cin,uid);
+    string json = string(JsonWriter::setPermission(user.c_str(),uid.c_str()));
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+    cycleOptions();
 }
