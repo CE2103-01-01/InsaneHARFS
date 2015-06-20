@@ -19,6 +19,8 @@ void initClient()
 {
     client = new TCPClient();
 }
+
+
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
@@ -33,7 +35,6 @@ void signal_callback_handler(int signum) {
  * insert this --config res/disk_config.cfg
  */
 int main(int argc, char* argv[]) {
-
     // Register signal and signal handler
     signal(SIGINT, signal_callback_handler);
     signal(SIGTERM, signal_callback_handler);
@@ -57,5 +58,4 @@ int main(int argc, char* argv[]) {
     return 0;
 
 }
-
 

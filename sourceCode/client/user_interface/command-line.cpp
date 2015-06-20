@@ -24,7 +24,7 @@ void CLI::cycleOptions() {
     else if(num==2)listStorageBlock();
     else if(num==3) deleteStorageBlock();
     else if(num==4) defineSchema();
-    else if(num==5) saveRegister();
+    else if(num==5)saveRegister();
     else if(num==6)deleteRegister();
     else if(num==7)search();
     else if(num==8)getRegister();
@@ -101,4 +101,28 @@ void CLI::getRegister(){
 
 CLI::~CLI() {
     free(columns);
+}
+
+void CLI::deleteRegister() {
+
+}
+
+void CLI::search() {
+
+}
+
+void CLI::getRegister() {
+
+}
+
+void CLI::createUser() {
+
+}
+
+void CLI::setPermission() {
+
+}
+
+void CLI::testPermission() {
+
 }

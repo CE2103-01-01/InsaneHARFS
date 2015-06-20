@@ -10,12 +10,14 @@
 #include <cstdlib>            // For atoi()
 #include "../config/clientConfiguration.h"
 const int RCVBUFSIZE = 32;    // Size of receive buffer
+#define SLEEP 100000
 using namespace std;
 class TCPClient {
 private:
     TCPSocket *sock;
     bool on;
     void receive();
+    void send(const void *buffer, int bufferLen);
 public:
     TCPClient();
     ~TCPClient();
