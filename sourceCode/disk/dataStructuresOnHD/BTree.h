@@ -54,6 +54,7 @@ class BTree {
     void binaryDeletion(void*,bool,long,long,long);
     bool binaryInsertion(void*,long,bool,long,long,long);
     void rotateRight(Buffer*,long, int);
+    void rotateLeft(Buffer*,long, int);
     void mix(long,long);
     void split();
     public:

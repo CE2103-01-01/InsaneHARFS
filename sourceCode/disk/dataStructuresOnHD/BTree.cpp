@@ -244,24 +244,64 @@ bool BTree::binaryInsertion(void* key, long pointerToInsert, bool terminal, long
 /**@brief rota a partir de una clave
  * @param long offset ubicacion de clave
  */
-void BTree::rotateRight(Buffer* toInsert, long node, int key){
+void BTree::rotateLeft(Buffer* toInsert, long node, int key){
     //lee el header del nodo
-    Buffer* header = FileManager::readFile(dataPath, 0, NODE_OFFSET);
-    long last = *static_cast<long*>(header->get(NODE_ELEMENT_LENGHT+1));
+    Buffer* nodeToRead = FileManager::readFile(dataPath, node*nodeLenght, nodeLenght+16);
+    long last = *static_cast<long*>(nodeToRead->get(NODE_ELEMENT_LENGHT+1));
     bool terminal;
     //Actualiza variables
-    if(static_cast<char*>(header->get(0))==" ") terminal = false;
+    if(static_cast<char*>(nodeToRead->get(0))==" ") terminal = false;
     else terminal = true;
-    free(header);
+    free(nodeToRead);
+    //Lee la clave a mover
+    Buffer* keyToMove = FileManager::readFile(dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), 16+keyLenght);
+    if(terminal){
+        if(key<order){
+            bool tmpFlag = true;
+            for(int i = NODE_ELEMENT_LENGHT; i<NODE_ELEMENT_LENGHT+keyLenght; i++){
+                if(*static_cast<unsigned char*>(keyToMove->get(i)) != 0) tmpFlag = false;
+            }
+            if(tmpFlag) rotateLeft(keyToMove, *static_cast<long*>(toInsert->get(0)), 0);
+            free(toInsert);
+        }else{
+            FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
+            rotateLeft(keyToMove, *static_cast<long*>(nodeToRead->get(nodeLenght)),0);
+            free(toInsert);
+        }
+    }else{
+        FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
+        rotateLeft(toInsert, *static_cast<long*>(toInsert->get(0)),0);
+        free(toInsert);
+    }
+}
+
+/**@brief rota a partir de una clave
+ * @param long offset ubicacion de clave
+ */
+void BTree::rotateRight(Buffer* toInsert, long node, int key){
+    //lee el header del nodo
+    Buffer* nodeToRead = FileManager::readFile(dataPath, node*nodeLenght, nodeLenght+16);
+    long last = *static_cast<long*>(nodeToRead->get(NODE_ELEMENT_LENGHT+1));
+    bool terminal;
+    //Actualiza variables
+    if(static_cast<char*>(nodeToRead->get(0))==" ") terminal = false;
+    else terminal = true;
+    free(nodeToRead);
     //Lee la clave a mover
     Buffer* keyToMove = FileManager::readFile(dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), 16+keyLenght);
     if(terminal){
         if(key<order){
             FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
-            rotateRight(toInsert, *static_cast<long*>(toInsert->get(NODE_ELEMENT_LENGHT+keyLenght)),0);
+            bool tmpFlag = true;
+            for(int i = NODE_ELEMENT_LENGHT; i<NODE_ELEMENT_LENGHT+keyLenght; i++){
+                if(*static_cast<unsigned char*>(keyToMove->get(i)) != 0) tmpFlag = false;
+            }
+            if(tmpFlag) rotateRight(keyToMove, *static_cast<long*>(toInsert->get(NODE_ELEMENT_LENGHT+keyLenght)),0);
             free(toInsert);
         }else{
-
+            FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
+            rotateRight(keyToMove, *static_cast<long*>(nodeToRead->get(nodeLenght+8)),0);
+            free(toInsert);
         }
     }else{
         FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
