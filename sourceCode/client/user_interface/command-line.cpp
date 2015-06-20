@@ -6,7 +6,7 @@
 #include "command-line.h"
 
 
-
+CLI* CLI::singleton = NULL;
 // cout <<  << endl;
 CLI::CLI() {
     existeStorage = false;
@@ -173,4 +173,17 @@ void CLI::testPermission() {
     string json = string(JsonWriter::setPermission(user.c_str(),uid.c_str()));
     TCPClient::getInstance()->send(json.c_str(),json.length()+1);
     cycleOptions();
+}
+
+CLI* CLI::getInstance() {
+    if(singleton==NULL){
+        singleton = new CLI();
+    }
+    return singleton;
+}
+
+void CLI::messageHandler(string message) {
+    rapidjson::Document document;
+    document.Parse(message.c_str());
+
 }

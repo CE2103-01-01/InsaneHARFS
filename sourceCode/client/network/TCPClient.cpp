@@ -3,8 +3,14 @@
 //
 
 #include <unistd.h>
+#include <thread>
 #include "TCPClient.h"
+#include "../user_interface/command-line.h"
 
+void manageMessage(string message)
+{
+    CLI::getInstance()->messageHandler(message);
+}
 TCPClient *TCPClient::singleton = NULL;
 
 TCPClient::TCPClient() {
@@ -53,7 +59,7 @@ void TCPClient::receive() {
             initConnection();
         }
         std::cout << "Message Received: " << message<<std::endl;
-
+        thread(manageMessage,message);
     } catch(SocketException &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -76,3 +82,4 @@ TCPClient *TCPClient::getInstance() {
     }
     return singleton;
 }
+
