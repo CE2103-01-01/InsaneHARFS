@@ -17,7 +17,8 @@ using namespace std;
 TCPClient *client;
 void initClient()
 {
-    client = new TCPClient();
+    client = TCPClient::getInstance();
+    client->receive();
 }
 
 

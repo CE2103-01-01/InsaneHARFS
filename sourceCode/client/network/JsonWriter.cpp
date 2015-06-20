@@ -19,7 +19,6 @@ const char *JsonWriter::createSchema(int *pInt, int size) {
     }
     writer.EndArray();
     writer.EndObject();
-    std::cout << s.GetString() << std::endl;
     return s.GetString();
 }
 string JsonWriter::createStorageBlock(string name,string structure, string raid) {
@@ -60,4 +59,16 @@ string JsonWriter::getRegister(string offset) {
 
     writer.String("op"); writer.String("getData");
 
+}
+
+const char *JsonWriter::createUser(const char* user, const char* password) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+
+    writer.String("op"); writer.String("createUser");
+    writer.String("user");writer.String(user);
+    writer.String("password");writer.String(password);
+    writer.EndObject();
+    return s.GetString();
 }

@@ -19,6 +19,7 @@ public:
     static string listStorageBlock();
     static void deleteStorageBlock(string);
     static string getRegister(string);
+    static const char* createUser(const char* user, const char* password);
 
 };
 

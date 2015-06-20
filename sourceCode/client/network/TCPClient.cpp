@@ -5,7 +5,7 @@
 #include <unistd.h>
 #include "TCPClient.h"
 
-
+TCPClient *TCPClient::singleton = NULL;
 
 TCPClient::TCPClient() {
     on = true;
@@ -18,16 +18,6 @@ TCPClient::TCPClient() {
         std::cout << "Connected: " << Configuration::getInstance()->getControllerIP() << ':' << Configuration::getInstance()->getControllerPort() << std::endl;
 
         // Send the string to the echo server
-        //              1234567890123456789012345678901234
-        string hello = "12345678901234567890123456789012345678901234567890/53";
-        sock->send(hello.c_str() , hello.length()+1);
-
-
-
-        while(on)
-        {
-            receive();
-        }
 
 
     } catch(SocketException &e) {
@@ -37,6 +27,7 @@ TCPClient::TCPClient() {
 }
 
 void TCPClient::receive() {
+    while(on)
     try {
         char echoBuffer[RCVBUFSIZE+1];
         string message;
@@ -58,6 +49,7 @@ void TCPClient::receive() {
 }
 
 void TCPClient::send(const void *buffer, int bufferLen) {
+    std::cout << "Sending: " << static_cast<const char*>(buffer) << std::endl;
     sock->send(buffer,bufferLen);
 }
 
@@ -66,3 +58,9 @@ TCPClient::~TCPClient() {
     sock->~Socket();
 }
 
+TCPClient *TCPClient::getInstance() {
+    if(singleton==NULL){
+        singleton = new TCPClient();
+    }
+    return singleton;
+}

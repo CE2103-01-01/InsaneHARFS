@@ -8,6 +8,7 @@
 #include "../network/JsonWriter.h"
 #include <ostream>
 #include <iostream>
+#include "../network/TCPClient.h"
 using namespace std;
 
 #define WELCOME "Welcome to the High Availability Register File System"

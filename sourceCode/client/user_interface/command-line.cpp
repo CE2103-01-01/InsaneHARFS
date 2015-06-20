@@ -6,6 +6,7 @@
 #include "command-line.h"
 
 
+
 // cout <<  << endl;
 CLI::CLI() {
     existeStorage = false;
@@ -31,7 +32,7 @@ void CLI::cycleOptions() {
     else if(num==9) createUser();
     else if(num==10)setPermission();
     else if(num==11)testPermission();
-    else if(num==12) std::cout<<"Tanks for using"<<endl;
+    else if(num==12) std::cout<<"Thanks for using"<<endl;
     else(cycleOptions());
 }
 
@@ -111,12 +112,17 @@ void CLI::search() {
 
 }
 
-void CLI::getRegister() {
-
-}
 
 void CLI::createUser() {
-
+    string user;
+    cout<<"Please insert the user"<<endl;
+    getline(cin,user);
+    string password;
+    cout<<"Please insert the password"<<endl;
+    getline(cin,password);
+    string json = string(JsonWriter::createUser(user.c_str(),password.c_str()));
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+    cycleOptions();
 }
 
 void CLI::setPermission() {
