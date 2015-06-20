@@ -30,7 +30,6 @@ void initClients()
     ipPort * nodes = Configuration::getInstance()->getDiskNodes();
     for (int i = 0; i < Configuration::getInstance()->getNumberOfDiks(); ++i) {
         ipPort ipPort = (*(nodes+i));
-        std::cout <<  string(ipPort.ip)<<":"<<ipPort.port<< std::endl;
         threads[i] = thread(initClient,string(ipPort.ip),ipPort.port);
     }
     for (int j = 0; j < Configuration::getInstance()->getNumberOfDiks(); ++j) {
