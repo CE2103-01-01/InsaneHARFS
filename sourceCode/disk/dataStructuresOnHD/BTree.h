@@ -20,11 +20,12 @@
 #define FIRST_EMPTY_ON_HEADER 3
 #define KEY_LENGHT_ON_HEADER 4
 
-#define NODE_OFFSET 17
+#define NODE_OFFSET 7
 #define NODE_ELEMENT_LENGHT 8
 #define TERMINAL_ON_NODE 0
 #define FATHER_ON_NODE 1
 #define LAST_KEY 2
+#define NEXT_EMPTY 3
 
 #define SMALLER_CODE 0
 #define EQUAL_CODE 1
@@ -32,7 +33,7 @@
 
 /**HEADER: | ORDEN 8 BYTES | PISOS 8 BYTES | LONGITUD 8 BYTES | PRIMER VACIO 8 BYTES | LONGITUD DE CLAVE 1 BYTE |*/
 
-/**NODO:   | TERMINAL 1 BYTES | PADRE 8 BYTES | ULTIMA CLAVE 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES | PUNTERO 8 BYTES | PUNTERO 8 BYTES |*/
+/**NODO:   | TERMINAL 1 BYTES | PADRE 8 BYTES | ULTIMA CLAVE 8 BYTES | NEXT EMPTY 8 BYTES | PUNTERO 8 BYTES | CLAVE N BYTES | PUNTERO 8 BYTES | PUNTERO 8 BYTES | PUNTERO 8 BYTES |*/
 
 
 class BTree {
@@ -56,7 +57,7 @@ class BTree {
     void rotateRight(Buffer*,long, int);
     void rotateLeft(Buffer*,long, int);
     void mix(long,long);
-    void split();
+    void split(long);
     public:
         BTree();
         BTree(std::string,long,long);
