@@ -254,11 +254,17 @@ void BTree::rotateRight(Buffer* toInsert, long node, int key){
     else terminal = true;
     free(header);
     //Lee la clave a mover
-    Buffer* keyToMove = FileManager::readFile(dataPath, node*nodeLenght+key*(8+keyLenght), NODE_OFFSET);
+    Buffer* keyToMove = FileManager::readFile(dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), 16+keyLenght);
     if(terminal){
-        //TODO
+        if(key<order){
+            FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
+            rotateRight(toInsert, *static_cast<long*>(toInsert->get(NODE_ELEMENT_LENGHT+keyLenght)),0);
+            free(toInsert);
+        }else{
+
+        }
     }else{
-        FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+key*(8+keyLenght), keyLenght);
+        FileManager::writeFile(toInsert->get(NODE_ELEMENT_LENGHT),dataPath, node*nodeLenght+NODE_OFFSET+key*(8+keyLenght), keyLenght);
         rotateRight(toInsert, *static_cast<long*>(toInsert->get(NODE_ELEMENT_LENGHT+keyLenght)),0);
         free(toInsert);
     }

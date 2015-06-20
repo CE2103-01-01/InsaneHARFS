@@ -6,6 +6,7 @@
 #define USAGE_MSG "Usage : harfs-disk --config res/disk_config.cfg \n"
 #define CONFIG "--config"
 
+
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
