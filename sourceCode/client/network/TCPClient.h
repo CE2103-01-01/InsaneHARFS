@@ -23,6 +23,8 @@ public:
     void receive();
     void send(const void *buffer, int bufferLen);
     ~TCPClient();
+
+    void initConnection();
 };
 
 

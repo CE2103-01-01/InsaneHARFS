@@ -36,15 +36,14 @@ void TCPServer::HandleTCPClient(TCPSocket *sock) {
         cerr << "Unable to get foreign port" << endl;
     }
     cout << endl;
-    while(!off)
-    {
-        receive(sock);
-    }
+
+    receive(sock);
 
 
 }
 
 void TCPServer::receive(TCPSocket *sock) {
+    while(!off)
     try {
         // Send received string and receive again until the end of transmission
         char echoBuffer[RCVBUFSIZE+1];
@@ -58,8 +57,15 @@ void TCPServer::receive(TCPSocket *sock) {
             message.append(echoBuffer);
             if(echoBuffer[bytesReceived-1]=='\0') break;
         }
+        //if(message.length()==0)
+
+        if (sock->send(message.c_str(),message.length()+1)==0)
+        {
+            sock->~Socket(); //Closed Socket
+            std::cout << "Disconnected" << std::endl;
+            break;
+        }
         std::cout << "Message Received: " << message<<std::endl;
-        sock->send(message.c_str(),totalBytesReceived);
 
     } catch(SocketException &e) {
         cerr << e.what() << endl;

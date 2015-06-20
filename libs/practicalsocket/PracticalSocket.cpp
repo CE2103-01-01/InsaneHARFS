@@ -212,11 +212,13 @@ void CommunicatingSocket::connect(const string &foreignAddress,
     }
 }
 
-void CommunicatingSocket::send(const void *buffer, int bufferLen)
+int CommunicatingSocket::send(const void *buffer, int bufferLen)
 throw(SocketException) {
-    if (::send(sockDesc, (raw_type *) buffer, bufferLen, 0) < 0) {
+    int rtn;
+    if (rtn = ::send(sockDesc, (raw_type *) buffer, bufferLen, 0) < 0) {
         throw SocketException("Send failed (send())", true);
     }
+    return rtn;
 }
 
 int CommunicatingSocket::recv(void *buffer, int bufferLen)
