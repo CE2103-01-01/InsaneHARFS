@@ -17,7 +17,8 @@ using namespace std;
 TCPClient *client;
 void initClient()
 {
-    client = new TCPClient();
+    client = TCPClient::getInstance();
+    client->receive();
 }
 
 
@@ -48,7 +49,7 @@ int main(int argc, char* argv[]) {
     //Thread for server
     thread serverThread (initClient);
 
-    CLI Client;
+    CLI::getInstance();
 
     serverThread.join();
     // Garbage Collection!

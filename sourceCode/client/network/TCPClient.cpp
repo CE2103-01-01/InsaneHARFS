@@ -3,31 +3,31 @@
 //
 
 #include <unistd.h>
+#include <thread>
 #include "TCPClient.h"
+#include "../user_interface/command-line.h"
 
-
+void manageMessage(string message)
+{
+    CLI::getInstance()->messageHandler(message);
+}
+TCPClient *TCPClient::singleton = NULL;
 
 TCPClient::TCPClient() {
+    initConnection();
+}
+
+void TCPClient::initConnection() {
     on = true;
-    std::cout << "Connecting: " << Configuration::getInstance()->getControllerIP() << ':' << Configuration::getInstance()->getControllerPort() << std::endl;
+    cout << "Connecting: " << Configuration::getInstance()->getControllerIP() << ':' << Configuration::getInstance()->getControllerPort() << endl;
     LOOP:
     try {
         // Establish connection with the echo server
         sock = new TCPSocket(Configuration::getInstance()->getControllerIP(), Configuration::getInstance()->getControllerPort());
 
-        std::cout << "Connected: " << Configuration::getInstance()->getControllerIP() << ':' << Configuration::getInstance()->getControllerPort() << std::endl;
+        cout << "Connected: " << Configuration::getInstance()->getControllerIP() << ':' << Configuration::getInstance()->getControllerPort() << endl;
 
         // Send the string to the echo server
-        //              1234567890123456789012345678901234
-        string hello = "12345678901234567890123456789012345678901234567890/53";
-        sock->send(hello.c_str() , hello.length()+1);
-
-
-
-        while(on)
-        {
-            receive();
-        }
 
 
     } catch(SocketException &e) {
@@ -37,11 +37,13 @@ TCPClient::TCPClient() {
 }
 
 void TCPClient::receive() {
+    char echoBuffer[RCVBUFSIZE+1];
+    string message;
+    int bytesReceived = 0;              // Bytes read on each recv()
+    int totalBytesReceived = 0;         // Total bytes read
+    while(on)
     try {
-        char echoBuffer[RCVBUFSIZE+1];
-        string message;
-        int bytesReceived = 0;              // Bytes read on each recv()
-        int totalBytesReceived = 0;         // Total bytes read
+
         while ((bytesReceived = sock->recv(echoBuffer, RCVBUFSIZE)) > 0)// Zero means end of transmission
         {
             totalBytesReceived += bytesReceived;     // Keep tally of total bytes
@@ -49,8 +51,15 @@ void TCPClient::receive() {
             message.append(echoBuffer);
             if(echoBuffer[bytesReceived-1]=='\0') break;
         }
-        std::cout << "Message Received: " << message<<std::endl;
 
+        if (sock->send(message.c_str(),message.length()+1)==0)
+        {
+            sock->~Socket(); //Closed Socket
+            std::cout << "Disconnected" << std::endl;
+            initConnection();
+        }
+        std::cout << "Message Received: " << message<<std::endl;
+        thread(manageMessage,message);
     } catch(SocketException &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -58,11 +67,19 @@ void TCPClient::receive() {
 }
 
 void TCPClient::send(const void *buffer, int bufferLen) {
+    std::cout << "Sending: " << static_cast<const char*>(buffer) << std::endl;
     sock->send(buffer,bufferLen);
 }
 
 
 TCPClient::~TCPClient() {
     sock->~Socket();
+}
+
+TCPClient *TCPClient::getInstance() {
+    if(singleton==NULL){
+        singleton = new TCPClient();
+    }
+    return singleton;
 }
 

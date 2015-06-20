@@ -14,13 +14,17 @@ const int RCVBUFSIZE = 32;    // Size of receive buffer
 using namespace std;
 class TCPClient {
 private:
+    TCPClient();
+    static TCPClient *singleton;
     TCPSocket *sock;
     bool on;
+public:
+    static TCPClient *getInstance();
     void receive();
     void send(const void *buffer, int bufferLen);
-public:
-    TCPClient();
     ~TCPClient();
+
+    void initConnection();
 };
 
 
