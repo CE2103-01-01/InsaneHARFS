@@ -10,17 +10,20 @@
 #include <iostream>           // For cerr and cout
 #include <cstdlib>            // For atoi()
 #include "../../dataStructures/DoubleLinkedList.h"
+#include "../managers/StorageBlockManager.h"
 
 #define  RCVBUFSIZE 32    // Size of receive buffer
 
 class TCPServer {
 private:
+    static TCPServer* singleton;
     void HandleTCPClient(TCPSocket *sock);
     int off;
     void receive(TCPSocket *sock);
     DoubleLinkedList<TCPSocket> clients;
 public:
     TCPServer();
+    static TCPServer* getInstance();
     ~TCPServer();
     void sendAll(string);
 };

@@ -4,7 +4,7 @@
 
 #include "TCPServer.h"
 #include "../models/Bridge.h"
-
+TCPServer::
 
 TCPServer::TCPServer() {
     clients = new DoubleLinkedList<TCPSocket>();
@@ -63,6 +63,7 @@ void TCPServer::receive(TCPSocket *sock) {
         }
         if (message.length()==0) throw (SocketException("Empty Message", true));
         std::cout << "Message Received: " << message<<std::endl;
+
         Bridge::getInstance()->sendToDisks(message,sock);
     } catch(SocketException &e) {
         cerr<<e.what()<<endl;

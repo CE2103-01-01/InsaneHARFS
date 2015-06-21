@@ -4,12 +4,15 @@
 
 #ifndef HARFS_CLIENT_STORAGEBLOCKMANAGER_H
 #define HARFS_CLIENT_STORAGEBLOCKMANAGER_H
-
+#include "../../../libs/rapidjson/document.h"
+#include <bits/pthreadtypes.h>
 #include "../pathConstants.h"
 #include "../dataStructuresOnHD/Buffer.h"
 #include "FileManager.h"
 #include "BlockManager.h"
 #include "../dataStructuresOnHD/List.h"
+#include "../network/JsonWriter.h"
+#include "../network/TCPServer.h"
 
 #define HEADER_NAME "storage.blocks"
 #define BLOCK_NAME_LENGHT 32
@@ -35,6 +38,7 @@ public:
     bool addStorageBlocks(void*,void*);
     bool addRegister(void*,long,int);
     bool deleteRegister(void*,int);
+    void messageHandler(std::string);
 };
 
 

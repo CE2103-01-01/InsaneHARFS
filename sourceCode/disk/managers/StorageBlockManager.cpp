@@ -4,6 +4,7 @@
 
 #include "StorageBlockManager.h"
 
+
 StorageBlockManager* StorageBlockManager::manager = 0;
 
 StorageBlockManager::StorageBlockManager(){
@@ -87,4 +88,15 @@ bool StorageBlockManager::deleteRegister(void* key, int storageBlock){
     }else{
         return false;
     }
+}
+
+void StorageBlockManager::messageHandler(std::string message) {
+    rapidjson::Document document;
+    document.Parse(message.c_str());
+    std::string op = document.FindMember("op")->value.GetString();
+    if(op=="logIn"){
+        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),true);
+        TCPServer::getInstance()->sendAll(json);
+    }
+
 }

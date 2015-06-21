@@ -22,8 +22,8 @@ CLI::CLI() {
 
 void CLI::logIn() {
     std::cout<<"Please log in"<<std::endl;
-    string user;
-    string password;
+    string user=0;
+    string password=0;
     cout<<"Plase input the user name"<<endl;
     getline(cin,user);
     userName = user;
@@ -44,7 +44,6 @@ void CLI::cycleOptions() {
     else if(num==2) listStorageBlock();
     else if(num==3) deleteStorageBlock();
     else if(num==4) insertData();
-    else if(num==5) saveRegister();
     else if(num==6) deleteRegister();
     else if(num==7) getRegister();
     else if(num==8) createUser();
@@ -137,9 +136,7 @@ void CLI::deleteStorageBlock() {
     string json =string(JsonWriter::deleteStorageBlock(userName.c_str(),input.c_str()));
     cycleOptions();
 }
-void CLI::saveRegister() {
 
-}
 
 void CLI::getRegister(){
     string input;
@@ -252,6 +249,7 @@ void CLI::messageHandler(string message) {
     }
 
 
+
 }
 
 void CLI::insertData() {
@@ -305,17 +303,23 @@ void CLI::insertDataAux(string structure) {
     cout<<"Please insert your data into the following columns"<<endl;
     const char* info = structure.c_str();
     int size = static_cast<int>(*info);
+
     string input[size];
+    void* data = calloc(1,8+size*32);
+    *static_cast<int*>(data)=size;
     for(int i = 0; i<size;i++){
         string tmp;
         for(int j=0;j<32;j++){
-            char *a= strdup(info+8+i*32+j);
+            char *a= strdup(info+4+i*32+j);
             tmp+=a[0];
         }
 
             cout<<"please insert the data for the "<<tmp<<"column"<<endl;
 
             getline(cin,input[i]);
+
         }
+
+
     }
 

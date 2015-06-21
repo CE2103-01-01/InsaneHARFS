@@ -3,7 +3,13 @@
 //
 
 #include "TCPServer.h"
-
+TCPServer* TCPServer::singleton =0;
+TCPServer* TCPServer::getInstance() {
+    if(singleton==0){
+        singleton = new TCPServer();
+    }
+    return singleton;
+}
 
 TCPServer::TCPServer() {
     off = false;
@@ -59,7 +65,7 @@ void TCPServer::receive(TCPSocket *sock) {
             }
             if (message.length()==0) throw (SocketException("Empty Message", true));
             std::cout << "Message Received: " << message<<std::endl;
-
+            StorageBlockManager::getInstance()->messageHandler(message);
         } catch(SocketException &e) {
             sock->~Socket(); //Closed Socket
             std::cout << "Disconnected" << std::endl;
