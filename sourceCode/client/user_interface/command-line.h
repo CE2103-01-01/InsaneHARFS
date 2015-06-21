@@ -10,7 +10,7 @@
 #include <iostream>
 #include "../network/TCPClient.h"
 using namespace std;
-
+#define SLEEP 100000
 #define WELCOME "Welcome to the High Availability Register File System"
 #define COLUMNS_INSTRUCTS "Define the columns and the size of data of each one:\nNumber of columns:"
 #define COLUMN "Size in bytes of column:"
