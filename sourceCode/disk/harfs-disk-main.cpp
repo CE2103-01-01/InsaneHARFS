@@ -43,28 +43,6 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
     thread serverThread (initServer);
 
-    /** PRUEBAS **/
-    try{
-        int* winner = static_cast<int*>(malloc(2*sizeof(int)));
-        unsigned long tmp1 = 0;
-        for(int i = 3; i<1000; i++){
-            for(int j = 0; j<35; j++){
-                unsigned long tmp2 = aa(i,j);
-                if(tmp2 > tmp1){
-                    tmp1 = tmp2;
-                    *(winner) = i;
-                    *(winner+1) = j;
-                    std::cout << tmp2 << std::endl;
-                }
-            }
-        }
-        std::cout << *(winner) << std:: endl;
-        std::cout << *(winner+1) << std:: endl;
-        //blockManagerProof();
-    }catch(int exception){
-        return exception;
-    }
-    /** ~PRUEBAS **/
     serverThread.join();
     free(Configuration::getInstance());// Garbage Collection!
     return 0;
