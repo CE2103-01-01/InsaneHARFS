@@ -37,8 +37,11 @@ private:
     void createUser();
     void setPermission();
     void testPermission();
-    void saveFile(string);
-    void getFile(string);
+    void insertDataAux(string);
+    void saveFile(string,string);
+    string getFile(string);
+    void insertData();
+    bool existFile(string);
 
 public:
     static CLI *getInstance();

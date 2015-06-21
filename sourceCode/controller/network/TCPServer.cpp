@@ -3,9 +3,11 @@
 //
 
 #include "TCPServer.h"
+#include "../models/Bridge.h"
 
 
 TCPServer::TCPServer() {
+    clients = new DoubleLinkedList<TCPSocket>();
     off = false;
     try {
         TCPServerSocket servSock(Configuration::getInstance()->getPort());     // Server Socket object
@@ -21,6 +23,7 @@ TCPServer::TCPServer() {
 
 TCPServer::~TCPServer() {
     off = true;
+    delete clients;
 }
 
 void TCPServer::HandleTCPClient(TCPSocket *sock) {
@@ -43,6 +46,7 @@ void TCPServer::HandleTCPClient(TCPSocket *sock) {
 }
 
 void TCPServer::receive(TCPSocket *sock) {
+    clients->insertNewTail(sock);
     while(!off)
     try {
         // Send received string and receive again until the end of transmission
@@ -61,14 +65,28 @@ void TCPServer::receive(TCPSocket *sock) {
 
         if (sock->send(message.c_str(),message.length()+1)==0)
         {
+            clients->deleteLink(sock);
             sock->~Socket(); //Closed Socket
             std::cout << "Disconnected" << std::endl;
             break;
         }
         std::cout << "Message Received: " << message<<std::endl;
-
+        Bridge::getInstance()->sendToDisks(message,sock);
     } catch(SocketException &e) {
         cerr << e.what() << endl;
         exit(1);
     }
+}
+
+void TCPServer::sendAll(string message) {
+    DoubleLinkedNode<TCPSocket> *node = clients->getHead();
+    while (!node)
+    {
+        node->getData()->send(message.c_str(),message.length()+1);
+        node = node->getNext();
+    }
+}
+
+DoubleLinkedList<TCPSocket> *TCPServer::getClients() {
+    return clients;
 }

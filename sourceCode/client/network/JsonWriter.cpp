@@ -73,7 +73,7 @@ const char *JsonWriter::createUser(const char* user,const char* userToCreate, co
     writer.StartObject();
     writer.String("user"); writer.String(user);
     writer.String("op"); writer.String("createUser");
-    writer.String("user");writer.String(user);
+    writer.String("user");writer.String(userToCreate);
     writer.String("password");writer.String(password);
     writer.EndObject();
     return s.GetString();
@@ -122,4 +122,16 @@ const char* JsonWriter::updateStorage(const char * user) {
     writer.String("op");writer.String("updateStorage");
     writer.EndObject();
     return s.GetString();
+}
+
+const char* JsonWriter::getStructure(const char * user, const char * file) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+    writer.String("user");writer.String(user);
+    writer.String("op");writer.String("getStructure");
+    writer.String("fileName");writer.String(file);
+    writer.EndObject();
+    return s.GetString();
+
 }
