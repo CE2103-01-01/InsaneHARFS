@@ -18,12 +18,12 @@ class TCPServer {
 private:
     TCPServer();
     static TCPServer* singleton;
-    void HandleTCPClient(TCPSocket *sock);
     int off;
     void receive(TCPSocket *sock);
     DoubleLinkedList<TCPSocket*> clients;
     TCPServerSocket *serverSocket;
 public:
+    void HandleTCPClient();
     static TCPServer* getInstance();
     ~TCPServer();
     void sendAll(string);

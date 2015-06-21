@@ -9,16 +9,17 @@
 #define USAGE_MSG "Usage : harfs-disk --config res/disk_config.cfg \n"
 #define CONFIG "--config"
 
-TCPServer *server;
+
 void initServer()
 {
-    server =TCPServer::getInstance();
+    TCPServer::getInstance()->HandleTCPClient();
 }
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
     // Cleanup and close up stuff here
     free(Configuration::getInstance());
+    TCPServer::getInstance()->~TCPServer();
     // Terminate program
     exit(signum);
 }

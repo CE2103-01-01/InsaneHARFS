@@ -17,7 +17,6 @@
 
 
 
-TCPServer *server;
 DoubleLinkedList<TCPSocket*> *sockets;
 using namespace std;
 //Init Single Client
@@ -41,7 +40,7 @@ void initClients()
 
 void initServer()
 {
-    server = new TCPServer();
+    TCPServer::getInstance()->HandleTCPClient();
 }
 
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
@@ -49,8 +48,7 @@ void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
     // Cleanup and close up stuff here
     free(Configuration::getInstance());
-    server->~TCPServer();
-    delete server;
+    TCPServer::getInstance()->~TCPServer();
     // Terminate program
     exit(signum);
 }
@@ -82,7 +80,6 @@ int main(int argc, char* argv[]) {
 
     // Garbage Collection!
     free(Configuration::getInstance());
-    delete server;
 
     return 0;
 

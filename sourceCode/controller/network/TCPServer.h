@@ -15,13 +15,15 @@
 
 class TCPServer {
 private:
-    void HandleTCPClient(TCPSocket *sock);
+    TCPServer();
+    static TCPServer* singleton;
     int off;
     void receive(TCPSocket *sock);
     DoubleLinkedList<TCPSocket>* clients;
     TCPServerSocket *serverSocket;
 public:
-    TCPServer();
+    void HandleTCPClient();
+    static TCPServer* getInstance();
     ~TCPServer();
     void sendAll(string);
     DoubleLinkedList<TCPSocket> *getClients();

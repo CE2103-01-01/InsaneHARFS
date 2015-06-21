@@ -3,7 +3,14 @@
 //
 
 #include "TCPServer.h"
+TCPServer* TCPServer::singleton = 0;
 
+TCPServer* TCPServer::getInstance() {
+    if(singleton==0){
+        singleton = new TCPServer();
+    }
+    return singleton;
+}
 
 TCPServer::TCPServer() {
     clients = new DoubleLinkedList<TCPSocket>();
@@ -11,9 +18,7 @@ TCPServer::TCPServer() {
     try {
         serverSocket = new TCPServerSocket(Configuration::getInstance()->getPort());     // Server Socket object
 
-        while(!off) {   // Run forever
-            HandleTCPClient(serverSocket->accept());       // Wait for a client to connect
-        }
+
     } catch (SocketException &e) {
         cerr << e.what() << endl;
         abort();
@@ -26,21 +31,26 @@ TCPServer::~TCPServer() {
     delete clients;
 }
 
-void TCPServer::HandleTCPClient(TCPSocket *sock) {
-    cout << "Handling client ";
-    try {
-        cout << sock->getForeignAddress() << ":";
-    } catch (SocketException e) {
-        cerr << "Unable to get foreign address" << endl;
-    }
-    try {
-        cout << sock->getForeignPort();
-    } catch (SocketException e) {
-        cerr << "Unable to get foreign port" << endl;
-    }
-    cout << endl;
+void TCPServer::HandleTCPClient() {
+    while(!off) {   // Run forever
 
-    receive(sock);
+        TCPSocket *sock = serverSocket->accept();
+
+        cout << "Handling client ";
+        try {
+            cout << sock->getForeignAddress() << ":";
+        } catch (SocketException e) {
+            cerr << "Unable to get foreign address" << endl;
+        }
+        try {
+            cout << sock->getForeignPort();
+        } catch (SocketException e) {
+            cerr << "Unable to get foreign port" << endl;
+        }
+        cout << endl;
+
+        receive(sock);
+    }
 
 
 }
