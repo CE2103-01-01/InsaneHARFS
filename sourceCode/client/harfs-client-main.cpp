@@ -15,6 +15,7 @@
 #define CONFIG "--config"
 
 using namespace std;
+
 TCPClient *client;
 void initClient()
 {

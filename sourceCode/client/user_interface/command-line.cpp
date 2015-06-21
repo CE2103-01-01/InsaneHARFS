@@ -24,8 +24,8 @@ CLI::CLI() {
 
 void CLI::logIn() {
     std::cout<<"Please log in"<<std::endl;
-    string user="";
-    string password="";
+    string user;
+    string password;
     cout<<"Plase input the user name"<<endl;
     getline(cin,user);
     userName = user;
@@ -221,7 +221,6 @@ void CLI::messageHandler(string message) {
     else if(action=="login"){
         if(document.FindMember("bool")->value.GetBool()){
             cycleOptions();
-            signIn=true;
         }
     }
     else if(action == "storageConfirmation"){

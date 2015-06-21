@@ -14,17 +14,17 @@ using namespace rapidjson;
 
 class JsonWriter {
 public:
-    static const char * createSchema(const char*,int*,int);
-    static const char* createStorageBlock(const char*,const char*,const char*,const char*);
-    static const char* listStorageBlock(const char*);
-    static const char* deleteStorageBlock(const char*,const char*);
-    static const char* getRegister(const char*,const char*,const char*);
-    static const char* createUser(const char* ,const char* , const char* );
-    static const char* logIn(const char* user, const char* password);
-    static const char* setPermission(const char*,const char*,const char*);
-    static const char* testPermission(const char*,const char*,const char*);
-    static const char* updateStorage(const char*);
-    static const char* getStructure(const char*,const char*);
+    static string createSchema(const char*,int*,int);
+    static string createStorageBlock(const char*,const char*,const char*,const char*);
+    static string listStorageBlock(const char*);
+    static string deleteStorageBlock(const char*,const char*);
+    static string getRegister(const char*,const char*,const char*);
+    static string createUser(const char* ,const char* , const char* );
+    static string logIn(const char* user, const char* password);
+    static string setPermission(const char*,const char*,const char*);
+    static string testPermission(const char*,const char*,const char*);
+    static string updateStorage(const char*);
+    static string getStructure(const char*,const char*);
 
 
 };

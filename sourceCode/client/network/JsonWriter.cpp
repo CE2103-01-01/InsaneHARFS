@@ -5,7 +5,7 @@
 #include <iostream>
 #include "JsonWriter.h"
 
-const char *JsonWriter::createSchema(const char* user,int *pInt, int size) {
+string JsonWriter::createSchema(const char* user,int *pInt, int size) {
 
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -21,7 +21,7 @@ const char *JsonWriter::createSchema(const char* user,int *pInt, int size) {
     writer.EndObject();
     return s.GetString();
 }
-const char* JsonWriter::createStorageBlock(const char* user,const char* name,const char* structure, const char* raid) {
+string JsonWriter::createStorageBlock(const char* user,const char* name,const char* structure, const char* raid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -33,7 +33,7 @@ const char* JsonWriter::createStorageBlock(const char* user,const char* name,con
     writer.EndObject();
     return s.GetString();
 }
-const char* JsonWriter::listStorageBlock(const char* user) {
+string JsonWriter::listStorageBlock(const char* user) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -43,7 +43,7 @@ const char* JsonWriter::listStorageBlock(const char* user) {
     return s.GetString();
 }
 
-const char* JsonWriter::deleteStorageBlock(const char* user,const char* uid) {
+string JsonWriter::deleteStorageBlock(const char* user,const char* uid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -54,7 +54,7 @@ const char* JsonWriter::deleteStorageBlock(const char* user,const char* uid) {
     return s.GetString();
 }
 
-const char* JsonWriter::getRegister(const char* user,const char* colum,const char* key) {
+string JsonWriter::getRegister(const char* user,const char* colum,const char* key) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -67,7 +67,7 @@ const char* JsonWriter::getRegister(const char* user,const char* colum,const cha
 
 }
 
-const char *JsonWriter::createUser(const char* user,const char* userToCreate, const char* password) {
+string JsonWriter::createUser(const char* user,const char* userToCreate, const char* password) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -79,7 +79,8 @@ const char *JsonWriter::createUser(const char* user,const char* userToCreate, co
     return s.GetString();
 }
 
-const char* JsonWriter::logIn(const char *user, const char *password) {
+string JsonWriter::logIn(const char *user, const char *password) {
+    cout<<user<<password<<endl;
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -91,7 +92,7 @@ const char* JsonWriter::logIn(const char *user, const char *password) {
     return s.GetString();
 }
 
-const char* JsonWriter::setPermission(const char* user,const char* userToSet, const char * uid) {
+string JsonWriter::setPermission(const char* user,const char* userToSet, const char * uid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -102,7 +103,7 @@ const char* JsonWriter::setPermission(const char* user,const char* userToSet, co
     writer.EndObject();
     return s.GetString();
 }
-const char* JsonWriter::testPermission(const char* user,const char * userToTest, const char * uid) {
+string JsonWriter::testPermission(const char* user,const char * userToTest, const char * uid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -114,7 +115,7 @@ const char* JsonWriter::testPermission(const char* user,const char * userToTest,
     return s.GetString();
 }
 
-const char* JsonWriter::updateStorage(const char * user) {
+string JsonWriter::updateStorage(const char * user) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -124,7 +125,7 @@ const char* JsonWriter::updateStorage(const char * user) {
     return s.GetString();
 }
 
-const char* JsonWriter::getStructure(const char * user, const char * file) {
+string JsonWriter::getStructure(const char * user, const char * file) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
