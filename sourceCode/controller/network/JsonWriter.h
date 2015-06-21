@@ -14,7 +14,7 @@ using namespace rapidjson;
 
 class JsonWriter {
 public:
-    static char* setStatus(bool status);
+    static string setStatus(bool status);
 };
 
 
