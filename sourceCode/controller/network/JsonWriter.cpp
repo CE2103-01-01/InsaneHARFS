@@ -4,7 +4,7 @@
 
 #include "JsonWriter.h"
 
-char* JsonWriter::setStatus(bool status) {
+string JsonWriter::setStatus(bool status) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
