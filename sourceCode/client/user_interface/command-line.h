@@ -19,6 +19,8 @@ class CLI {
 private:
     CLI();
     static CLI* singleton;
+    string userName;
+    void* table;
     bool signIn;
     bool defineRegister;
     bool existeStorage;
@@ -35,6 +37,8 @@ private:
     void createUser();
     void setPermission();
     void testPermission();
+    void saveFile(string);
+    void getFile(string);
 
 public:
     static CLI *getInstance();

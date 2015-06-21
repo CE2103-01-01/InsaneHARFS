@@ -5,112 +5,84 @@
 #include <iostream>
 #include "JsonWriter.h"
 
-const char *JsonWriter::createSchema(int *pInt, int size) {
-
+const char* JsonWriter::confirmationLogin(const char* user,bool cheack){
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-
-    writer.String("op"); writer.String("define");
-    writer.String("columns");
-    writer.StartArray();
-    for (int i = 0; i < size; ++i) {
-        writer.Int(pInt[i]);
-    }
-    writer.EndArray();
-    writer.EndObject();
-    return s.GetString();
-}
-const char* JsonWriter::createStorageBlock(string name,string structure, string raid) {
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-    writer.StartObject();
-
-    writer.String("op");writer.String("createBlock");
-    writer.String("name");writer.String(name.c_str());
-    writer.String("structure");writer.String(structure.c_str());
-    writer.String("raid");writer.String(raid.c_str());
-    writer.EndObject();
-    return s.GetString();
-}
-const char* JsonWriter::listStorageBlock() {
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-    writer.StartObject();
-
-    writer.String("op"); writer.String("list");
+    writer.String("user"); writer.String(user);
+    writer.String("op"); writer.String("login");
+    writer.String("bool");writer.Bool(cheack);
     writer.EndObject();
     return s.GetString();
 }
 
-const char* JsonWriter::deleteStorageBlock(const char* uid) {
+const char* JsonWriter::listStorage(const char* user, const void *list,const int len) {
+    char* pointer = static_cast<char*>(list) + '\0';
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-
-    writer.String("op");writer.String("deleteStorageBlock");
-    writer.String("uid");writer.String(uid);
+    writer.String("user"); writer.String(user);
+    writer.String("op"); writer.String("listStorage");
+    writer.String("data"); writer.String(pointer);
     writer.EndObject();
     return s.GetString();
 }
 
-const char* JsonWriter::getRegister(const char* colum,const char* key) {
+const char* JsonWriter::updateStorage(const char* user,const void *list, const int len) {
+    char* pointer = static_cast<char*>(list) + '\0';
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-
-    writer.String("op"); writer.String("getData");
-    writer.String("colum");writer.String(colum);
-    writer.String("key");writer.String(key);
-    writer.EndObject();
-    return s.GetString();
-
-}
-
-const char *JsonWriter::createUser(const char* user, const char* password) {
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-    writer.StartObject();
-
-    writer.String("op"); writer.String("createUser");
-    writer.String("user");writer.String(user);
-    writer.String("password");writer.String(password);
+    writer.String("user"); writer.String(user);
+    writer.String("op"); writer.String("updateStorage");
+    writer.String("infoStorage"); writer.String(pointer);
+    writer.String("size");writer.Int(len);
     writer.EndObject();
     return s.GetString();
 }
 
-const char* JsonWriter::logIn(const char *user, const char *password) {
+const char* JsonWriter::sendStructure(const char* user,const void *list, const int len) {
+    char* pointer = static_cast<char*>(list) + '\0';
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-
-    writer.String("op"); writer.String("logIn");
-    writer.String("user");writer.String(user);
-    writer.String("password");writer.String(password);
+    writer.String("user"); writer.String(user);
+    writer.String("op"); writer.String("updateStructure");
+    writer.String("infoStrcture"); writer.String(pointer);
+    writer.String("size");writer.Int(len);
     writer.EndObject();
     return s.GetString();
 }
 
-const char* JsonWriter::setPermission(const char* user, const char * uid) {
+const char* JsonWriter::confirmationUpdate(const char* user,bool cheack) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-
-    writer.String("op"); writer.String("setPermission");
-    writer.String("user");writer.String(user);
-    writer.String("uid");writer.String(uid);
-    writer.EndObject();
-    return s.GetString();
-}
-const char* JsonWriter::testPermission(const char * user, const char * uid) {
-    StringBuffer s;
-    Writer<StringBuffer> writer(s);
-    writer.StartObject();
-
-    writer.String("op"); writer.String("testPermission");
-    writer.String("user");writer.String(user);
-    writer.String("uid");writer.String(uid);
+    writer.String("user"); writer.String(user);
+    writer.String("op"); writer.String("update");
+    writer.String("bool");writer.Bool(cheack);
     writer.EndObject();
     return s.GetString();
 }
 
+const char* JsonWriter::confirmation(const char * user, bool cheack) {
+    StringBuffer s ;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+    writer.String("user"); writer.String(user);
+    writer.String("op");writer.String("confirm");
+    writer.String("bool");writer.Bool(cheack);
+    writer.EndObject();
+    return s.GetString();
+}
+
+const char* JsonWriter::confirmationCreationStorage(const char * user, bool cheack) {
+    StringBuffer s ;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+    writer.String("user"); writer.String(user);
+    writer.String("op");writer.String("storageConfirmation");
+    writer.String("bool");writer.Bool(cheack);
+    writer.EndObject();
+    return s.GetString();
+}
