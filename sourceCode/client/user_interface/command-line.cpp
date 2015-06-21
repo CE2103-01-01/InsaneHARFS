@@ -25,13 +25,12 @@ void CLI::logIn() {
     string password;
     cout<<"Plase input the user name"<<endl;
     getline(cin,user);
+    userName = user;
     cout<<"Please input the password"<<endl;
     getline(cin,password);
-    JsonWriter::logIn(user.c_str(),password.c_str());
+    string json =JsonWriter::logIn(user.c_str(),password.c_str());
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
 
-
-
-    cycleOptions();
 }
 
 void CLI::cycleOptions() {
@@ -43,7 +42,6 @@ void CLI::cycleOptions() {
          if(num==1) createStorageBlock();
     else if(num==2)listStorageBlock();
     else if(num==3) deleteStorageBlock();
-    else if(num==4) defineSchema();
     else if(num==5)saveRegister();
     else if(num==6)deleteRegister();
     else if(num==7)getRegister();
@@ -59,7 +57,6 @@ void CLI::cycleOptions() {
 }
 
 void CLI::defineSchema() {
-    if (existeStorage) {
         string input;
         cout << COLUMNS_INSTRUCTS << std::endl;
         getline(cin, input);
@@ -70,14 +67,12 @@ void CLI::defineSchema() {
             getline(cin, input);
             columns[i] = atoi(input.c_str());
         }
-        JsonWriter::createSchema(columns, columnNumber);
+        JsonWriter::createSchema(userName.c_str(),columns, columnNumber);
         defineRegister = true;
 
     }
-    else{
-        std::cout<<"Currently no Storage to define the schema"<<std::endl;
-    }
-}
+
+
 
 void CLI::createStorageBlock() {
     string input_name;
@@ -112,18 +107,20 @@ void CLI::createStorageBlock() {
     }
 
     existeStorage=true;
-    JsonWriter::createStorageBlock(input_name.c_str(),input_organization.c_str(),raid.c_str());
+    string json = JsonWriter::createStorageBlock(userName.c_str(),input_name.c_str(),input_organization.c_str(),raid.c_str());
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+
 
 }
 void CLI::listStorageBlock() {
-    JsonWriter::listStorageBlock();
+    JsonWriter::listStorageBlock(userName.c_str());
 }
 
 void CLI::deleteStorageBlock() {
     string input;
     cout<< "Please insert the UID of the storage block which you want to delete"<<endl;
     getline(cin,input);
-    string json =string(JsonWriter::deleteStorageBlock(input.c_str()));
+    string json =string(JsonWriter::deleteStorageBlock(userName.c_str(),input.c_str()));
     cycleOptions();
 }
 void CLI::saveRegister() {
@@ -137,7 +134,7 @@ void CLI::getRegister(){
     string key;
     cout<<"Please insert the search key of your register"<<endl;
     getline(cin,key);
-    string json = string(JsonWriter::getRegister(input.c_str(),key.c_str()));
+    string json = string(JsonWriter::getRegister(userName.c_str(),input.c_str(),key.c_str()));
     TCPClient::getInstance()->send(json.c_str(),json.length()+1);
     cycleOptions();
 }
@@ -159,7 +156,7 @@ void CLI::createUser() {
     string password;
     cout<<"Please insert the password"<<endl;
     getline(cin,password);
-    string json = string(JsonWriter::createUser(user.c_str(),password.c_str()));
+    string json = string(JsonWriter::createUser(userName.c_str(),user.c_str(),password.c_str()));
     TCPClient::getInstance()->send(json.c_str(),json.length()+1);
     cycleOptions();
 }
@@ -171,7 +168,7 @@ void CLI::setPermission() {
     getline(cin,user);
     cout<<"Please insert the uid of the storage which you want to associate: "<<endl;
     getline(cin,uid);
-    string json = string(JsonWriter::setPermission(user.c_str(),uid.c_str()));
+    string json = string(JsonWriter::setPermission(userName.c_str(),user.c_str(),uid.c_str()));
     TCPClient::getInstance()->send(json.c_str(),json.length()+1);
     cycleOptions();
 
@@ -184,7 +181,7 @@ void CLI::testPermission() {
     getline(cin,user);
     cout<<"Please insert the uid of the storage which you want to associate: "<<endl;
     getline(cin,uid);
-    string json = string(JsonWriter::setPermission(user.c_str(),uid.c_str()));
+    string json = string(JsonWriter::setPermission(userName.c_str(),user.c_str(),uid.c_str()));
     TCPClient::getInstance()->send(json.c_str(),json.length()+1);
     cycleOptions();
 }
@@ -202,11 +199,27 @@ void CLI::messageHandler(string message) {
     string action = document.FindMember("op")->value.GetString();
     if(action=="confirm"){
         bool confirm =document.FindMember("bool")->value.GetBool();
-        if(confirm) std::cout<<"Process done successfully"<<std::endl;
+        if(confirm) std::cout<<"successful"<<std::endl;
         else{
-            std::cout<<"Process failed"<<std::endl;
+            std::cout<<"failed"<<std::endl;
         }
 
+    }
+    else if(action=="login"){
+        if(document.FindMember("bool")->value.GetBool()){
+            cycleOptions();
+        }
+    }
+    else if(action == "storageConfirmation"){
+        if(document.FindMember("bool")->value.GetBool()){
+            defineSchema();
+        }
+    }
+    else if(action == "updateStorage"){
+        if(document.FindMember("bool")->value.GetBool()){
+
+            }
+        }
     }
 
 
