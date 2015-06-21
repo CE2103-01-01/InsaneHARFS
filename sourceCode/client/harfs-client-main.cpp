@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
     //Thread for server
     thread serverThread (initClient);
 
-    CLI Client;
+    CLI::getInstance();
 
     serverThread.join();
     // Garbage Collection!

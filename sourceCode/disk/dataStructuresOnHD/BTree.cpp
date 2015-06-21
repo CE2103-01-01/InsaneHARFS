@@ -186,7 +186,7 @@ void BTree::insertKey(void* key, long pointer){
         free(nodeHeader);
         binaryInsertion(key, pointer,terminal,0,0,last);
     }else{
-        split();
+        split(0);
     }
 }
 
@@ -312,8 +312,26 @@ void BTree::rotateRight(Buffer* toInsert, long node, int key){
 
 /**@brief divide el arbol
  */
-void BTree::split(){
-    //TODO
+void BTree::split(long node){
+    Buffer* nodeToRead = FileManager::readFile(dataPath, node*nodeLenght, nodeLenght+24);
+    if(static_cast<char*>(nodeToRead->get(0))==" "){
+        long next = *static_cast<long*>(nodeToRead->get(nodeLenght+16));
+        if(firstEmpty!=-1){
+            Buffer* nextEmptyLeft = FileManager::readFile(dataPath, firstEmpty*nodeLenght, nodeLenght+24);
+            long tmpNext = firstEmpty;
+            firstEmpty = *static_cast<long*>(nextEmptyLeft->get((NEXT_EMPTY-1)*NODE_ELEMENT_LENGHT+1));
+            if(firstEmpty!=-1){
+                Buffer* nextEmptyRight = FileManager::readFile(dataPath, firstEmpty*nodeLenght, nodeLenght+24);
+
+            }else{
+
+            }
+        }else{
+
+        }
+        FileManager::writeFile(static_cast<char*>(" "), dataPath, node*nodeLenght, nodeLenght+24);
+        split(next);
+    }
 }
 
 /**@brief mezcla dos nodos
