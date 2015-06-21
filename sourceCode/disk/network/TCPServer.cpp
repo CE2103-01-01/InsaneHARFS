@@ -15,7 +15,6 @@ TCPServer::TCPServer() {
     off = false;
     try {
         TCPServerSocket servSock(Configuration::getInstance()->getPort());     // Server Socket object
-
         while(!off) {   // Run forever
             HandleTCPClient(servSock.accept());       // Wait for a client to connect
         }

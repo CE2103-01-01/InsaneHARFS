@@ -14,13 +14,13 @@ using namespace rapidjson;
 
 class JsonWriter {
 public:
-    static const char* confirmationLogin(const char*,bool cheack);
-    static const char* confirmationUpdate(const char*,bool cheack);
-    static const char* confirmation(const char*,bool cheack);
-    static const char* listStorage(const char*, void* list,const int len);
-    static const char* updateStorage(const char*, void* list,const int len);
-    static const char* sendStructure(const char*, void* list,const int len);
-    static const char* confirmationCreationStorage(const char*,bool cheack);
+    static string confirmationLogin(const char*,bool cheack);
+    static string confirmationUpdate(const char*,bool cheack);
+    static string confirmation(const char*,bool cheack);
+    static string listStorage(const char*, void* list,const int len);
+    static string updateStorage(const char*, void* list,const int len);
+    static string sendStructure(const char*, void* list,const int len);
+    static string confirmationCreationStorage(const char*,bool cheack);
 };
 
 

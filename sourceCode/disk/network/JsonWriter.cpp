@@ -5,7 +5,7 @@
 #include <iostream>
 #include "JsonWriter.h"
 
-const char* JsonWriter::confirmationLogin(const char* user,bool cheack){
+string JsonWriter::confirmationLogin(const char* user,bool cheack){
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -16,7 +16,7 @@ const char* JsonWriter::confirmationLogin(const char* user,bool cheack){
     return s.GetString();
 }
 
-const char* JsonWriter::listStorage(const char* user,void *list,const int len) {
+string JsonWriter::listStorage(const char* user,void *list,const int len) {
     char* pointer = static_cast<char*>(list) + '\0';
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -28,7 +28,7 @@ const char* JsonWriter::listStorage(const char* user,void *list,const int len) {
     return s.GetString();
 }
 
-const char* JsonWriter::updateStorage(const char* user, void *list, const int len) {
+string JsonWriter::updateStorage(const char* user, void *list, const int len) {
     char* pointer = static_cast<char*>(list) + '\0';
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -41,7 +41,7 @@ const char* JsonWriter::updateStorage(const char* user, void *list, const int le
     return s.GetString();
 }
 
-const char* JsonWriter::sendStructure(const char* user, void *list, const int len) {
+string JsonWriter::sendStructure(const char* user, void *list, const int len) {
     char* pointer = static_cast<char*>(list) + '\0';
     StringBuffer s;
     Writer<StringBuffer> writer(s);
@@ -54,7 +54,7 @@ const char* JsonWriter::sendStructure(const char* user, void *list, const int le
     return s.GetString();
 }
 
-const char* JsonWriter::confirmationUpdate(const char* user,bool cheack) {
+string JsonWriter::confirmationUpdate(const char* user,bool cheack) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -65,7 +65,7 @@ const char* JsonWriter::confirmationUpdate(const char* user,bool cheack) {
     return s.GetString();
 }
 
-const char* JsonWriter::confirmation(const char * user, bool cheack) {
+string JsonWriter::confirmation(const char * user, bool cheack) {
     StringBuffer s ;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
@@ -76,7 +76,7 @@ const char* JsonWriter::confirmation(const char * user, bool cheack) {
     return s.GetString();
 }
 
-const char* JsonWriter::confirmationCreationStorage(const char * user, bool cheack) {
+string JsonWriter::confirmationCreationStorage(const char * user, bool cheack) {
     StringBuffer s ;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
