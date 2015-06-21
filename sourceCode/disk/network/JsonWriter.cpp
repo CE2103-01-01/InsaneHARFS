@@ -5,25 +5,31 @@
 #include <iostream>
 #include "JsonWriter.h"
 
-const char *JsonWriter::createSchema(bool check) {
+const char *JsonWriter::createSchema(int *pInt, int size) {
 
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-    writer.String("op");writer.String("createSchemaConf");
-    writer.String("conf");writer.Bool(check);
 
+    writer.String("op"); writer.String("define");
+    writer.String("columns");
+    writer.StartArray();
+    for (int i = 0; i < size; ++i) {
+        writer.Int(pInt[i]);
+    }
+    writer.EndArray();
     writer.EndObject();
     return s.GetString();
 }
-const char* JsonWriter::createStorageBlock(bool check, unsigned int uid) {
+const char* JsonWriter::createStorageBlock(string name,string structure, string raid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
 
-    writer.String("op");writer.String("createBlockConf");
-    writer.String("");
-
+    writer.String("op");writer.String("createBlock");
+    writer.String("name");writer.String(name.c_str());
+    writer.String("structure");writer.String(structure.c_str());
+    writer.String("raid");writer.String(raid.c_str());
     writer.EndObject();
     return s.GetString();
 }

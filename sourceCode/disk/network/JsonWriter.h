@@ -14,8 +14,8 @@ using namespace rapidjson;
 
 class JsonWriter {
 public:
-    static const char* createSchema(bool);
-    static const char* createStorageBlock(bool, unsigned int);
+    static const char* createSchema(int*,int);
+    static const char* createStorageBlock(const char*,const char*,const char*);
     static const char* listStorageBlock();
     static const char* deleteStorageBlock(const char*);
     static const char* getRegister(const char*,const char*);

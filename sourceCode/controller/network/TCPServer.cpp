@@ -57,7 +57,7 @@ void TCPServer::receive(TCPSocket *sock) {
             message.append(echoBuffer);
             if(echoBuffer[bytesReceived-1]=='\0') break;
         }
-        //if(message.length()==0)
+
 
         if (sock->send(message.c_str(),message.length()+1)==0)
         {

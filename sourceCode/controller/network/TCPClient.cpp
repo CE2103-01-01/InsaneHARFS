@@ -7,25 +7,23 @@
 #include <unistd.h>
 #include "TCPClient.h"
 
-
+TCPClient *TCPClient::singleton = NULL;
 
 TCPClient::TCPClient(string ip, unsigned short &port) {
+    initConnection(ip,port);
+}
+
+void TCPClient::initConnection(string ip, unsigned short &port) {
     on = true;
-    std::cout << "Connecting: " << ip << ':' << port << std::endl;
+    cout << "Connecting: " << ip << ':' << port << endl;
     LOOP:
     try {
         // Establish connection with the echo server
-        sock = new TCPSocket(ip,port);
-        std::cout << "Connected: " << ip << ':' << port << std::endl;
-        // Send the string to the echo server
-        //              1234567890123456789012345678901234
-        string hello = "helloworld";
-        sock->send(hello.c_str() , 10);
+        sock = new TCPSocket(ip, port);
 
-        while(on)
-        {
-            receive();
-        }
+        cout << "Connected: " << ip << ':' << port << endl;
+
+        // Send the string to the echo server
 
 
     } catch(SocketException &e) {
@@ -33,6 +31,8 @@ TCPClient::TCPClient(string ip, unsigned short &port) {
         goto LOOP;
     }
 }
+
+
 
 void TCPClient::receive() {
     try {
@@ -62,4 +62,15 @@ void TCPClient::receive() {
 
 TCPClient::~TCPClient() {
     sock->~Socket();
+}
+
+TCPClient *TCPClient::initialize(string ip, unsigned short &port) {
+    if(singleton==NULL){
+        singleton = new TCPClient(ip,port);
+    }
+}
+
+TCPClient *TCPClient::getInstance() {
+    if(!singleton) cerr<<"Please initialize"<<endl;
+    return singleton;
 }

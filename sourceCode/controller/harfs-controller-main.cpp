@@ -21,7 +21,7 @@ using namespace std;
 //Init Single Client
 void initClient(string ip, unsigned short port)
 {
-    TCPClient(ip,port);
+    TCPClient::initialize(ip,port);
 }
 //Init all the clients
 void initClients()

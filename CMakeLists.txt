@@ -19,7 +19,8 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/dataStructuresOnHD/List.cpp
             sourceCode/disk/dataStructuresOnHD/BTree.cpp
             sourceCode/disk/dataStructuresOnHD/Buffer.cpp
-            sourceCode/disk/network/TCPServer.cpp)
+            sourceCode/disk/network/TCPServer.cpp
+            sourceCode/disk/network/JsonWriter.cpp)
 
 add_executable(harfs-disk ${HARFS_DISK_FILES}  sourceCode/disk/managers/StorageBlockManager.cpp sourceCode/disk/managers/StorageBlockManager.h)
 
