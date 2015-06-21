@@ -219,6 +219,7 @@ void CLI::messageHandler(string message) {
     else if(action=="login"){
         if(document.FindMember("bool")->value.GetBool()){
             cycleOptions();
+            signIn=true;
         }
     }
     else if(action == "storageConfirmation"){
