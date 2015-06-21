@@ -96,7 +96,7 @@ void StorageBlockManager::messageHandler(std::string message) {
     std::string op = document.FindMember("op")->value.GetString();
     if(op=="logIn"){
         string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),true);
-        TCPServer::getInstance()->sendAll(json);
+        //TCPServer::getInstance()->sendAll(json);
     }
 
 }

@@ -4,7 +4,7 @@
 
 #include "TCPServer.h"
 
-TCPServer* singleton = 0;
+TCPServer* TCPServer::singleton = 0;
 TCPServer* TCPServer::getInstance() {
     if(singleton==0){
         singleton = new TCPServer();
