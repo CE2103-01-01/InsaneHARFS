@@ -16,6 +16,7 @@
 //HEADER: | Cantidad 4B | Nombre 128B | Nombre 128B |...
 
 class StorageBlockManager {
+    pthread_mutex_t* mutex;
     int lenght;
     Buffer* storageBlocks;
     static StorageBlockManager* manager;
