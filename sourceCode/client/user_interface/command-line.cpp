@@ -24,8 +24,8 @@ CLI::CLI() {
 
 void CLI::logIn() {
     std::cout<<"Please log in"<<std::endl;
-    string user=0;
-    string password=0;
+    string user="";
+    string password="";
     cout<<"Plase input the user name"<<endl;
     getline(cin,user);
     userName = user;
