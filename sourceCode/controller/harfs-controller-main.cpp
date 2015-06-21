@@ -21,8 +21,8 @@ DoubleLinkedList<TCPSocket*> *sockets;
 using namespace std;
 //Init Single Client
 void initClient(string ip, unsigned short port)
-{\
-    TCPClient::initialize(ip,port);
+{
+    TCPClient(ip,port).receive();
 }
 //Init all the clients
 void initClients()

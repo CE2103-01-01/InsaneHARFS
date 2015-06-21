@@ -8,7 +8,6 @@
 #include "TCPClient.h"
 #include "../models/Bridge.h"
 
-TCPClient *TCPClient::singleton = NULL;
 
 TCPClient::TCPClient(string ip, unsigned short &port) {
     initConnection(ip,port);
@@ -64,15 +63,4 @@ void TCPClient::receive() {
 
 TCPClient::~TCPClient() {
     sock->~Socket();
-}
-
-TCPClient *TCPClient::initialize(string ip, unsigned short &port) {
-    if(singleton==NULL){
-        singleton = new TCPClient(ip,port);
-    }
-}
-
-TCPClient *TCPClient::getInstance() {
-    if(!singleton) cerr<<"Please initialize"<<endl;
-    return singleton;
 }

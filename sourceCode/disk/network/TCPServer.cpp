@@ -82,7 +82,6 @@ void TCPServer::receive(TCPSocket *sock) {
 
 void TCPServer::sendAll(string message) {
     DoubleLinkedNode<TCPSocket> *node = clients->getHead();
-    std::cout << "hey" << std::endl;
     while (node)
     {
         TCPSocket *sock = node->getData();
