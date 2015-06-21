@@ -15,24 +15,23 @@ CLI::CLI() {
     defineRegister=false;
     signIn=false;
     cout << WELCOME << endl;
-    while(!signIn){
-        logIn();
-        usleep(SLEEP);
-    }
 
 }
 
 void CLI::logIn() {
-    std::cout<<"Please log in"<<std::endl;
-    string user;
-    string password;
-    cout<<"Plase input the user name"<<endl;
-    getline(cin,user);
-    userName = user;
-    cout<<"Please input the password"<<endl;
-    getline(cin,password);
-    string json =JsonWriter::logIn(user.c_str(),password.c_str());
-    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+    while(!signIn) {
+        usleep(SLEEP);
+        std::cout << "Please log in" << std::endl;
+        string user;
+        string password;
+        cout << "Plase input the user name" << endl;
+        getline(cin, user);
+        userName = user;
+        cout << "Please input the password" << endl;
+        getline(cin, password);
+        string json = JsonWriter::logIn(user.c_str(), password.c_str());
+        TCPClient::getInstance()->send(json.c_str(), json.length() + 1);
+    }
 
 }
 

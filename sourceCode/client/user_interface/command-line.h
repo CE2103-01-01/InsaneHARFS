@@ -25,7 +25,7 @@ private:
     bool defineRegister;
     bool existeStorage;
     int *columns;
-    void logIn();
+
     void defineSchema();
     void cycleOptions();
     void createStorageBlock();
@@ -44,6 +44,7 @@ private:
     bool existFile(string);
 
 public:
+    void logIn();
     static CLI *getInstance();
     void messageHandler(string);
     ~CLI();

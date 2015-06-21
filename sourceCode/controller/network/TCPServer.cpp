@@ -72,8 +72,8 @@ void TCPServer::receive(TCPSocket *sock) {
         }
         if (message.length()==0) throw (SocketException("Empty Message", true));
         std::cout << "Message Received: " << message<<std::endl;
-
         Bridge::getInstance()->sendToDisks(message,sock);
+        message = "";
     } catch(SocketException &e) {
         cerr<<e.what()<<endl;
         clients->deleteLink(sock);

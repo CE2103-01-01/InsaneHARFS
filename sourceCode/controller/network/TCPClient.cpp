@@ -53,6 +53,7 @@ void TCPClient::receive() {
             if (message.length()==0) throw (SocketException("Empty Message", true));
             Bridge::getInstance()->sendToUser(message);
             std::cout << "Message Received: " << message<<std::endl;
+            message = "";
         } catch(SocketException &e) {
             sock->~Socket(); //Closed Socket
             std::cout << "Disconnected" << std::endl;

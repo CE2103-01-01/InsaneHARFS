@@ -54,6 +54,7 @@ void TCPClient::receive() {
         if (message.length()==0) throw (SocketException("Empty Message", true));
         std::cout << "Message Received: " << message<<std::endl;
         manageMessage(message);
+        message = "";
     } catch(SocketException &e) {
         sock->~Socket(); //Closed Socket
         std::cout << "Disconnected" << std::endl;

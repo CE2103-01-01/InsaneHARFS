@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
     //Thread for server
     thread serverThread (initClient);
 
-    CLI::getInstance();
+    CLI::getInstance()->logIn();
 
     serverThread.join();
     // Garbage Collection!

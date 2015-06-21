@@ -70,7 +70,7 @@ void TCPServer::receive(TCPSocket *sock) {
             if (message.length()==0) throw (SocketException("Empty Message", true));
             std::cout << "Message Received: " << message<<std::endl;
             StorageBlockManager::getInstance()->messageHandler(message);
-
+            message = "";
         } catch(SocketException &e) {
             cerr<<e.what()<<endl;
             sock->~Socket(); //Closed Socket
