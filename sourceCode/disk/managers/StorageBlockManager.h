@@ -8,16 +8,23 @@
 #include "../pathConstants.h"
 #include "../dataStructuresOnHD/Buffer.h"
 #include "FileManager.h"
+#include "BlockManager.h"
+#include "../dataStructuresOnHD/List.h"
 
 #define HEADER_NAME "storage.blocks"
-#define BLOCK_NAME_LENGHT 128
+#define BLOCK_NAME_LENGHT 32
 #define NUMBER_OF_BLOCKS_LENGHT 4
 
-//HEADER: | Cantidad 4B | Nombre 128B | Nombre 128B |...
+#define STORAGE_BLOCKS_EXT ".storage"
+#define LIST_EXT ".list"
+
+//HEADER: | Cantidad 4 B | Nombre 128 B | Nombre 128 B |...
 
 class StorageBlockManager {
-    pthread_mutex_t* mutex;
     int lenght;
+    BlockManager* blocks;
+    pthread_mutex_t* mutex;
+    List* metadata;
     Buffer* storageBlocks;
     static StorageBlockManager* manager;
     StorageBlockManager();
@@ -25,8 +32,9 @@ class StorageBlockManager {
     void updateHeader();
 public:
     static StorageBlockManager* getInstance();
-    int addStorageBlocks(void*);
-
+    bool addStorageBlocks(void*,void*);
+    bool addRegister(void*,long,int);
+    bool deleteRegister(void*,int);
 };
 
 

@@ -19,10 +19,13 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/dataStructuresOnHD/List.cpp
             sourceCode/disk/dataStructuresOnHD/BTree.cpp
             sourceCode/disk/dataStructuresOnHD/Buffer.cpp
+            sourceCode/dataStructures/DoubleLinkedList.h
             sourceCode/disk/network/TCPServer.cpp
-            sourceCode/disk/network/JsonWriter.cpp)
+            sourceCode/disk/network/JsonWriter.cpp
+            sourceCode/disk/managers/StorageBlockManager.cpp
+            sourceCode/disk/managers/RegisterManager.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES}  sourceCode/disk/managers/StorageBlockManager.cpp sourceCode/disk/managers/StorageBlockManager.h)
+add_executable(harfs-disk ${HARFS_DISK_FILES})
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
@@ -38,7 +41,7 @@ set(HARFS_CONTROLLER_FILES  sourceCode/controller/harfs-controller-main.cpp
                              sourceCode/controller/network/TCPClient.cpp
                             sourceCode/controller/network/ipPort.cpp)
 
-add_executable(harfs-controller ${HARFS_CONTROLLER_FILES})
+add_executable(harfs-controller ${HARFS_CONTROLLER_FILES} sourceCode/controller/network/JsonWriter.cpp sourceCode/controller/network/JsonWriter.h sourceCode/controller/models/Bridge.cpp sourceCode/controller/models/Bridge.h)
 set_target_properties(harfs-controller PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
 

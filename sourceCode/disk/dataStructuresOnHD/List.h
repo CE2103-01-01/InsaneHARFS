@@ -20,7 +20,7 @@
 #define POSITION_OF_LENGHT_ON_HEADER 5
 
 // NODES:   | NEXT 4 BYTES | PREVIOUS 4 BYTES | NEXT EMPTY 4 BYTES | KEY X BYTES | DATA N BYTES |   = 12 + X + N BYTES
-#define LIST_NODE_MEMBER_LENGHT 4
+#define LIST_NODE_MEMBER_LENGHT 8
 #define LIST_NODE_LENGHT_WITHOUT_DATA 12
 #define POSITION_OF_NEXT_ON_NODE 0
 #define POSITION_OF_PREVIOUS_ON_NODE 1
@@ -31,21 +31,24 @@
 
 
 class List {
-    int head;
-    int tail;
-    int dataSize;
-    int keySize;
-    int firstEmpty;
-    int lenght;
+    long head;
+    long tail;
+    long dataSize;
+    long keySize;
+    long firstEmpty;
+    long lenght;
     std::string path;
     void updateHeader();
-    bool compare(void*, void*, int);
+    void readHeader();
+    bool compare(void*,void*,long);
     public:
-        List(std::string, int, int);
+        List();
+        List(std::string,long,long);
+        void changePath(std::string);
         void* search(void*);
         void* search(int);
-        int getOffset(void*);
-        int insertData(void*, void*);
+        long getOffset(void*);
+        long insertData(void*, void*);
         void deleteData(void*);
 };
 

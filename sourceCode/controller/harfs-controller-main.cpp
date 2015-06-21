@@ -9,6 +9,7 @@
 #include "config/controllerConfiguration.h"
 #include "network/TCPServer.h"
 #include "network/TCPClient.h"
+#include "models/Bridge.h"
 
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/controller_config.cfg \n"
@@ -16,11 +17,12 @@
 
 
 
-
+TCPServer *server;
+DoubleLinkedList<TCPSocket> *sockets;
 using namespace std;
 //Init Single Client
 void initClient(string ip, unsigned short port)
-{
+{\
     TCPClient::initialize(ip,port);
 }
 //Init all the clients
@@ -36,8 +38,6 @@ void initClients()
         threads[j].join();
     }
 }
-
-TCPServer *server;
 
 void initServer()
 {
@@ -69,6 +69,9 @@ int main(int argc, char* argv[]) {
         abort();
     } else Configuration::initializeAndGetInstance(argv[2]);
 
+    //initialize
+    sockets = new DoubleLinkedList<TCPSocket>();
+    Bridge::initialize(sockets);
     //Thread for server
     thread serverThread (initServer);
     thread clientsThread (initClients);

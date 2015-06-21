@@ -3,21 +3,3 @@
 //
 
 #include "RegisterManager.h"
-
-RegisterManager::RegisterManager(int storageBlock){
-
-    metadata = List();
-
-}
-
-bool RegisterManager::insertRegister(void*,void*){
-
-}
-
-bool RegisterManager::deleteRegister(void*){
-
-}
-
-void* RegisterManager::searchRegister(void*,int){
-
-}
