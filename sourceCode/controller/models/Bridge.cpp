@@ -18,7 +18,7 @@ Bridge *Bridge::getInstance() {
 
 Bridge::Bridge(DoubleLinkedList<TCPSocket> *pSockets)  {
     sockets = pSockets;
-    clients = new DoubleLinkedList<SockUser>();
+    clients = new DoubleLinkedList<SockUser*>();
     string json = JsonWriter::setStatus(true);
     if (sockets->getHead()) sockets->getHead()->getData()->send(json.c_str(),json.length()+1);
 }
@@ -33,7 +33,7 @@ void Bridge::sendToDisks(string message, TCPSocket *sock) {
     }
     rapidjson::Document document;
     document.Parse(message.c_str());
-    SockUser client = SockUser(sock, document.FindMember("user")->value.GetString());
+    SockUser *client = new SockUser(sock, document.FindMember("user")->value.GetString());
     clients->insertNewTail(client);
 }
 
@@ -41,12 +41,17 @@ void Bridge::sendToUser(string message) {
     rapidjson::Document document;
     document.Parse(message.c_str());
     string user = document.FindMember("user")->value.GetString();
-    DoubleLinkedNode<SockUser> *socketNode = clients->getHead();
+    DoubleLinkedNode<SockUser*> *socketNode = clients->getHead();
     while (!socketNode) {
-        if (socketNode->getData()->user == user) {
-            socketNode->getData()->socket->send(message.c_str(), message.length() + 1);
+        if ((*socketNode->getData())->user == user) {
+            (*socketNode->getData())->socket->send(message.c_str(), message.length() + 1);
             break;
         }
         socketNode = socketNode->getNext();
     }
+}
+
+void Bridge::addSocket(TCPSocket *sock) {
+    sockets->insertNewTail(sock);
+
 }

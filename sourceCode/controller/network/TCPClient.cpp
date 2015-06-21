@@ -24,7 +24,7 @@ void TCPClient::initConnection(string ip, unsigned short &port) {
         sock = new TCPSocket(ip, port);
 
         cout << "Connected: " << ip << ':' << port << endl;
-
+        Bridge::getInstance()->addSocket(sock);
         // Send the string to the echo server
 
 

@@ -22,11 +22,12 @@ public:
     static Bridge *getInstance();
     void sendToDisks(string message, TCPSocket *sock);
     void sendToUser(string message);
+    void addSocket(TCPSocket * sock);
 private:
     Bridge(DoubleLinkedList <TCPSocket> *sockets);
     static Bridge* singleton;
     DoubleLinkedList <TCPSocket> *sockets;
-    DoubleLinkedList <SockUser> *clients;
+    DoubleLinkedList <SockUser*> *clients;
 };
 
 

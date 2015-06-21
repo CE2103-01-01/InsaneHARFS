@@ -65,6 +65,7 @@ void TCPServer::receive(TCPSocket *sock) {
         std::cout << "Message Received: " << message<<std::endl;
         Bridge::getInstance()->sendToDisks(message,sock);
     } catch(SocketException &e) {
+        cerr<<e.what()<<endl;
         clients->deleteLink(sock);
         sock->~Socket(); //Closed Socket
         std::cout << "Disconnected" << std::endl;
