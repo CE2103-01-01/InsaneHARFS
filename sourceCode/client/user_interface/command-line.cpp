@@ -308,6 +308,7 @@ void CLI::insertDataAux(string structure) {
     string input[size];
     void* data = calloc(1,8+size*32);
     *static_cast<int*>(data)=size;
+    string information;
     for(int i = 0; i<size;i++){
         string tmp;
         for(int j=0;j<32;j++){
@@ -318,8 +319,11 @@ void CLI::insertDataAux(string structure) {
             cout<<"please insert the data for the "<<tmp<<"column"<<endl;
 
             getline(cin,input[i]);
+            information+=(input[i]);
 
         }
+    string json =JsonWriter::createRegister(userName.c_str(),information.c_str());
+    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
 
 
     }

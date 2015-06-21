@@ -12,7 +12,7 @@ TCPServer* TCPServer::getInstance() {
     return singleton;
 }
 TCPServer::TCPServer() {
-
+    clients = new DoubleLinkedList<TCPSocket>();
     off = false;
     try {
         serverSocket = new TCPServerSocket(Configuration::getInstance()->getPort());     // Server Socket object
@@ -23,7 +23,7 @@ TCPServer::TCPServer() {
 }
 
 TCPServer::~TCPServer() {
-    serverSocket->cleanUp();
+    serverSocket->~Socket();
     off = true;
 
 }
@@ -32,7 +32,7 @@ void TCPServer::HandleTCPClient() {
     while(!off) {   // Run forever
 
         TCPSocket *sock = serverSocket->accept();
-
+        clients->insertNewTail(sock);
         cout << "Handling client ";
         try {
             cout << sock->getForeignAddress() << ":";
@@ -81,5 +81,14 @@ void TCPServer::receive(TCPSocket *sock) {
 
 
 void TCPServer::sendAll(string message) {
-
+    DoubleLinkedNode<TCPSocket> *node = clients->getHead();
+    std::cout << "hey" << std::endl;
+    while (node)
+    {
+        TCPSocket *sock = node->getData();
+        std::cout << sock->getForeignPort() << std::endl;
+        std::cout << message << std::endl;
+        sock->send(message.c_str(),message.length()+1);
+        node = node->getNext();
+    }
 }

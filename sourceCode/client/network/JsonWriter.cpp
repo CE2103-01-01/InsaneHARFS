@@ -136,3 +136,13 @@ string JsonWriter::getStructure(const char * user, const char * file) {
     return s.GetString();
 
 }
+string JsonWriter::createRegister(const char *user, const char *file) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+    writer.String("user");writer.String(user);
+    writer.String("op");writer.String("createRegister");
+    writer.String("data");writer.String(file);
+    writer.EndObject();
+    return s.GetString();
+}

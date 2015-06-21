@@ -27,7 +27,7 @@ TCPServer::TCPServer() {
 
 TCPServer::~TCPServer() {
     off = true;
-    serverSocket->cleanUp();
+    serverSocket->~Socket();
     delete clients;
 }
 
@@ -35,7 +35,7 @@ void TCPServer::HandleTCPClient() {
     while(!off) {   // Run forever
 
         TCPSocket *sock = serverSocket->accept();
-
+        clients->insertNewTail(sock);
         cout << "Handling client ";
         try {
             cout << sock->getForeignAddress() << ":";
@@ -56,7 +56,6 @@ void TCPServer::HandleTCPClient() {
 }
 
 void TCPServer::receive(TCPSocket *sock) {
-    clients->insertNewTail(sock);
     while(!off)
     try {
         // Send received string and receive again until the end of transmission
