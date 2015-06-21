@@ -216,9 +216,7 @@ void CLI::messageHandler(string message) {
         else{
             std::cout<<"failed"<<std::endl;
         }
-
-    }
-    else if(action=="login"){
+    }else if(action=="login"){
         if(document.FindMember("bool")->value.GetBool()){
             cycleOptions();
             signIn=true;

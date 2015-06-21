@@ -75,9 +75,8 @@ template <typename AnyType> DoubleLinkedNode<AnyType>::~DoubleLinkedNode(){
  * @param AnyType toInsert: dato a insertar
  */
 template <typename AnyType> void DoubleLinkedNode<AnyType>::setData(AnyType toInsert){
-    if(data) {
-        *data = toInsert;
-    }else{
+    if(data) *data = toInsert;
+    else{
         data = static_cast<AnyType*>(malloc(sizeof(AnyType)));
         *data = toInsert;
     }

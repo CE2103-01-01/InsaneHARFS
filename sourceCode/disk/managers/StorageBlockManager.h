@@ -17,12 +17,15 @@
 #define BLOCK_NAME_LENGHT 32
 #define NUMBER_OF_BLOCKS_LENGHT 4
 
+#define CLIENTS_FILE "clients.md"
 #define STORAGE_BLOCKS_EXT ".storage"
 #define LIST_EXT ".list"
 
+//USERS:  | Cantidad 4 B | Nombre 32 B | Clave 8 B | Nombre 32 B | Clave 8 B |...
 //HEADER: | Cantidad 4 B | Nombre 128 B | Nombre 128 B |...
 
 class StorageBlockManager {
+    int users;
     int lenght;
     BlockManager* blocks;
     pthread_mutex_t* mutex;
@@ -38,6 +41,7 @@ public:
     bool addRegister(void*,long,int);
     bool deleteRegister(void*,int);
     void messageHandler(std::string);
+    bool confirmUser(void*,void*);
 };
 
 

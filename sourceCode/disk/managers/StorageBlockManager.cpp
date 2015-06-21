@@ -17,6 +17,9 @@ StorageBlockManager::StorageBlockManager(){
     if(!fopen((PathConstants::PROJECT_PATH + HEADER_NAME).c_str(), "r")){
         FileManager::createFile(HEADER_NAME,BLOCK_NAME_LENGHT);
     }
+    if(!fopen((PathConstants::PROJECT_PATH + CLIENTS_FILE).c_str(), "r")){
+        FileManager::createFile(CLIENTS_FILE,4);
+    }
     Buffer* tmp= FileManager::readFile(PathConstants::PROJECT_PATH+HEADER_NAME, 0, NUMBER_OF_BLOCKS_LENGHT);
     lenght = *static_cast<int*>(tmp->get(0));
     free(tmp);
@@ -29,6 +32,7 @@ StorageBlockManager::~StorageBlockManager(){
 
 void StorageBlockManager::updateHeader(){
     FileManager::writeFile(std::addressof(lenght),(PathConstants::PROJECT_PATH+HEADER_NAME).c_str(),0,sizeof(lenght));
+    FileManager::writeFile(std::addressof(users),(PathConstants::PROJECT_PATH+CLIENTS_FILE).c_str(),0,sizeof(users));
 }
 
 StorageBlockManager* StorageBlockManager::getInstance(){
@@ -74,6 +78,19 @@ bool StorageBlockManager::addRegister(void* data, long size, int storageBlock){
     }
 }
 
+bool StorageBlockManager::confirmUser(void* user, void* pass){
+    Buffer* usersToAnalyze = FileManager::readFile(CLIENTS_FILE,3,40*users);
+    for(int i = 0; i < users; i++){
+        for(int j = 0; j < 40; j++){
+            if((i<32 && *static_cast<char*>(usersToAnalyze->get(i*40+j))!=*static_cast<char*>(user+i*40+j))
+                    || (*static_cast<char*>(usersToAnalyze->get(i*40+j))!=*static_cast<char*>(pass+i*40+j))){
+                break;
+            }
+            if(j==39)return true;
+        }
+    }
+}
+
 bool StorageBlockManager::deleteRegister(void* key, int storageBlock){
     char* tmp = static_cast<char*>(storageBlocks->get(NUMBER_OF_BLOCKS_LENGHT+(storageBlock-1)*storageBlock));
     if(storageBlock<=lenght && tmp==0){
@@ -95,8 +112,9 @@ void StorageBlockManager::messageHandler(std::string message) {
     document.Parse(message.c_str());
     std::string op = document.FindMember("op")->value.GetString();
     if(op=="logIn"){
-        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),true);
+        std::string user = document.FindMember("user")->value.GetString();
+        std::string pass = document.FindMember("password")->value.GetString();
+        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),confirmUser(user.c_str(),pass.c_str()));
         TCPServer::getInstance()->sendAll(json);
     }
-
 }

@@ -6,6 +6,7 @@
 #define INSANEHARFS_DOUBLELINKEDLIST_H
 
 
+#include <iostream>
 #include "DoubleLinkedNode.h"
 
 #define POSITION_ERROR "ERROR EN DoubleLinkedList, LA POSICION SUMINISTRADA ESTA FUERA DE RANGO"

@@ -53,5 +53,4 @@ void Bridge::sendToUser(string message) {
 
 void Bridge::addSocket(TCPSocket *sock) {
     sockets->insertNewTail(sock);
-
 }
