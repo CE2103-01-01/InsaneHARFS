@@ -9,6 +9,10 @@
 
 #include <fstream>
 #include "../managers/FileManager.h"
+#include "../dataStructuresOnHD/List.h"
+#include "../../dataStructures/DoubleLinkedList.h"
+#include "BlockManager.h"
+#include "../pathConstants.h"
 
 // HEADER:      | PrimerVacio  4 Bytes | Usados 4 Bytes | Registros totales 4 Bytes | =  12 Bytes
 
@@ -18,36 +22,14 @@
 #define USED_POSITION 1
 #define MAX_REGISTERS_POSITION 2
 
-// REGISTROS: | Siguiente Vacio 4 Bytes | Nombre  128 Bytes |
-//            |Apellido 64 Bytes | Cedula 9 Bytes | Edad 1 Byte
-//            | Profesion u oficio 50 Bytes |                      =  256 Bytes
-
-#define REGISTER_LENGHT 256
-#define NEXT_EMPTY_LENGHT 4
-#define NAME_LENGHT 128
-#define SURNAME_LENGHT 64
-#define ID_LENGHT 9
-#define AGE_LENGHT 1
-#define OCCUPATION_LENGHT 50
-#define NEXT_EMPTY_POSITION 0
-#define NAME_POSITION 1
-#define SURNAME_POSITION 2
-#define ID_POSITION 3
-#define AGE_POSITION 4
-#define OCCUPATION_POSITION 5
-
 class RegisterManager {
-    std::string path;
-    int firstEmptyRegister;
-    int usedRegisters;
-    int numberOfRegisters;
-    void updateHeader();
+    List metadata;
+    BlockManager blocks;
 public:
-    RegisterManager(std::string, int);
-    long addRegister(void*, long);
-    void* searchRegister(void*, int, int);
-    void deleteRegister(int);
-    void print();
+    RegisterManager(int,int);
+    bool insertRegister(void*,void*);
+    bool deleteRegister(void*);
+    void* searchRegister(void*,int);
 };
 
 #endif //HARFS_CLIENT_REGISTERMANAGER_H
