@@ -19,6 +19,7 @@ private:
     static TCPClient *singleton;
     TCPSocket *sock;
     bool on;
+    ipPort iport;
 public:
     static TCPClient *initialize(string ip, unsigned short &port);
     static TCPClient *getInstance();

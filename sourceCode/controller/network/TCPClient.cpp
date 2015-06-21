@@ -12,6 +12,7 @@ TCPClient *TCPClient::singleton = NULL;
 
 TCPClient::TCPClient(string ip, unsigned short &port) {
     initConnection(ip,port);
+    iport= ipPort(ip,port);
 }
 
 void TCPClient::initConnection(string ip, unsigned short &port) {
@@ -50,18 +51,13 @@ void TCPClient::receive() {
                 message.append(echoBuffer);
                 if(echoBuffer[bytesReceived-1]=='\0') break;
             }
-
-            if (sock->send(message.c_str(),message.length()+1)==0)
-            {
-                sock->~Socket(); //Closed Socket
-                std::cout << "Disconnected" << std::endl;
-               // initConnection();
-            }
+            if (message.length()==0) throw (SocketException("Empty Message", true));
             Bridge::getInstance()->sendToUser(message);
             std::cout << "Message Received: " << message<<std::endl;
         } catch(SocketException &e) {
-            cerr << e.what() << endl;
-            exit(1);
+            sock->~Socket(); //Closed Socket
+            std::cout << "Disconnected" << std::endl;
+            initConnection(iport.ip,iport.port);
         }
 }
 

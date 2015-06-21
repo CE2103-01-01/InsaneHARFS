@@ -25,7 +25,8 @@ Bridge::Bridge(DoubleLinkedList<TCPSocket> *pSockets)  {
 
 void Bridge::sendToDisks(string message, TCPSocket *sock) {
     DoubleLinkedNode<TCPSocket> *socketNode = sockets->getHead();
-    while (!socketNode)
+    if (!socketNode) return;
+    while (socketNode)
     {
         socketNode->getData()->send(message.c_str(),message.length()+1);
         socketNode = socketNode->getNext();

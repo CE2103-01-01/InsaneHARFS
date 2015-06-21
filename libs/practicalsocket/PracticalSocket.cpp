@@ -106,12 +106,6 @@ Socket::Socket(int type, int protocol) throw(SocketException) {
     setsockopt(sockDesc, SOL_TCP, TCP_KEEPIDLE, &keepidle, sizeof(int));
     setsockopt(sockDesc, SOL_TCP, TCP_KEEPINTVL, &keepintvl, sizeof(int));
 
-    int optval = 1;
-    if(setsockopt(sockDesc, SOL_SOCKET, SO_KEEPALIVE, &optval, sizeof(optval)) < 0) {
-        perror("setsockopt()");
-        close(sockDesc);
-        exit(EXIT_FAILURE);
-    }
     //printf("SO_KEEPALIVE set on socket\n");
 
 }
@@ -398,4 +392,11 @@ void UDPSocket::leaveGroup(const string &multicastGroup) throw(SocketException) 
                    sizeof(multicastRequest)) < 0) {
         throw SocketException("Multicast group leave failed (setsockopt())", true);
     }
+}
+
+int CommunicatingSocket::checkConnection() throw(SocketException){
+    int error_code;
+    unsigned int error_code_size = sizeof(error_code);
+    getsockopt(sockDesc, SOL_SOCKET, SO_ERROR, &error_code, &error_code_size);
+    return error_code;
 }

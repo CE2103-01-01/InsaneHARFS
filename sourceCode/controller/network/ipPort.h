@@ -9,6 +9,8 @@
 using namespace std;
 class ipPort {
 public:
+    ipPort();
+
     ipPort(string ip, unsigned short port);
     char ip[IP_LENGTH];
     unsigned short port;

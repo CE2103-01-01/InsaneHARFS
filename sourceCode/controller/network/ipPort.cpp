@@ -13,3 +13,7 @@ ipPort::ipPort(string ipNode, unsigned short port) : port(port) {
     }
 
 }
+
+ipPort::ipPort() {
+
+}

@@ -61,20 +61,14 @@ void TCPServer::receive(TCPSocket *sock) {
             message.append(echoBuffer);
             if(echoBuffer[bytesReceived-1]=='\0') break;
         }
-
-
-        if (sock->send(message.c_str(),message.length()+1)==0)
-        {
-            clients->deleteLink(sock);
-            sock->~Socket(); //Closed Socket
-            std::cout << "Disconnected" << std::endl;
-            break;
-        }
+        if (message.length()==0) throw (SocketException("Empty Message", true));
         std::cout << "Message Received: " << message<<std::endl;
         Bridge::getInstance()->sendToDisks(message,sock);
     } catch(SocketException &e) {
-        cerr << e.what() << endl;
-        exit(1);
+        clients->deleteLink(sock);
+        sock->~Socket(); //Closed Socket
+        std::cout << "Disconnected" << std::endl;
+        break;
     }
 }
 
