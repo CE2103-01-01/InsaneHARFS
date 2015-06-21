@@ -4,6 +4,7 @@
 
 
 #include <sstream>
+#include <unistd.h>
 #include "command-line.h"
 #include "../../disk/pathConstants.h"
 using namespace PathConstants;
@@ -16,6 +17,7 @@ CLI::CLI() {
     cout << WELCOME << endl;
     while(!signIn){
         logIn();
+        usleep(SLEEP);
     }
 
 }
