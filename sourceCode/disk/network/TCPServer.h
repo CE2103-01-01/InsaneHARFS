@@ -16,6 +16,7 @@
 
 class TCPServer {
 private:
+    TCPServer();
     static TCPServer* singleton;
     void HandleTCPClient(TCPSocket *sock);
     int off;
@@ -23,7 +24,6 @@ private:
     DoubleLinkedList<TCPSocket*> clients;
     TCPServerSocket *serverSocket;
 public:
-    TCPServer();
     static TCPServer* getInstance();
     ~TCPServer();
     void sendAll(string);

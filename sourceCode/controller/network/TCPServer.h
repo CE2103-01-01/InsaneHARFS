@@ -10,7 +10,7 @@
 #include <iostream>           // For cerr and cout
 #include <cstdlib>            // For atoi()
 #include "../../dataStructures/DoubleLinkedList.h"
-
+#include "../models/Bridge.h"
 #define  RCVBUFSIZE 32    // Size of receive buffer
 
 class TCPServer {
