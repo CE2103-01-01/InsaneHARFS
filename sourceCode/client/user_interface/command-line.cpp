@@ -97,8 +97,22 @@ void CLI::createStorageBlock() {
         getline(cin,input_organization);
         num = atoi(input_organization.c_str());
     }
+    cout<<"The raids are:"<<endl;
+    cout<<"1- No Raid"
+        <<"2- Raid 1"<<endl;
+    cout<<"Please insert the number of Raid"<<endl;
+    string raid;
+    getline(cin,raid);
+    int num1 = atoi(input_organization.c_str());
+    while(num1!=1 or num1!=2){
+        cout<<"Information incorrect, please input the information again"<<std::endl;
+        cout<<"Please insert the number of Raid:"<<endl;
+        getline(cin,raid);
+        num1 = atoi(raid.c_str());
+    }
+
     existeStorage=true;
-    JsonWriter::createStorageBlock(input_name,input_organization,"1");
+    JsonWriter::createStorageBlock(input_name.c_str(),input_organization.c_str(),raid.c_str());
 
 }
 void CLI::listStorageBlock() {
@@ -185,5 +199,15 @@ CLI* CLI::getInstance() {
 void CLI::messageHandler(string message) {
     rapidjson::Document document;
     document.Parse(message.c_str());
+    string action = document.FindMember("op")->value.GetString();
+    if(action=="confirm"){
+        bool confirm =document.FindMember("bool")->value.GetBool();
+        if(confirm) std::cout<<"Process done successfully"<<std::endl;
+        else{
+            std::cout<<"Process failed"<<std::endl;
+        }
+
+    }
+
 
 }

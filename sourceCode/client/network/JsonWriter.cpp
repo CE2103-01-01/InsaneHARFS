@@ -21,15 +21,15 @@ const char *JsonWriter::createSchema(int *pInt, int size) {
     writer.EndObject();
     return s.GetString();
 }
-const char* JsonWriter::createStorageBlock(string name,string structure, string raid) {
+const char* JsonWriter::createStorageBlock(const char* name,const char* structure, const char* raid) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
 
     writer.String("op");writer.String("createBlock");
-    writer.String("name");writer.String(name.c_str());
-    writer.String("structure");writer.String(structure.c_str());
-    writer.String("raid");writer.String(raid.c_str());
+    writer.String("name");writer.String(name);
+    writer.String("structure");writer.String(structure);
+    writer.String("raid");writer.String(raid);
     writer.EndObject();
     return s.GetString();
 }
