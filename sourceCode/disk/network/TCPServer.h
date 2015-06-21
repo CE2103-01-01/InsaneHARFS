@@ -20,7 +20,7 @@ private:
     static TCPServer* singleton;
     int off;
     void receive(TCPSocket *sock);
-    DoubleLinkedList<TCPSocket*> clients;
+    DoubleLinkedList<TCPSocket>*clients;
     TCPServerSocket *serverSocket;
 public:
     void HandleTCPClient();
