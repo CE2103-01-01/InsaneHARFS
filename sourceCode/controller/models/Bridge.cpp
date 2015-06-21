@@ -26,7 +26,7 @@ void Bridge::sendToDisks(string message, TCPSocket *sock) {
     DoubleLinkedNode<TCPSocket> *socketNode = sockets->getHead();
     while (!socketNode)
     {
-        socketNode->getData()->send(message.c_str(),message.length());
+        socketNode->getData()->send(message.c_str(),message.length()+1);
         socketNode = socketNode->getNext();
     }
     rapidjson::Document document;
@@ -36,5 +36,15 @@ void Bridge::sendToDisks(string message, TCPSocket *sock) {
 }
 
 void Bridge::sendToUser(string message) {
-
+    rapidjson::Document document;
+    document.Parse(message.c_str());
+    string user = document.FindMember("user")->value.GetString();
+    DoubleLinkedNode<SockUser> *socketNode = clients->getHead();
+    while (!socketNode) {
+        if (socketNode->getData()->user == user) {
+            socketNode->getData()->socket->send(message.c_str(), message.length() + 1);
+            break;
+        }
+        socketNode = socketNode->getNext();
+    }
 }
