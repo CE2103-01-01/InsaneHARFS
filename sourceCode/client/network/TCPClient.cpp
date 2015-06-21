@@ -59,7 +59,7 @@ void TCPClient::receive() {
             initConnection();
         }
         std::cout << "Message Received: " << message<<std::endl;
-        thread(manageMessage,message);
+        manageMessage(message);
     } catch(SocketException &e) {
         cerr << e.what() << endl;
         exit(1);

@@ -16,10 +16,11 @@ Bridge *Bridge::getInstance() {
     return singleton;
 }
 
-Bridge::Bridge(DoubleLinkedList<TCPSocket> *pSockets) :sockets(pSockets) {
+Bridge::Bridge(DoubleLinkedList<TCPSocket> *pSockets)  {
+    sockets = pSockets;
     clients = new DoubleLinkedList<SockUser>();
     string json = JsonWriter::setStatus(true);
-    sockets->getHead()->getData()->send(json.c_str(),json.length()+1);
+    if (sockets->getHead()) sockets->getHead()->getData()->send(json.c_str(),json.length()+1);
 }
 
 void Bridge::sendToDisks(string message, TCPSocket *sock) {

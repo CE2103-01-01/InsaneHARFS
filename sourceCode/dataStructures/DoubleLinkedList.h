@@ -292,14 +292,14 @@ template <typename AnyType> long DoubleLinkedList<AnyType>::lenght(){
 
 template <typename AnyType> void DoubleLinkedList<AnyType>::deleteLink(AnyType *data) {
     DoubleLinkedNode<AnyType>* node = head;
-    while(node!= nullptr || node->getData()!= data)
+    while(node!= nullptr && node->getData()!= data)
     {
         node = node->getNext();
     }
     if(!node) return;
 
-    node->getPrevious()->setNext(node->getNext());
-    node->getNext()->setPrevious(node->getPrevious());
+    if(node->getPrevious()!= nullptr)node->getPrevious()->setNext(node->getNext());
+    if(node->getNext()!= nullptr)node->getNext()->setPrevious(node->getPrevious());
 }
 
 #endif //INSANEHARFS__DOUBLELINKEDLIST_H
