@@ -146,3 +146,14 @@ string JsonWriter::createRegister(const char *user, const char *file) {
     writer.EndObject();
     return s.GetString();
 }
+
+string JsonWriter::deleteRegister(const char *user, const char *file) {
+    StringBuffer s;
+    Writer<StringBuffer> writer(s);
+    writer.StartObject();
+    writer.String("user");writer.String(user);
+    writer.String("op");writer.String("deleteRegister");
+    writer.String("data");writer.String(file);
+    writer.EndObject();
+    return s.GetString();
+}

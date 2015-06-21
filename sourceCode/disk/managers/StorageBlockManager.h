@@ -35,13 +35,17 @@ class StorageBlockManager {
     StorageBlockManager();
     ~StorageBlockManager();
     void updateHeader();
-public:
-    static StorageBlockManager* getInstance();
     bool addStorageBlocks(void*,void*);
     bool addRegister(void*,long,int);
     bool deleteRegister(void*,int);
-    void messageHandler(std::string);
     bool confirmUser(void*,void*);
+public:
+    static StorageBlockManager* getInstance();
+    void messageHandler(std::string);
+    void addRegister(std::string);
+    void deleteRegister(std::string);
+    void newStorageBlock(std::string);
+    void getRegister(std::string);
 };
 
 

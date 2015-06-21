@@ -26,8 +26,7 @@ public:
     static string updateStorage(const char*);
     static string getStructure(const char*,const char*);
     static string createRegister(const char*,const char*);
-
-
+    static string deleteRegister(const char *user, const char *file);
 };
 
 
