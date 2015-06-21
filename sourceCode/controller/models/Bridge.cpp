@@ -8,7 +8,7 @@
 
 Bridge * Bridge::singleton = NULL;
 
-void Bridge::initialize(DoubleLinkedList<TCPSocket> *pSockets){
+void Bridge::initialize(DoubleLinkedList<TCPSocket*> *pSockets){
     if (!singleton) singleton = new Bridge(pSockets);
 }
 
@@ -16,19 +16,19 @@ Bridge *Bridge::getInstance() {
     return singleton;
 }
 
-Bridge::Bridge(DoubleLinkedList<TCPSocket> *pSockets)  {
+Bridge::Bridge(DoubleLinkedList<TCPSocket*> *pSockets)  {
     sockets = pSockets;
     clients = new DoubleLinkedList<SockUser*>();
     string json = JsonWriter::setStatus(true);
-    if (sockets->getHead()) sockets->getHead()->getData()->send(json.c_str(),json.length()+1);
+    if (sockets->getHead()) (*sockets->getHead()->getData())->send(json.c_str(),json.length()+1);
 }
 
 void Bridge::sendToDisks(string message, TCPSocket *sock) {
-    DoubleLinkedNode<TCPSocket> *socketNode = sockets->getHead();
+    DoubleLinkedNode<TCPSocket*> *socketNode = sockets->getHead();
     if (!socketNode) return;
     while (socketNode)
     {
-        socketNode->getData()->send(message.c_str(),message.length()+1);
+        (*socketNode->getData())->send(message.c_str(),message.length()+1);
         socketNode = socketNode->getNext();
     }
     rapidjson::Document document;

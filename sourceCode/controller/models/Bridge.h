@@ -18,15 +18,15 @@ public:
 };
 class Bridge {
 public:
-    static void initialize(DoubleLinkedList<TCPSocket> *sockets);
+    static void initialize(DoubleLinkedList<TCPSocket*> *sockets);
     static Bridge *getInstance();
     void sendToDisks(string message, TCPSocket *sock);
     void sendToUser(string message);
     void addSocket(TCPSocket * sock);
 private:
-    Bridge(DoubleLinkedList <TCPSocket> *sockets);
+    Bridge(DoubleLinkedList <TCPSocket*> *sockets);
     static Bridge* singleton;
-    DoubleLinkedList <TCPSocket> *sockets;
+    DoubleLinkedList <TCPSocket*> *sockets;
     DoubleLinkedList <SockUser*> *clients;
 };
 

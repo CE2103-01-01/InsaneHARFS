@@ -12,7 +12,7 @@
 TCPServer *server;
 void initServer()
 {
-    server =TCPServer::getInstance();
+    server = new TCPServer();
 }
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {

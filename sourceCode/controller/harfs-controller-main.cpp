@@ -18,7 +18,7 @@
 
 
 TCPServer *server;
-DoubleLinkedList<TCPSocket> *sockets;
+DoubleLinkedList<TCPSocket*> *sockets;
 using namespace std;
 //Init Single Client
 void initClient(string ip, unsigned short port)
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     } else Configuration::initializeAndGetInstance(argv[2]);
 
     //initialize
-    sockets = new DoubleLinkedList<TCPSocket>();
+    sockets = new DoubleLinkedList<TCPSocket*>();
     Bridge::initialize(sockets);
     //Thread for server
     thread serverThread (initServer);

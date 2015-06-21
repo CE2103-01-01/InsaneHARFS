@@ -3,18 +3,14 @@
 //
 
 #include "TCPServer.h"
-TCPServer* TCPServer::singleton =0;
-TCPServer* TCPServer::getInstance() {
-    if(singleton==0){
-        singleton = new TCPServer();
-    }
-    return singleton;
-}
+
 
 TCPServer::TCPServer() {
+
     off = false;
     try {
         TCPServerSocket servSock(Configuration::getInstance()->getPort());     // Server Socket object
+
         while(!off) {   // Run forever
             HandleTCPClient(servSock.accept());       // Wait for a client to connect
         }
@@ -26,6 +22,7 @@ TCPServer::TCPServer() {
 
 TCPServer::~TCPServer() {
     off = true;
+
 }
 
 void TCPServer::HandleTCPClient(TCPSocket *sock) {
@@ -64,19 +61,13 @@ void TCPServer::receive(TCPSocket *sock) {
             }
             if (message.length()==0) throw (SocketException("Empty Message", true));
             std::cout << "Message Received: " << message<<std::endl;
-            StorageBlockManager::getInstance()->messageHandler(message);
+
         } catch(SocketException &e) {
+            cerr<<e.what()<<endl;
             sock->~Socket(); //Closed Socket
             std::cout << "Disconnected" << std::endl;
             break;
         }
 }
 
-void TCPServer::sendAll(string message) {
-    DoubleLinkedNode<TCPSocket> *node = clients.getHead();
-    while (!node)
-    {
-        node->getData()->send(message.c_str(),message.length()+1);
-        node = node->getNext();
-    }
-}
+
