@@ -16,6 +16,7 @@ class TCPServer {
 private:
     void HandleTCPClient(TCPSocket *sock);
     int off;
+    void receive(TCPSocket *sock);
 public:
     TCPServer();
     ~TCPServer();

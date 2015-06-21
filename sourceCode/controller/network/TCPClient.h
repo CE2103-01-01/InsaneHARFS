@@ -15,12 +15,18 @@
 using namespace std;
 class TCPClient {
 private:
+    TCPClient(string ip, unsigned short &port);
+    static TCPClient *singleton;
     TCPSocket *sock;
     bool on;
-    void receive();
 public:
-    TCPClient(string ip, unsigned short &port);
+    static TCPClient *initialize(string ip, unsigned short &port);
+    static TCPClient *getInstance();
+    void receive();
+    void send(const void *buffer, int bufferLen);
     ~TCPClient();
+
+    void initConnection(string ip, unsigned short &port);
 };
 
 

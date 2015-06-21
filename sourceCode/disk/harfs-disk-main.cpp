@@ -1,12 +1,19 @@
 #include <signal.h>
 #include "config/diskConfiguration.h"
 #include "proofs/BlockManagerProof.h"
+#include "network/TCPServer.h"
 #include <math.h>
+#include <thread>
+
 #define CAUGHT_SIGNAL "Caught signal %d\n"
 #define USAGE_MSG "Usage : harfs-disk --config res/disk_config.cfg \n"
 #define CONFIG "--config"
 
-
+TCPServer *server;
+void initServer()
+{
+    server = new TCPServer();
+}
 // Define the function to be called when ctrl-c (SIGINT) signal is sent to process
 void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
@@ -34,6 +41,7 @@ int main(int argc, char* argv[]) {
         printf(USAGE_MSG);
         abort();
     } else Configuration::initializeAndGetInstance(argv[2]);
+    thread serverThread (initServer);
 
     /** PRUEBAS **/
     try{
@@ -57,7 +65,7 @@ int main(int argc, char* argv[]) {
         return exception;
     }
     /** ~PRUEBAS **/
-
+    serverThread.join();
     free(Configuration::getInstance());// Garbage Collection!
     return 0;
 }
