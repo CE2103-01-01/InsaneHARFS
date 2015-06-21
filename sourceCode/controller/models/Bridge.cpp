@@ -42,7 +42,7 @@ void Bridge::sendToUser(string message) {
     document.Parse(message.c_str());
     string user = document.FindMember("user")->value.GetString();
     DoubleLinkedNode<SockUser*> *socketNode = clients->getHead();
-    while (!socketNode) {
+    while (socketNode) {
         if ((*socketNode->getData())->user == user) {
             (*socketNode->getData())->socket->send(message.c_str(), message.length() + 1);
             break;

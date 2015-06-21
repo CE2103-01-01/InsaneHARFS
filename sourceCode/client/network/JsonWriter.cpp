@@ -84,11 +84,11 @@ string JsonWriter::logIn(const char *user, const char *password) {
     StringBuffer s;
     Writer<StringBuffer> writer(s);
     writer.StartObject();
-    writer.String("user"); writer.String(user);
     writer.String("op"); writer.String("logIn");
     writer.String("user");writer.String(user);
     writer.String("password");writer.String(password);
     writer.EndObject();
+
     return s.GetString();
 }
 
