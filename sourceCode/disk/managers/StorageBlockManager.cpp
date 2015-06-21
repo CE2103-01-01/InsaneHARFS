@@ -111,61 +111,24 @@ void StorageBlockManager::messageHandler(std::string message) {
     rapidjson::Document document;
     document.Parse(message.c_str());
     std::string op = document.FindMember("op")->value.GetString();
+    std::string user = document.FindMember("user")->value.GetString();
     if(op=="logIn"){
-        std::string user = document.FindMember("user")->value.GetString();
         std::string pass = document.FindMember("password")->value.GetString();
-        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),confirmUser(user.c_str(),pass.c_str()));
+        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),true);
         TCPServer::getInstance()->sendAll(json);
-    }
-}
-
-
-void StorageBlockManager::addRegister(std::string message) {
-    rapidjson::Document document;
-    document.Parse(message.c_str());
-    std::string op = document.FindMember("op")->value.GetString();
-    if(op=="logIn"){
-        std::string user = document.FindMember("user")->value.GetString();
-        std::string op = document.FindMember("op")->value.GetString();
+    }/**else if(op == "deleteRegister"){
+        std::string key = document.FindMember("key")->value.GetString();
+        deleteRegister(key.c_str());
+    }else if(op == "createBlock"){
+        std::string name = document.FindMember("name")->value.GetString();
+        std::string structure = document.FindMember("structure")->value.GetString();
+        std::string raid = document.FindMember("raid")->value.GetString();
+    }else if(op == "getData"){
+        std::string key = document.FindMember("key")->value.GetString();
+        std::string column = document.FindMember("column")->value.GetString();
+    }else if(op == "createRegister"){
+        std::string key = document.FindMember("key")->value.GetString();
         std::string data = document.FindMember("data")->value.GetString();
-        
-        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),confirmUser(static_cast<void*>(user.c_str()),static_cast<void*>(pass.c_str())));
-        TCPServer::getInstance()->sendAll(json);
-    }
-}
-
-void StorageBlockManager::deleteRegister(std::string message) {
-    rapidjson::Document document;
-    document.Parse(message.c_str());
-    std::string op = document.FindMember("op")->value.GetString();
-    if(op=="logIn"){
-        std::string user = document.FindMember("user")->value.GetString();
-        std::string pass = document.FindMember("password")->value.GetString();
-        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),confirmUser(user.c_str(),pass.c_str()));
-        TCPServer::getInstance()->sendAll(json);
-    }
-}
-
-void StorageBlockManager::getRegister(std::string message) {
-    rapidjson::Document document;
-    document.Parse(message.c_str());
-    std::string op = document.FindMember("op")->value.GetString();
-    if(op=="logIn"){
-        std::string user = document.FindMember("user")->value.GetString();
-        std::string pass = document.FindMember("password")->value.GetString();
-        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),confirmUser(user.c_str(),pass.c_str()));
-        TCPServer::getInstance()->sendAll(json);
-    }
-}
-
-void StorageBlockManager::newStorageBlock(std::string message) {
-    rapidjson::Document document;
-    document.Parse(message.c_str());
-    std::string op = document.FindMember("op")->value.GetString();
-    if(op=="logIn"){
-        std::string user = document.FindMember("user")->value.GetString();
-        std::string pass = document.FindMember("password")->value.GetString();
-        string json=JsonWriter::confirmation(document.FindMember("user")->value.GetString(),confirmUser(user.c_str(),pass.c_str()));
-        TCPServer::getInstance()->sendAll(json);
-    }
+        addRegister();
+    }*/
 }

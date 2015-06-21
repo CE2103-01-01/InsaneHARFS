@@ -321,8 +321,8 @@ void CLI::insertDataAux(string structure) {
             information+=(input[i]);
 
         }
-    string json =JsonWriter::createRegister(userName.c_str(),information.c_str());
-    TCPClient::getInstance()->send(json.c_str(),json.length()+1);
+    //string json =JsonWriter::createRegister(userName.c_str(),information.c_str());
+    //TCPClient::getInstance()->send(json.c_str(),json.length()+1);
 
 
     }
