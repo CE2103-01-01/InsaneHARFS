@@ -24,6 +24,7 @@ public:
     static const char* setPermission(const char*,const char*,const char*);
     static const char* testPermission(const char*,const char*,const char*);
     static const char* updateStorage(const char*);
+    static const char* getStructure(const char*,const char*);
 
 
 };

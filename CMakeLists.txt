@@ -50,6 +50,7 @@ set(HARFS_CLIENT_FILES  sourceCode/client/harfs-client-main.cpp
                         libs/practicalsocket/PracticalSocket.cpp
                         sourceCode/client/config/clientConfiguration.cpp
                         sourceCode/client/network/JsonWriter.cpp
+                        sourceCode/disk/pathConstants.cpp
                         sourceCode/client/user_interface/command-line.cpp
                         sourceCode/client/network/TCPClient.cpp
                         )
