@@ -19,6 +19,7 @@ private:
     int off;
     void receive(TCPSocket *sock);
     DoubleLinkedList<TCPSocket>* clients;
+    TCPServerSocket *serverSocket;
 public:
     TCPServer();
     ~TCPServer();

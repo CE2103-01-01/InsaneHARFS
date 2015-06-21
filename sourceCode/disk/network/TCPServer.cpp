@@ -15,10 +15,10 @@ TCPServer::TCPServer() {
 
     off = false;
     try {
-        TCPServerSocket servSock(Configuration::getInstance()->getPort());     // Server Socket object
+        serverSocket = new TCPServerSocket(Configuration::getInstance()->getPort());     // Server Socket object
 
         while(!off) {   // Run forever
-            HandleTCPClient(servSock.accept());       // Wait for a client to connect
+            HandleTCPClient(serverSocket->accept());       // Wait for a client to connect
         }
     } catch (SocketException &e) {
         cerr << e.what() << endl;
@@ -27,6 +27,7 @@ TCPServer::TCPServer() {
 }
 
 TCPServer::~TCPServer() {
+    serverSocket->cleanUp();
     off = true;
 
 }
@@ -79,10 +80,5 @@ void TCPServer::receive(TCPSocket *sock) {
 
 
 void TCPServer::sendAll(string message) {
-    DoubleLinkedNode<TCPSocket> *node = clients.getHead();
-    while (node)
-    {
-        node->getData()->send(message.c_str(),message.length()+1);
-        node = node->getNext();
-    }
+
 }

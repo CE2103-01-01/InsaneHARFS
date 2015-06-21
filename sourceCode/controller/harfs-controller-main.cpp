@@ -49,6 +49,7 @@ void signal_callback_handler(int signum) {
     printf(CAUGHT_SIGNAL,signum);
     // Cleanup and close up stuff here
     free(Configuration::getInstance());
+    server->~TCPServer();
     delete server;
     // Terminate program
     exit(signum);

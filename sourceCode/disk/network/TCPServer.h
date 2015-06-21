@@ -20,7 +20,8 @@ private:
     void HandleTCPClient(TCPSocket *sock);
     int off;
     void receive(TCPSocket *sock);
-    DoubleLinkedList<TCPSocket> clients;
+    DoubleLinkedList<TCPSocket*> clients;
+    TCPServerSocket *serverSocket;
 public:
     TCPServer();
     static TCPServer* getInstance();
