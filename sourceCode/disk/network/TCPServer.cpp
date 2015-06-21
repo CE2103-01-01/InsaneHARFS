@@ -72,3 +72,12 @@ void TCPServer::receive(TCPSocket *sock) {
             exit(1);
         }
 }
+
+void TCPServer::sendAll(string message) {
+    DoubleLinkedNode<TCPSocket> *node = clients.getHead();
+    while (!node)
+    {
+        node->getData()->send(message.c_str(),message.length()+1);
+        node = node->getNext();
+    }
+}

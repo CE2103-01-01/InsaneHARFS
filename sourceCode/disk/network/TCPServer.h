@@ -9,6 +9,7 @@
 #include "../config/diskConfiguration.h"
 #include <iostream>           // For cerr and cout
 #include <cstdlib>            // For atoi()
+#include "../../dataStructures/DoubleLinkedList.h"
 
 #define  RCVBUFSIZE 32    // Size of receive buffer
 
@@ -17,9 +18,11 @@ private:
     void HandleTCPClient(TCPSocket *sock);
     int off;
     void receive(TCPSocket *sock);
+    DoubleLinkedList<TCPSocket> clients;
 public:
     TCPServer();
     ~TCPServer();
+    void sendAll(string);
 };
 
 

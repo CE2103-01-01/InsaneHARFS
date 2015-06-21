@@ -5,6 +5,7 @@
 #ifndef INSANEHARFS_DOUBLELINKEDLIST_H
 #define INSANEHARFS_DOUBLELINKEDLIST_H
 
+
 #include "DoubleLinkedNode.h"
 
 #define POSITION_ERROR "ERROR EN DoubleLinkedList, LA POSICION SUMINISTRADA ESTA FUERA DE RANGO"
@@ -23,8 +24,9 @@ template <typename AnyType> class DoubleLinkedList {
         void insertNewTail(AnyType);
         void insertNewTail(AnyType*);
         void deleteData(AnyType);
-        void deleteData(AnyType*);
+        void deleteLink(AnyType *);
         void deleteData(long);
+        void deleteLink(long);
         DoubleLinkedNode<AnyType>* getNode(long);
         AnyType* getData(long);
         DoubleLinkedNode<AnyType>* getHead();
@@ -288,5 +290,18 @@ template <typename AnyType> long DoubleLinkedList<AnyType>::lenght(){
     return nodeCounter;
 }
 
+template <typename AnyType> void DoubleLinkedList<AnyType>::deleteLink(AnyType *data) {
+    DoubleLinkedNode<AnyType>* node = head;
+    while(node!= nullptr || node->getData()!= data)
+    {
+        node = node->getNext();
+    }
+    if(!node) return;
+
+    node->getPrevious()->setNext(node->getNext());
+    node->getNext()->setPrevious(node->getPrevious());
+}
 
 #endif //INSANEHARFS__DOUBLELINKEDLIST_H
+
+

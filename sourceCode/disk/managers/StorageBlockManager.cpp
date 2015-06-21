@@ -82,6 +82,7 @@ bool StorageBlockManager::deleteRegister(void* key, int storageBlock){
         long offset = metadata->getOffset(key);
         metadata->changePath(tmpPath + LIST_EXT);
         metadata->deleteData(key);
+        blocks->deleteBlock(offset);
         return true;
     }else{
         return false;
