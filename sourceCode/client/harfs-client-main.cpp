@@ -5,6 +5,7 @@
 #include <iostream>
 #include <signal.h>
 #include <thread>
+#include <bits/signum.h>
 #include "config/clientConfiguration.h"
 #include "network/TCPClient.h"
 #include "user_interface/command-line.h"
@@ -56,7 +57,7 @@ int main(int argc, char* argv[]) {
     // Garbage Collection!
     free(Configuration::getInstance());
     delete client;
-
+//
     return 0;
 
 }
