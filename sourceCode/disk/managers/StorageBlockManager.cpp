@@ -72,3 +72,18 @@ bool StorageBlockManager::addRegister(void* data, long size, int storageBlock){
         return false;
     }
 }
+
+bool StorageBlockManager::deleteRegister(void* key, int storageBlock){
+    char* tmp = static_cast<char*>(storageBlocks->get(NUMBER_OF_BLOCKS_LENGHT+(storageBlock-1)*storageBlock));
+    if(storageBlock<=lenght && tmp==0){
+        std::string tmpPath = "";
+        for(int i = 0; i<BLOCK_NAME_LENGHT && (tmp+i)!="."; i++) tmpPath.append(tmp+i);
+        blocks->changeStorageBlock(tmpPath + STORAGE_BLOCKS_EXT);
+        long offset = metadata->getOffset(key);
+        metadata->changePath(tmpPath + LIST_EXT);
+        metadata->deleteData(key);
+        return true;
+    }else{
+        return false;
+    }
+}

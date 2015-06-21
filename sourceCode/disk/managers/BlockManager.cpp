@@ -108,12 +108,12 @@ long BlockManager::addBlock(void* data, long dataSize){
  * @param long offset: numero de registro (posicion)
  * @return void*: dato del registro junto con los anexos
  */
-void* BlockManager::searchBlock(void* toRet, int offset, int counter){
+void* BlockManager::searchBlock(void* toRet, long offset, long counter){
     if(toRet){
         if(offset < numberOfBlocks){
             FileManager::readFile(toRet+counter*DATA_LENGHT, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT+NEXT_LENGHT+NEXT_EMPTY_LENGHT, DATA_LENGHT);
             counter++;
-            int* next = static_cast<int*>(malloc(sizeof(int)));
+            long* next = static_cast<long*>(malloc(sizeof(long)));
             FileManager::readFile(next, path, BLOCK_MANAGER_HEADER_LENGHT+offset*BLOCK_LENGHT, NEXT_LENGHT);
             if(*next!=-1)searchBlock(toRet,*next,counter);
             free(next);

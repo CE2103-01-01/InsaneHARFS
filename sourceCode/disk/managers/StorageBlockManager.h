@@ -34,7 +34,7 @@ public:
     static StorageBlockManager* getInstance();
     bool addStorageBlocks(void*,void*);
     bool addRegister(void*,long,int);
-
+    bool deleteRegister(void*,int);
 };
 
 

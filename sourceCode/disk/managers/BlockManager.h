@@ -37,7 +37,8 @@ class BlockManager {
         BlockManager();
         BlockManager(std::string, int);
         long addBlock(void*, long);
-        void* searchBlock(void*, int, int);
+        void* searchBlock(void*, long, long);
+        void* searchBlock(void*);
         void deleteBlock(int);
         void print();
         void changeStorageBlock(std::string);

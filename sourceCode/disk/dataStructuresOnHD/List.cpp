@@ -18,7 +18,7 @@ List::List(){
 /**@brief construye lista en disco
  * @param std::string pathParam: sitio donde se guardara la lista
  */
-List::List(std::string pathParam, int dataSizeParam, int keySizeParam){
+List::List(std::string pathParam, long dataSizeParam, long keySizeParam){
     if(pathParam.length() && dataSizeParam){
         keySize = keySizeParam;
         dataSize = dataSizeParam;
@@ -87,10 +87,10 @@ void List::changePath(std::string newPath){
  * @param void* key: clave de busqueda
  * @return int offset
  */
-int List::getOffset(void* key){
+long List::getOffset(void* key){
     if(key){
         //Se crea el buffer para el iterador
-        int* tmp = static_cast<int*>(malloc(sizeof(int)));
+        long* tmp = static_cast<long*>(malloc(sizeof(long)));
         *tmp = head;
         //Crea el buffer de la llave
         void* readedKey = malloc(dataSize);
@@ -100,7 +100,7 @@ int List::getOffset(void* key){
                                                  +LIST_NODE_LENGHT_WITHOUT_DATA, keySize);
             //Compara la llave leida con la buscada
             if(compare(readedKey,key,keySize)){
-                int toRet  = *tmp;
+                long toRet  = *tmp;
                 //Libera memoria
                 free(readedKey);
                 free(tmp);
@@ -146,7 +146,7 @@ void* List::search(int offset){
  * @param void*: puntero a posicion en la lista, contiene el numero de nodo
  * @return Pointer: puntero a posicion del dato en otro archivo
  */
-bool List::compare(void* dataOne, void* dataTwo, int dataLenght){
+bool List::compare(void* dataOne, void* dataTwo, long dataLenght){
     if(dataOne && dataTwo && dataLenght){
         for(int i = 0; i < dataLenght; i++) if(*static_cast<char*>(dataOne+i)!=*static_cast<char*>(dataTwo+i)) return false;
         return true;
@@ -161,12 +161,12 @@ bool List::compare(void* dataOne, void* dataTwo, int dataLenght){
  * @param void* key: llave de busqueda
  * @return int
  */
-int List::insertData(void* toInsert, void* key){
+long List::insertData(void* toInsert, void* key){
     if(toInsert && key){
-        int id;
+        long id;
         //Si la lista no esta vacia
         if(head != -1 && tail != -1){
-            int toWriteOnNext;
+            long toWriteOnNext;
             if(firstEmpty!=-1) toWriteOnNext = firstEmpty;
             else toWriteOnNext = lenght;
             //Escribe siguiente a la cola
@@ -176,7 +176,7 @@ int List::insertData(void* toInsert, void* key){
             FileManager::writeFile(std::addressof(tail), path, LIST_HEADER_LENGHT + toWriteOnNext*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
                                                                         + POSITION_OF_PREVIOUS_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
             tail = toWriteOnNext;
-            int tmp = -1;
+            long tmp = -1;
             //Setea en -1 el siguiente y siguiente vacio
             FileManager::writeFile(std::addressof(tmp), path, LIST_HEADER_LENGHT + tail*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
                                                               + POSITION_OF_NEXT_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
@@ -190,7 +190,7 @@ int List::insertData(void* toInsert, void* key){
             id = tail;
         }//Si existe la cabeza
         else if(head != -1){
-            int tmp = -1;
+            long tmp = -1;
             tail = 1;
             //Coloca a la cola como siguiente de la cabeza
             FileManager::writeFile(std::addressof(tail), path, LIST_HEADER_LENGHT + head*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
@@ -210,7 +210,7 @@ int List::insertData(void* toInsert, void* key){
             id = tail;
         }//Si la lista esta vacia
         else{
-            int tmp = -1;
+            long tmp = -1;
             //Setea en -1 el siguiente y siguiente vacio y escribe el dato
             FileManager::writeFile(std::addressof(tmp), path, LIST_HEADER_LENGHT + POSITION_OF_NEXT_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
             FileManager::writeFile(std::addressof(tmp), path, LIST_HEADER_LENGHT + POSITION_OF_PREVIOUS_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
@@ -234,9 +234,9 @@ int List::insertData(void* toInsert, void* key){
  */
 void List::deleteData(void* key){
     //Busca el offset
-    int offset = getOffset(key);
+    long offset = getOffset(key);
     //Lee los enlaces  | anterior | siguiente |
-    int* links = static_cast<int*>(malloc(2 * sizeof(int)));
+    long* links = static_cast<long*>(malloc(2 * sizeof(long)));
     FileManager::readFile(links, path, LIST_HEADER_LENGHT + offset*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
                                        + POSITION_OF_PREVIOUS_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
     FileManager::readFile(links+1, path, LIST_HEADER_LENGHT + offset*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
@@ -253,13 +253,13 @@ void List::deleteData(void* key){
                                              + POSITION_OF_NEXT_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
     }//Si es la cola
     else if(*(links) > -1){
-        int tmp = -1;
+        long tmp = -1;
         FileManager::writeFile(std::addressof(tmp), path, LIST_HEADER_LENGHT + *(links)*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
                                             + POSITION_OF_NEXT_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
         tail = *links;
     }//Si es la cabeza
     else if(*(links + 1) > -1){
-        int tmp = -1;
+        long tmp = -1;
         FileManager::writeFile(std::addressof(tmp), path, LIST_HEADER_LENGHT + *(links)*(LIST_NODE_LENGHT_WITHOUT_DATA+keySize+dataSize)
                                                           + POSITION_OF_PREVIOUS_ON_NODE*LIST_NODE_MEMBER_LENGHT, LIST_NODE_MEMBER_LENGHT);
         head = *(links+1);
