@@ -5,7 +5,6 @@
 #ifndef HARFS_CLIENT_STORAGEBLOCKMANAGER_H
 #define HARFS_CLIENT_STORAGEBLOCKMANAGER_H
 #include "../../../libs/rapidjson/document.h"
-#include <bits/pthreadtypes.h>
 #include "../pathConstants.h"
 #include "../dataStructuresOnHD/Buffer.h"
 #include "FileManager.h"
