@@ -21,7 +21,7 @@ public:
     static void initialize(DoubleLinkedList<TCPSocket> *sockets);
     static Bridge *getInstance();
     void sendToDisks(string message, TCPSocket *sock);
-    void sendToUser(string message)
+    void sendToUser(string message);
 private:
     Bridge(DoubleLinkedList <TCPSocket> *sockets);
     static Bridge* singleton;

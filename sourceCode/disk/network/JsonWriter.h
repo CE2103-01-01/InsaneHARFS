@@ -17,9 +17,9 @@ public:
     static const char* confirmationLogin(const char*,bool cheack);
     static const char* confirmationUpdate(const char*,bool cheack);
     static const char* confirmation(const char*,bool cheack);
-    static const char* listStorage(const char*,const void* list,const int len);
-    static const char* updateStorage(const char*,const void* list,const int len);
-    static const char* sendStructure(const char*,const void* list,const int len);
+    static const char* listStorage(const char*, void* list,const int len);
+    static const char* updateStorage(const char*, void* list,const int len);
+    static const char* sendStructure(const char*, void* list,const int len);
     static const char* confirmationCreationStorage(const char*,bool cheack);
 };
 
