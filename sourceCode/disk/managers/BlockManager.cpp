@@ -32,6 +32,20 @@ BlockManager::BlockManager(std::string pathParam, int numberOfBlocksParam){
     }
 }
 
+/**@brief elimina un registro y los registros anexos al mismo
+ */
+BlockManager::BlockManager(){
+   numberOfBlocks = 0;
+    firstEmptyBlock = 0;
+    usedBlocks = 0;
+    path = "";
+}
+
+void BlockManager::changeStorageBlock(std::string newPath){
+    path = newPath;
+    updateHeader();
+}
+
 /**@brief actualiza el header
  */
 void BlockManager::updateHeader() {

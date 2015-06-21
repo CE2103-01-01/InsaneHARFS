@@ -23,6 +23,8 @@ public:
     static const char* logIn(const char* user, const char* password);
     static const char* setPermission(const char*,const char*);
     static const char* testPermission(const char*,const char*);
+
+    const char *createStorageBlock(string name, string structure, string raid);
 };
 
 

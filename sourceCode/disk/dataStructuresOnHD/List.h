@@ -39,9 +39,12 @@ class List {
     int lenght;
     std::string path;
     void updateHeader();
+    void readHeader();
     bool compare(void*, void*, int);
     public:
+        List();
         List(std::string, int, int);
+        void changePath(std::string);
         void* search(void*);
         void* search(int);
         int getOffset(void*);

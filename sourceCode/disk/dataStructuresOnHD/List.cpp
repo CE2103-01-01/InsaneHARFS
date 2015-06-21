@@ -5,6 +5,17 @@
 #include "List.h"
 
 /**@brief construye lista en disco
+ */
+List::List(){
+    keySize = 0;
+    dataSize = 0;
+    path = "";
+    head = -1;
+    tail = -1;
+    firstEmpty = -1;
+}
+
+/**@brief construye lista en disco
  * @param std::string pathParam: sitio donde se guardara la lista
  */
 List::List(std::string pathParam, int dataSizeParam, int keySizeParam){
@@ -41,12 +52,35 @@ void List::updateHeader() {
                            LIST_HEADER_MEMBER_LENGHT);
 }
 
+/**@brief actualiza el header
+ */
+void List::readHeader() {
+    FileManager::readFile(std::addressof(head), path, POSITION_OF_HEAD_ON_HEADER*LIST_HEADER_MEMBER_LENGHT,
+                           LIST_HEADER_MEMBER_LENGHT);
+    FileManager::readFile(std::addressof(tail), path, POSITION_OF_TAIL_ON_HEADER*LIST_HEADER_MEMBER_LENGHT,
+                           LIST_HEADER_MEMBER_LENGHT);
+    FileManager::readFile(std::addressof(firstEmpty), path, POSITION_OF_FIRST_EMPTY_ON_HEADER*LIST_HEADER_MEMBER_LENGHT,
+                           LIST_HEADER_MEMBER_LENGHT);
+    FileManager::readFile(std::addressof(lenght), path, POSITION_OF_LENGHT_ON_HEADER*LIST_HEADER_MEMBER_LENGHT,
+                           LIST_HEADER_MEMBER_LENGHT);
+    FileManager::readFile(std::addressof(keySize), path, POSITION_OF_KEY_SIZE_ON_HEADER*LIST_HEADER_MEMBER_LENGHT,
+                           LIST_HEADER_MEMBER_LENGHT);
+    FileManager::readFile(std::addressof(dataSize), path, POSITION_OF_DATA_SIZE_ON_HEADER*LIST_HEADER_MEMBER_LENGHT,
+                           LIST_HEADER_MEMBER_LENGHT);
+}
+
+
 /**@brief busca un dato
  * @param void* key: clave de busqueda
  * @return void*: dato
  */
 void* List::search(void* key){
     return search(getOffset(key));
+}
+
+void List::changePath(std::string newPath){
+    path=newPath;
+    readHeader();
 }
 
 /**@brief busca un dato

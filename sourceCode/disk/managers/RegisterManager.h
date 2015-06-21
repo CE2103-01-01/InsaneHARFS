@@ -23,7 +23,6 @@
 #define MAX_REGISTERS_POSITION 2
 
 class RegisterManager {
-    List metadata;
     BlockManager blocks;
 public:
     RegisterManager(int,int);

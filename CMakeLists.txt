@@ -20,9 +20,11 @@ set(HARFS_DISK_FILES sourceCode/disk/harfs-disk-main.cpp
             sourceCode/disk/dataStructuresOnHD/BTree.cpp
             sourceCode/disk/dataStructuresOnHD/Buffer.cpp
             sourceCode/disk/network/TCPServer.cpp
-            sourceCode/disk/network/JsonWriter.cpp)
+            sourceCode/disk/network/JsonWriter.cpp
+            sourceCode/disk/managers/StorageBlockManager.cpp
+            sourceCode/disk/managers/RegisterManager.cpp)
 
-add_executable(harfs-disk ${HARFS_DISK_FILES}  sourceCode/disk/managers/StorageBlockManager.cpp sourceCode/disk/managers/StorageBlockManager.h)
+add_executable(harfs-disk ${HARFS_DISK_FILES})
 
 set_target_properties(harfs-disk PROPERTIES COMPILE_FLAGS -pthread LINK_FLAGS -pthread)
 
