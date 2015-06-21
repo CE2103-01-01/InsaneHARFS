@@ -36,7 +36,6 @@ unsigned long max(int order, int floor){
  */
 int main(int argc, char* argv[]) {
     a();
-    std::cout <<  << std::endl;
     // Register signal and signal handler
     signal(SIGINT, signal_callback_handler);
     signal(SIGTERM, signal_callback_handler);
