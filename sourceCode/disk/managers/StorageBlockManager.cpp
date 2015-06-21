@@ -43,7 +43,7 @@ bool StorageBlockManager::addStorageBlocks(void* storageName, void* data){
     char* tmp = static_cast<char*>(storageName);
     int sizeOfVoid = *static_cast<int*>(data);
     int keyOffset = *static_cast<int*>(data+4);
-    int keySize = *static_cast<int*>((keyOffset+1)*4);
+    int keySize = *static_cast<int*>(data+(keyOffset+1)*4);
     std::string tmpPath = "";
     for(int i = 0; i<BLOCK_NAME_LENGHT && (tmp+i)!="."; i++) tmpPath.append(tmp+i);
     pthread_mutex_lock(mutex);
